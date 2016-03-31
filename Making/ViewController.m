@@ -54,7 +54,7 @@
         case PressTypeEditText:
             break;
         case PressTypeShare:
-            NSLog(@"PressTypeShare");
+            NSLog(@"PressTypeShareT");
             break;
         case PressTypeCount:
             NSLog(@"PressTypeCount");
