@@ -54,6 +54,10 @@
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     [cell initialize];
     cell.makingLayer.backgroundColor = [UIColor blueColor].CGColor;
+    cell.makingLayer.cornerRadius = 10.0;
+    cell.makingLayer.masksToBounds = YES;
+    cell.makingLayer.borderWidth = 2;
+    cell.makingLayer.borderColor = [UIColor yellowColor].CGColor;
     
     return cell;
 }
