@@ -60,7 +60,7 @@
             NSLog(@"PressTypeCount");
             break;
         case PressTypeInfo:
-            NSLog(@"PressTypeInfo");
+            NSLog(@"PressTypeInfoT");
             break;
             
         default:
