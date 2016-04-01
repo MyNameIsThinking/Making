@@ -51,7 +51,10 @@
             
         }
             break;
-        case PressTypeEditText:
+        case PressTypeEditText: {
+            [self presentViewController:[[EditTextViewController alloc] init] animated:YES completion:^{
+            }];
+        }
             break;
         case PressTypeShare:
             NSLog(@"PressTypeShare");

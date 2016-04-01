@@ -8,30 +8,59 @@
 
 #import "EditTextViewController.h"
 
-@interface EditTextViewController ()
-
+@interface EditTextViewController () <UITextViewDelegate>
+@property (nonatomic, retain) UITextView *mainTextView;
+@property (nonatomic, retain) UITextView *forewordTextView;
 @end
 
 @implementation EditTextViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
+- (void)dealloc {
+    self.mainTextView = nil;
+    self.forewordTextView = nil;
 }
+- (id)init {
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    self = [super init];
+    if (self) {
+        self.view.backgroundColor = [UIColor whiteColor];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+    }
+    return self;
 }
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.view addSubview:self.mainTextView];
+    [self.mainTextView becomeFirstResponder];
 }
-*/
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
+        [self.mainTextView resignFirstResponder];
+        return NO;
+    }
+    
+    return YES;
+}
+- (void)keyboardWasShown:(NSNotification *)notification {
+    NSDictionary *info = [notification userInfo];
+    CGSize size = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;//得到鍵盤的高度
+    self.mainTextView.frame = CGRectMake(0, 0, size.width, CGRectGetHeight(self.view.bounds)-size.height);
+}
+- (void)keyboardWillBeHidden:(NSNotification *)notification {
+    [self dismissViewControllerAnimated:YES completion:^{
+    }];
+}
+- (UITextView *)mainTextView {
+
+    if (!_mainTextView) {
+        
+        _mainTextView = [[UITextView alloc] init];
+        _mainTextView.delegate = self;
+        _mainTextView.backgroundColor = [UIColor yellowColor];
+        _mainTextView.returnKeyType = UIReturnKeyDone;
+    }
+    
+    return _mainTextView;
+}
 
 @end

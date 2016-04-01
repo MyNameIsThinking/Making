@@ -6,8 +6,8 @@
 //  Copyright © 2016年 Making. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface ShareViewController : UIViewController
+@interface ShareViewController : BaseViewController
 
 @end

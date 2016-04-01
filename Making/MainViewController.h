@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Making. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 #import "MakingCell.h"
 
 typedef NS_OPTIONS(NSUInteger, PressType) {
@@ -23,7 +23,7 @@ typedef NS_OPTIONS(NSUInteger, PressType) {
 
 @end
 
-@interface MainViewController : UIViewController
+@interface MainViewController : BaseViewController
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) MakingCell *currCell;
 @property (nonatomic, assign) id<MainDelegate> delegate;

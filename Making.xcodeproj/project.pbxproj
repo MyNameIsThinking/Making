@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F16E2541CAEA6CA0009AA13 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */; };
 		1F80C2311CAAA86800961DA0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2301CAAA86800961DA0 /* main.m */; };
 		1F80C2341CAAA86800961DA0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2331CAAA86800961DA0 /* AppDelegate.m */; };
 		1F80C2371CAAA86800961DA0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2361CAAA86800961DA0 /* ViewController.m */; };
@@ -22,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F16E2521CAEA6CA0009AA13 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
+		1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		1F80C22C1CAAA86800961DA0 /* Making.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Making.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F80C2301CAAA86800961DA0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1F80C2321CAAA86800961DA0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -97,6 +100,8 @@
 				1FD0D7591CABFECE00501D52 /* MakingLayer.m */,
 				1FD0D75B1CABFF0700501D52 /* MakingCell.h */,
 				1FD0D75C1CABFF0700501D52 /* MakingCell.m */,
+				1F16E2521CAEA6CA0009AA13 /* BaseViewController.h */,
+				1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */,
 			);
 			path = Making;
 			sourceTree = "<group>";
@@ -181,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FD0D7511CABF9CE00501D52 /* ChangeTypeViewController.m in Sources */,
+				1F16E2541CAEA6CA0009AA13 /* BaseViewController.m in Sources */,
 				1F80C2371CAAA86800961DA0 /* ViewController.m in Sources */,
 				1F80C2341CAAA86800961DA0 /* AppDelegate.m in Sources */,
 				1F80C2311CAAA86800961DA0 /* main.m in Sources */,

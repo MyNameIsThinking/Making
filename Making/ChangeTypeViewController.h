@@ -6,7 +6,7 @@
 //  Copyright © 2016年 Making. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 #import "MakingCell.h"
 
 @protocol ChangeTypeDelegate <NSObject>
@@ -15,6 +15,6 @@
 - (void)pressCell:(MakingCell *)cell scrollView:(UIScrollView *)scrollView;
 
 @end
-@interface ChangeTypeViewController : UIViewController
+@interface ChangeTypeViewController : BaseViewController
 @property (nonatomic, assign) id<ChangeTypeDelegate> delegate;
 @end
