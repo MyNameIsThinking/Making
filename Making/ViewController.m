@@ -63,7 +63,7 @@
             NSLog(@"PressTypeCount");
             break;
         case PressTypeInfo:
-            NSLog(@"PressTypeInfoT");
+            NSLog(@"PressTypeInfo");
             break;
             
         default:
@@ -77,6 +77,8 @@
     } completion:^(BOOL finished) {
         [self.view insertSubview:_changeTypeViewController.view belowSubview:_mainViewController.view];
         _changeTypeViewController.view.alpha = 1;
+        [_changeTypeViewController.view removeFromSuperview];
+        self.changeTypeViewController = nil;
     }];
 }
 - (void)pressCell:(MakingCell *)cell scrollView:(UIScrollView *)scrollView {

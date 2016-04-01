@@ -68,7 +68,7 @@
         _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:self.collectionViewLayout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
-        _collectionView.pagingEnabled = YES;
+        _collectionView.pagingEnabled = NO;
         [_collectionView registerClass:[MakingCell class] forCellWithReuseIdentifier:[MakingCell identifier]];
     }
     
