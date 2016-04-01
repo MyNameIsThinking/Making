@@ -31,11 +31,13 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self.view addSubview:self.mainTextView];
+    [self.view addSubview:self.forewordTextView];
     [self.mainTextView becomeFirstResponder];
 }
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
         [self.mainTextView resignFirstResponder];
+        [self.forewordTextView resignFirstResponder];
         return NO;
     }
     
@@ -44,7 +46,8 @@
 - (void)keyboardWasShown:(NSNotification *)notification {
     NSDictionary *info = [notification userInfo];
     CGSize size = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;//得到鍵盤的高度
-    self.mainTextView.frame = CGRectMake(0, 0, size.width, CGRectGetHeight(self.view.bounds)-size.height);
+    self.mainTextView.frame = CGRectMake(0, 0, size.width, CGRectGetHeight(self.view.bounds)-size.height-CGRectGetHeight(self.forewordTextView.frame));
+    self.forewordTextView.frame = CGRectMake(0, _mainTextView.frame.origin.y+_mainTextView.frame.size.height, CGRectGetWidth(_forewordTextView.frame), CGRectGetHeight(_forewordTextView.frame));
 }
 - (void)keyboardWillBeHidden:(NSNotification *)notification {
     [self dismissViewControllerAnimated:YES completion:^{
@@ -62,5 +65,16 @@
     
     return _mainTextView;
 }
+- (UITextView *)forewordTextView {
 
+    if (!_forewordTextView) {
+        CGFloat height = 60;
+        _forewordTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, -height, CGRectGetWidth(self.view.bounds), height)];
+        _forewordTextView.delegate = self;
+        _forewordTextView.backgroundColor = [UIColor redColor];
+        _forewordTextView.returnKeyType = UIReturnKeyDone;
+    }
+    
+    return _forewordTextView;
+}
 @end
