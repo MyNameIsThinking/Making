@@ -10,4 +10,5 @@
 
 @interface ShareViewController : BaseViewController
 
+- (id)initWithModels:(NSArray *)models;
 @end

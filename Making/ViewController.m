@@ -57,8 +57,9 @@
             }];
         }
             break;
-        case PressTypeShare:
-            NSLog(@"PressTypeShare");
+        case PressTypeShare: {
+            [self.navigationController pushViewController:[[ShareViewController alloc] initWithModels:nil] animated:YES];
+        }
             break;
         case PressTypeCount: {
             [self presentViewController:[[CountViewController alloc] init] animated:YES completion:^{
