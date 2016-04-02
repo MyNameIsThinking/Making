@@ -11,17 +11,14 @@
 
 @interface CenterLayout : UICollectionViewFlowLayout
 @property (nonatomic, assign) NSInteger cellCount;
-@property (nonatomic, assign) int visibleCount;
 @end
 @interface CountViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate> {
 
 }
 @property (nonatomic, retain) UILabel *titleLabel;
-@property (nonatomic, retain) UIScrollView *scrollView;
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) CenterLayout *collectionViewLayout;
 @property (nonatomic, retain) UIButton *closeBtn;
-@property (nonatomic, assign) int selectIndex;
 @property (nonatomic, assign) int count;
 @end
 
@@ -30,7 +27,6 @@
 - (void)dealloc {
 
     self.titleLabel = nil;
-    self.scrollView = nil;
     self.collectionView = nil;
     self.collectionViewLayout = nil;
     self.closeBtn = nil;
@@ -40,7 +36,6 @@
     self = [super init];
     if (self) {
         self.view.backgroundColor = [UIColor whiteColor];
-        self.selectIndex = 0;
     }
     
     return self;
@@ -50,7 +45,6 @@
     self.count = 9;
     [self.view addSubview:self.titleLabel];
     [self.view addSubview:self.collectionView];
-    [self.view addSubview:self.scrollView];
     [self.view addSubview:self.closeBtn];
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -73,6 +67,7 @@
     cell.makingLayer.masksToBounds = YES;
     cell.makingLayer.borderWidth = 2;
     cell.makingLayer.borderColor = [UIColor yellowColor].CGColor;
+    
     return cell;
 }
 - (void)goBack {
@@ -81,25 +76,25 @@
         
     }];
 }
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-
-    if (scrollView == _scrollView) {
-        NSIndexPath *indexPath = nil;
-        if (velocity.x > 0) {
-            self.selectIndex++;
-            if (self.selectIndex >=self.count) {
-                self.selectIndex = self.count-1;
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    [self scrollViewDidEndDecelerating:!decelerate?scrollView:nil];
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
+    if (scrollView == self.collectionView) {
+        float minDis = CGRectGetHeight(scrollView.frame);
+        NSIndexPath *minIndexPath = nil;
+        float scrollViewCenter = scrollView.contentOffset.x+(CGRectGetWidth(scrollView.frame)/2);
+        NSArray *array = [self.collectionView indexPathsForVisibleItems];
+        for (NSIndexPath *cellIndexPath in array) {
+            MakingCell *cell = (MakingCell *)[self.collectionView cellForItemAtIndexPath:cellIndexPath];
+            float cellCenter = cell.center.x;
+            if (fabsf(scrollViewCenter-cellCenter) < minDis) {
+                minDis = fabsf(scrollViewCenter-cellCenter);
+                minIndexPath = cellIndexPath;
             }
-            indexPath = [NSIndexPath indexPathForItem:self.selectIndex inSection:0];
-        } else if (velocity.x < 0) {
-            self.selectIndex--;
-            if (self.selectIndex <= 0) {
-                self.selectIndex = 0;
-            }
-            indexPath = [NSIndexPath indexPathForItem:self.selectIndex inSection:0];
         }
-        
-        [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+        [self.collectionView scrollToItemAtIndexPath:minIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
     }
 }
 - (UILabel *)titleLabel {
@@ -124,26 +119,12 @@
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.pagingEnabled = NO;
-        _collectionView.userInteractionEnabled = NO;
         [_collectionView setClipsToBounds:NO];
         [_collectionView setShowsHorizontalScrollIndicator:NO];
         [_collectionView registerClass:[MakingCell class] forCellWithReuseIdentifier:[MakingCell identifier]];
     }
     
     return _collectionView;
-}
-- (UIScrollView *)scrollView {
-
-    if (!_scrollView) {
-        _scrollView = [[UIScrollView alloc] initWithFrame:self.collectionView.frame];
-        _scrollView.backgroundColor = [UIColor clearColor];
-        CGFloat width = CGRectGetHeight(self.view.bounds)/3;
-        [_scrollView setContentSize:CGSizeMake((self.count+1)*width, 0)];
-        [_scrollView setShowsHorizontalScrollIndicator:NO];
-        _scrollView.delegate = self;
-    }
-    
-    return _scrollView;
 }
 - (CenterLayout *)collectionViewLayout {
     
@@ -168,8 +149,6 @@
     
     return _closeBtn;
 }
-
-
 @end
 
 @implementation CenterLayout
@@ -193,9 +172,8 @@
     int firstIndex = floorf(minX / CGRectGetHeight(self.collectionView.frame));
     int lastIndex = floorf(maxX / CGRectGetHeight(self.collectionView.frame));
     int activeIndex = (int)(firstIndex + lastIndex)/2;
-    self.visibleCount = lastIndex - firstIndex;
     
-    int maxVisibleOnScreen = 3;
+    int maxVisibleOnScreen = (int)self.cellCount;
     int firstItem = fmax(0, activeIndex - (int)(maxVisibleOnScreen/2) );
     int lastItem = fmin( self.cellCount-1 , activeIndex + (int)(maxVisibleOnScreen/2) );
     for( int i = firstItem; i <= lastItem; i++ ){
