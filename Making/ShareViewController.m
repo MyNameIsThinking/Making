@@ -9,17 +9,30 @@
 #import "ShareViewController.h"
 #import "MakingCell.h"
 
+@interface ShareView : UIView
+@property (nonatomic, retain) NSMutableArray *shares;
+@end
+
 @interface ShareViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, retain) NSArray *models;
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) UICollectionViewFlowLayout *collectionViewLayout;
 @property (nonatomic, retain) UIButton *backBtn;
+@property (nonatomic, retain) UILabel *countLabel;
+@property (nonatomic, retain) UIView *grayLine;
+@property (nonatomic, retain) ShareView *shareView;
 @end
 
 @implementation ShareViewController
 
 - (void)dealloc {
-
+    self.models = nil;
+    self.collectionView = nil;
+    self.collectionViewLayout = nil;
+    self.backBtn = nil;
+    self.countLabel = nil;
+    self.grayLine = nil;
+    self.shareView = nil;
 }
 - (id)initWithModels:(NSArray *)models {
 
@@ -34,6 +47,9 @@
     [super viewDidLoad];
     [self.view addSubview:self.collectionView];
     [self.view addSubview:self.backBtn];
+    [self.view addSubview:self.countLabel];
+    [self.view insertSubview:self.grayLine belowSubview:self.countLabel];
+    [self.view addSubview:self.shareView];
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     switch (self.models.count) {
@@ -178,6 +194,33 @@
                                     
     return _backBtn;
 }
+- (UILabel *)countLabel {
+
+    if (!_countLabel) {
+        _countLabel = [[UILabel alloc] init];
+        _countLabel.backgroundColor = [UIColor whiteColor];
+        _countLabel.text = [NSString stringWithFormat:@"共%i張",(int)self.models.count];
+        _countLabel.font = [UIFont systemFontOfSize:16];
+        _countLabel.textAlignment = NSTextAlignmentCenter;
+        _countLabel.textColor = [UIColor grayColor];
+        CGSize size = [_countLabel.text sizeWithAttributes:@{NSFontAttributeName:_countLabel.font}];
+        CGFloat width = size.width+20;
+        _countLabel.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-width)/2, CGRectGetWidth(self.view.bounds)+size.height, width, size.height);
+    }
+    
+    return _countLabel;
+}
+- (UIView *)grayLine {
+
+    if (!_grayLine) {
+        CGFloat offset = 40;
+        _grayLine = [[UIView alloc] initWithFrame:CGRectMake(offset/2, 0, CGRectGetWidth(self.view.bounds)-offset, 1)];
+        _grayLine.center = CGPointMake(_grayLine.center.x, self.countLabel.center.y);
+        _grayLine.backgroundColor = [UIColor grayColor];
+    }
+    
+    return _grayLine;
+}
 - (NSArray *)models {
 
     if (!_models) {
@@ -185,5 +228,61 @@
     }
     
     return _models;
+}
+- (ShareView *)shareView {
+
+    if (!_shareView) {
+        _shareView = [[ShareView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), MIN(self.backBtn.frame.origin.y-self.countLabel.frame.origin.y-self.countLabel.frame.size.height, 50))];
+        _shareView.center = CGPointMake(_shareView.center.x, self.countLabel.frame.origin.y+self.countLabel.frame.size.height+60);
+    }
+    
+    return _shareView;
+}
+@end
+
+@implementation ShareView
+
+- (void)dealloc {
+
+    self.shares = nil;
+}
+- (id)initWithFrame:(CGRect)frame {
+
+    self = [super initWithFrame:frame];
+    
+    if (self) {
+        [self.shares addObject:@"本地"];
+        [self.shares addObject:@"微信"];
+        [self.shares addObject:@"微博"];
+        [self.shares addObject:@"空間"];
+        
+        CGFloat offset = (frame.size.width-(frame.size.height*self.shares.count))/self.shares.count;
+        
+        for (int i = 0; i < self.shares.count; i++) {
+            
+            UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [btn setTitle:self.shares[i] forState:UIControlStateNormal];
+            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            btn.titleLabel.font = [UIFont systemFontOfSize:20];
+            btn.titleLabel.textAlignment = NSTextAlignmentCenter;
+            CGFloat width = frame.size.height;
+            btn.frame = CGRectMake((offset/2)+((width+offset)*i), 0, width, width);
+            btn.layer.masksToBounds = YES;
+            btn.layer.borderWidth = 2;
+            btn.layer.cornerRadius = width/2;
+            btn.layer.borderColor = [UIColor yellowColor].CGColor;
+            [self addSubview:btn];
+        }
+    }
+    
+    return self;
+}
+- (NSMutableArray *)shares {
+
+    if (!_shares) {
+        _shares = [[NSMutableArray alloc] init];
+    }
+    
+    return _shares;
 }
 @end
