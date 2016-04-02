@@ -11,6 +11,7 @@
 #import "ChangeTypeViewController.h"
 #import "EditTextViewController.h"
 #import "ShareViewController.h"
+#import "CountViewController.h"
 #import "MakingLayer.h"
 
 @interface ViewController () <MainDelegate,ChangeTypeDelegate>
@@ -59,8 +60,11 @@
         case PressTypeShare:
             NSLog(@"PressTypeShare");
             break;
-        case PressTypeCount:
-            NSLog(@"PressTypeCount");
+        case PressTypeCount: {
+            [self presentViewController:[[CountViewController alloc] init] animated:YES completion:^{
+            }];
+        
+        }
             break;
         case PressTypeInfo:
             NSLog(@"PressTypeInfo");
