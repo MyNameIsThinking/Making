@@ -10,6 +10,7 @@
 #import "MakingCell.h"
 
 @interface ShareViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@property (nonatomic, retain) NSArray *models;
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) UICollectionViewFlowLayout *collectionViewLayout;
 @property (nonatomic, retain) UIButton *backBtn;
@@ -35,7 +36,49 @@
     [self.view addSubview:self.backBtn];
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return self.collectionView.frame.size;
+    switch (self.models.count) {
+        case 1: {
+            return CGSizeMake(CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+        }
+            break;
+        case 2: {
+            return CGSizeMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetWidth(self.view.bounds)/2);
+        }
+            break;
+        case 3: {
+            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+        }
+            break;
+        case 4: {
+            return CGSizeMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetWidth(self.view.bounds)/2);
+        }
+            break;
+        case 5: {
+            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+        }
+            break;
+        case 6: {
+            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+        }
+            break;
+        case 7: {
+            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+        }
+            break;
+        case 8: {
+            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+        }
+            break;
+        case 9: {
+            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+        }
+            break;
+            
+        default:
+            break;
+    }
+    
+    return CGSizeZero;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
@@ -44,18 +87,65 @@
     return 0;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 1;
+    
+    switch (self.models.count) {
+        case 1: {
+            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+        }
+            break;
+        case 2: {
+            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds)/2);
+        }
+            break;
+        case 3: {
+            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds)/3);
+        }
+            break;
+        case 4: {
+            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+        }
+            break;
+        case 5: {
+            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), (CGRectGetWidth(self.view.bounds)/3)*2);
+        }
+            break;
+        case 6: {
+            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), (CGRectGetWidth(self.view.bounds)/3)*2);
+        }
+            break;
+        case 7: {
+            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+        }
+            break;
+        case 8: {
+            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+        }
+            break;
+        case 9: {
+            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+        }
+            break;
+            
+        default:
+            break;
+    }
+    self.collectionView.center = CGPointMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetWidth(self.view.bounds)/2);
+    return self.models.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     [cell initialize];
+    cell.makingLayer.masksToBounds = YES;
+    cell.makingLayer.borderWidth = 2;
+    cell.makingLayer.borderColor = [UIColor yellowColor].CGColor;
     return cell;
 }
 - (UICollectionView *)collectionView {
     
     if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
+        _collectionView.backgroundColor = [UIColor clearColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.pagingEnabled = YES;
@@ -68,7 +158,7 @@
     
     if (!_collectionViewLayout) {
         _collectionViewLayout = [[UICollectionViewFlowLayout alloc] init];
-        _collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        _collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     }
     
     return _collectionViewLayout;
@@ -87,5 +177,13 @@
     }
                                     
     return _backBtn;
+}
+- (NSArray *)models {
+
+    if (!_models) {
+        _models = [[NSArray alloc] initWithObjects:@"",@"",@"",@"",@"",@"",@"", nil];
+    }
+    
+    return _models;
 }
 @end
