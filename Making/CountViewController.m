@@ -9,10 +9,25 @@
 #import "CountViewController.h"
 #import "MakingCell.h"
 
+@class CountMakingCell;
+
+@protocol CountMakingCellDelegate <NSObject>
+
+- (void)pressAdd:(CountMakingCell *)cell;
+- (void)pressDel:(CountMakingCell *)cell;
+
+@end
+
+@interface CountMakingCell : MakingCell
+@property (nonatomic, weak) id<CountMakingCellDelegate> delegate;
+@property (nonatomic, retain) UIButton *addBtn;
+@property (nonatomic, retain) UIButton *delBtn;
+@end
+
 @interface CenterLayout : UICollectionViewFlowLayout
 @property (nonatomic, assign) NSInteger cellCount;
 @end
-@interface CountViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate> {
+@interface CountViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, CountMakingCellDelegate> {
 
 }
 @property (nonatomic, retain) UILabel *titleLabel;
@@ -42,7 +57,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.count = 9;
+    self.count = 1;
     [self.view addSubview:self.titleLabel];
     [self.view addSubview:self.collectionView];
     [self.view addSubview:self.closeBtn];
@@ -62,7 +77,8 @@
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
+    CountMakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[CountMakingCell identifier] forIndexPath:indexPath];
+    cell.delegate = self;
     [cell initialize];
     cell.makingLayer.masksToBounds = YES;
     cell.makingLayer.borderWidth = 2;
@@ -87,7 +103,7 @@
         float scrollViewCenter = scrollView.contentOffset.x+(CGRectGetWidth(scrollView.frame)/2);
         NSArray *array = [self.collectionView indexPathsForVisibleItems];
         for (NSIndexPath *cellIndexPath in array) {
-            MakingCell *cell = (MakingCell *)[self.collectionView cellForItemAtIndexPath:cellIndexPath];
+            CountMakingCell *cell = (CountMakingCell *)[self.collectionView cellForItemAtIndexPath:cellIndexPath];
             float cellCenter = cell.center.x;
             if (fabsf(scrollViewCenter-cellCenter) < minDis) {
                 minDis = fabsf(scrollViewCenter-cellCenter);
@@ -95,6 +111,28 @@
             }
         }
         [self.collectionView scrollToItemAtIndexPath:minIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+    }
+}
+- (void)pressAdd:(CountMakingCell *)cell {
+
+    if (self.count < 9) {
+        self.count++;
+        [self.collectionView performBatchUpdates:^{
+            NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+            [self.collectionView insertItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+        } completion:^(BOOL finished) {
+        }];
+    }
+}
+- (void)pressDel:(CountMakingCell *)cell {
+    
+    if (self.count > 1) {
+        self.count--;
+        [self.collectionView performBatchUpdates:^{
+            NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+            [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+        } completion:^(BOOL finished) {
+        }];
     }
 }
 - (UILabel *)titleLabel {
@@ -121,7 +159,7 @@
         _collectionView.pagingEnabled = NO;
         [_collectionView setClipsToBounds:NO];
         [_collectionView setShowsHorizontalScrollIndicator:NO];
-        [_collectionView registerClass:[MakingCell class] forCellWithReuseIdentifier:[MakingCell identifier]];
+        [_collectionView registerClass:[CountMakingCell class] forCellWithReuseIdentifier:[CountMakingCell identifier]];
     }
     
     return _collectionView;
@@ -150,7 +188,60 @@
     return _closeBtn;
 }
 @end
+@implementation CountMakingCell
 
+- (void)dealloc {
+
+    self.addBtn = nil;
+    self.delBtn = nil;
+}
+- (void)initialize {
+
+    [super initialize];
+    [self addSubview:self.addBtn];
+    [self addSubview:self.delBtn];
+}
+- (UIButton *)addBtn {
+
+    if (!_addBtn) {
+        _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_addBtn setTitle:@"+" forState:UIControlStateNormal];
+        [_addBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _addBtn.titleLabel.font = [UIFont systemFontOfSize:40];
+        CGSize size = [_addBtn.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_addBtn.titleLabel.font}];
+        _addBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-size.width-10, CGRectGetHeight(self.frame)-size.height-10, size.width, size.height);
+        [_addBtn addTarget:self action:@selector(pressAdd) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _addBtn;
+}
+- (UIButton *)delBtn {
+    
+    if (!_delBtn) {
+        _delBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_delBtn setTitle:@"-" forState:UIControlStateNormal];
+        [_delBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        _delBtn.titleLabel.font = [UIFont systemFontOfSize:40];
+        CGSize size = [_delBtn.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_delBtn.titleLabel.font}];
+        _delBtn.frame = CGRectMake(10, CGRectGetHeight(self.frame)-size.height-10, size.width, size.height);
+        [_delBtn addTarget:self action:@selector(pressDel) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _delBtn;
+}
+- (void)pressAdd {
+
+    if ([_delegate respondsToSelector:@selector(pressAdd:)]) {
+        [_delegate pressAdd:self];
+    }
+}
+- (void)pressDel {
+
+    if ([_delegate respondsToSelector:@selector(pressDel:)]) {
+        [_delegate pressDel:self];
+    }
+}
+@end
 @implementation CenterLayout
 
 - (void)prepareLayout {
