@@ -58,7 +58,7 @@
     CoreTextModel *model2 = [[CoreTextModel alloc] init];
     model2.text = @"TEST2";
     
-    cell.backgroundColor = [UIColor orangeColor];
+    cell.BGColor = [UIColor yellowColor];
     cell.isShadow = YES;
     [cell showWithModel:model1];
     return cell;

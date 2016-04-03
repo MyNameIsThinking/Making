@@ -12,7 +12,7 @@
 
 @interface MakingCell : UICollectionViewCell
 @property (nonatomic, assign) BOOL isShadow;
-@property (nonatomic, retain) UIColor *backgroundColor;
+@property (nonatomic, retain) UIColor *BGColor;
 @property (nonatomic, retain) CoreTextModel *model;
 @property (nonatomic, assign) CGFloat scale;
 + (NSString *)identifier;

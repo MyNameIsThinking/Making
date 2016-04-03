@@ -43,7 +43,7 @@
     }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat width = CGRectGetWidth(self.view.bounds)/2;
+    int width = CGRectGetWidth(self.view.bounds)/2;
     return CGSizeMake(width, width);
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
@@ -63,10 +63,10 @@
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     cell.scale = 2;
     if (_changeType==ChangeTypeBackground) {
-        cell.backgroundColor = [ChangeTypeManager shareInstance].colors[indexPath.row];
+        cell.BGColor = [ChangeTypeManager shareInstance].colors[indexPath.row];
         [cell showWithModel:self.defaultModel];
     } else {
-        cell.backgroundColor = self.defaultColor;
+        cell.BGColor = self.defaultColor;
         XMLUtil *xml = [ChangeTypeManager shareInstance].xmls[indexPath.row];
         [cell showWithModel:xml.model];
     }

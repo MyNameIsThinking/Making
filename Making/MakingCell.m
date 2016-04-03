@@ -10,13 +10,6 @@
 #import "CoreTextModel.h"
 #import "M80AttributedLabel.h"
 
-#define UIColorFromRGB(rgbValue) [UIColor \
-colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
-green:((float)((rgbValue & 0x00FF00) >> 8))/255.0 \
-blue:((float)(rgbValue & 0x0000FF))/255.0 \
-alpha:1.0]
-
-
 @interface MakingCell ()
 @property (nonatomic, retain) M80AttributedLabel *label;
 @end
@@ -31,14 +24,15 @@ alpha:1.0]
     self.label = nil;
 }
 - (void)showWithModel:(CoreTextModel *)model {
-    _model = model;
-    [self setBackgroundColor:_backgroundColor];
     
+    _model = model;
+    self.backgroundColor = _BGColor;
     self.label.textAlignment = model.textAlignment;
     self.label.text      = model.text;
     self.label.font      = [UIFont fontWithName:@"Zapfino" size:25/_scale];
-    self.label.textColor = UIColorFromRGB(0xFF9F00);
-    self.label.frame     = CGRectInset(self.bounds,0,0);
+    self.label.textColor = [UIColor redColor];
+    self.label.backgroundColor = _BGColor;
+    self.label.frame     = CGRectInset(self.bounds,20/_scale,20/_scale);
     [self addSubview:self.label];
 }
 - (M80AttributedLabel *)label {
