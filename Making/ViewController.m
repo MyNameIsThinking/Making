@@ -15,6 +15,8 @@
 #import "MakingCell.h"
 #import "M80AttributedLabel.h"
 
+const NSTimeInterval durationTime = 0.4;
+
 @interface ViewController () <MainDelegate,ChangeTypeDelegate>
 
 @property (nonatomic, retain) MainViewController *mainViewController;
@@ -34,37 +36,6 @@
 
     PressType pressType = (PressType)sender.tag;
     switch (pressType) {
-        case PressTypeChangeType:
-        case PressTypeChangeBackground: {
-        
-            MakingCell *currCell = [_mainViewController getCurrCell];
-            self.animationLabel.textAlignment = currCell.model.textAlignment;
-            self.animationLabel.text      = currCell.model.text;
-            self.animationLabel.font      = [UIFont fontWithName:@"Zapfino" size:25];
-            self.animationLabel.textColor = [UIColor grayColor];
-            self.animationLabel.backgroundColor = currCell.backgroundColor;
-            self.animationLabel.frame     = CGRectInset(currCell.bounds,0,0);
-            
-            self.animationLabel.frame = currCell.frame;
-            self.animationLabel.backgroundColor = currCell.backgroundColor;
-            [self.view addSubview:self.animationLabel];
-            [self toCell:self.animationLabel];
-            [currCell removeFromSuperview];
-            
-            self.changeTypeViewController.defaultColor = currCell.backgroundColor;
-            self.changeTypeViewController.defaultModel = currCell.model;
-            self.changeTypeViewController.changeType = (ChangeType)pressType;
-            
-            [self.view insertSubview:self.changeTypeViewController.view belowSubview:_mainViewController.view];
-            [UIView animateWithDuration:1 animations:^{
-                _mainViewController.view.alpha = 0;
-            } completion:^(BOOL finished) {
-                [self.view insertSubview:_mainViewController.view belowSubview:_changeTypeViewController.view];
-                _mainViewController.view.alpha = 1;
-            }];
-            
-        }
-            break;
         case PressTypeEditText: {
             [self presentViewController:[[EditTextViewController alloc] init] animated:YES completion:^{
             }];
@@ -89,40 +60,65 @@
     }
 }
 - (void)pressClose {
-    [_mainViewController.collectionView reloadData];
-    [UIView animateWithDuration:1 animations:^{
+    
+    [UIView animateWithDuration:durationTime animations:^{
         _changeTypeViewController.view.alpha = 0;
     } completion:^(BOOL finished) {
         [self.view insertSubview:_changeTypeViewController.view belowSubview:_mainViewController.view];
         _changeTypeViewController.view.alpha = 1;
         [_changeTypeViewController.view removeFromSuperview];
         self.changeTypeViewController = nil;
+        [_mainViewController.view addSubview:_mainViewController.collectionView];
+        [_mainViewController.collectionView reloadData];
+    }];
+}
+- (void)pressCell:(MakingCell *)cell Type:(PressType)type {
+
+    self.animationLabel.textAlignment = cell.model.textAlignment;
+    self.animationLabel.text      = cell.model.text;
+    self.animationLabel.font      = [UIFont fontWithName:@"Zapfino" size:26];
+    self.animationLabel.textColor = [UIColor grayColor];
+    self.animationLabel.backgroundColor = cell.backgroundColor;
+    self.animationLabel.frame     = CGRectInset(cell.bounds,0,0);
+
+    [self toCell:self.animationLabel];
+    [_mainViewController.collectionView removeFromSuperview];
+    
+    self.changeTypeViewController.defaultColor = cell.backgroundColor;
+    self.changeTypeViewController.defaultModel = cell.model;
+    self.changeTypeViewController.changeType = (ChangeType)type;
+    
+    [self.view insertSubview:self.changeTypeViewController.view belowSubview:_mainViewController.view];
+    [UIView animateWithDuration:durationTime animations:^{
+        _mainViewController.view.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.view insertSubview:_mainViewController.view belowSubview:_changeTypeViewController.view];
+        _mainViewController.view.alpha = 1;
     }];
 }
 - (void)pressCell:(MakingCell *)cell scrollView:(UIScrollView *)scrollView {
     
     [self.mainViewController setSelectCell:cell];
-    [self pressClose];
+    
     self.animationLabel.textAlignment = cell.model.textAlignment;
     self.animationLabel.text      = cell.model.text;
-    self.animationLabel.font      = [UIFont fontWithName:@"Zapfino" size:25/2];
+    self.animationLabel.font      = [UIFont fontWithName:@"Zapfino" size:26/2];
     self.animationLabel.textColor = [UIColor grayColor];
     self.animationLabel.backgroundColor = cell.backgroundColor;
     self.animationLabel.frame     = CGRectInset(cell.bounds,0,0);
+    
     [self toMain:self.animationLabel scroller:scrollView cell:cell];
+    [self pressClose];
 }
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    double delayInSeconds = 1.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [_animationLabel removeFromSuperview];
-        _animationLabel = nil;
-    });
-    
+    [_animationLabel removeFromSuperview];
+    _animationLabel = nil;
 }
 - (void)toCell:(M80AttributedLabel *)label {
     
-    CFTimeInterval time = 0.2f;
+    [self.view addSubview:self.animationLabel];
+    
+    CFTimeInterval time = durationTime;
     
     CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
     positionAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(label.layer.frame.origin.x+(label.layer.frame.size.width/2), label.layer.frame.origin.y+(label.layer.frame.size.height/2))];
@@ -150,11 +146,11 @@
     label.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y-scroller.contentOffset.y, cell.frame.size.width, cell.frame.size.height);
     [self.view addSubview:label];
     
-    CFTimeInterval time = 0.2f;
+    CFTimeInterval time = durationTime;
     
     CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
     positionAnimation.fromValue = [NSValue valueWithCGPoint:label.layer.position];
-    positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetHeight(label.layer.frame))];
+    positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((int)(CGRectGetWidth(self.view.bounds)/2), CGRectGetHeight(label.layer.frame))];
     positionAnimation.fillMode = kCAFillModeForwards;
     positionAnimation.removedOnCompletion = NO;
     positionAnimation.duration = time;

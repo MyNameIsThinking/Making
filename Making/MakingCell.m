@@ -29,7 +29,7 @@
     _model = model;
     self.label.textAlignment = model.textAlignment;
     self.label.text      = model.text;
-    self.label.font      = [UIFont fontWithName:@"Zapfino" size:25/_scale];
+    self.label.font      = [UIFont fontWithName:@"Zapfino" size:26/_scale];
     self.label.textColor = [UIColor grayColor];
     self.label.frame     = CGRectInset(self.bounds,0,0);
     [self addSubview:self.label];

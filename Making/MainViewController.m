@@ -45,9 +45,6 @@
     [_mainModels replaceObjectAtIndex:_currIndex withObject:newModel];
     [_collectionView reloadData];
 }
-- (MakingCell *)getCurrCell {
-    return _currCell;
-}
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return self.collectionView.frame.size;
 }
@@ -95,6 +92,12 @@
     
     return _collectionViewLayout;
 }
+- (void)pressBtnWithType:(UIButton *)sender {
+
+    if ([_delegate respondsToSelector:@selector(pressCell:Type:)]) {
+        [_delegate pressCell:_currCell Type:(PressType)sender.tag];
+    }
+}
 - (UIButton *)changeTypeBtn {
 
     if (!_changeTypeBtn) {
@@ -106,9 +109,7 @@
         [_changeTypeBtn setTitle:@"風格" forState:UIControlStateNormal];
         [_changeTypeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _changeTypeBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        if ([_delegate respondsToSelector:@selector(pressBtnWithType:)]) {
-            [_changeTypeBtn addTarget:_delegate action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
-        }
+        [_changeTypeBtn addTarget:self action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _changeTypeBtn;
@@ -124,10 +125,7 @@
         [_changeBackgroundBtn setTitle:@"背景" forState:UIControlStateNormal];
         [_changeBackgroundBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _changeBackgroundBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        if ([_delegate respondsToSelector:@selector(pressBtnWithType:)]) {
-            [_changeBackgroundBtn addTarget:_delegate action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
-        }
-        
+        [_changeBackgroundBtn addTarget:self action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _changeBackgroundBtn;
