@@ -43,7 +43,7 @@
             [_mainViewController.currCell removeFromSuperview];
             
             self.changeTypeViewController.defaultColor = _mainViewController.currCell.backgroundColor;
-            self.changeTypeViewController.defaultModels = _mainViewController.currCell.models;
+            self.changeTypeViewController.defaultModel = _mainViewController.currCell.model;
             self.changeTypeViewController.changeType = (ChangeType)pressType;
             
             [self.view insertSubview:self.changeTypeViewController.view belowSubview:_mainViewController.view];

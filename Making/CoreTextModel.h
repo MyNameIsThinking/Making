@@ -8,17 +8,20 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <CoreText/CoreText.h>
 
 @interface CoreTextModel : NSObject
 
-@property (nonatomic, retain) NSString *text;                   //文字
-@property (nonatomic, retain) NSString *defaultText;            //默認文案
-@property (nonatomic, retain) NSString *fontName;               //字體
-@property (nonatomic, assign) CGFloat fontSize;                 //字大小
-@property (nonatomic, retain) UIColor *color;                   //字顏色
-@property (nonatomic, assign) BOOL isStrokeWidth;               //加粗
-@property (nonatomic, assign) CGFloat kern;                     //字距
-@property (nonatomic, assign) CGSize originalSize;              //字原始大小
-@property (nonatomic, retain) NSNumber *alignment;              //字對齊
-@property (nonatomic, assign) CGRect frame;                     //字邊框
+@property (nonatomic,strong)    NSString *text;                 //文字
+@property (nonatomic,strong)    UIFont *font;                   //字体
+@property (nonatomic,strong)    UIColor *textColor;             //文字颜色
+@property (nonatomic,strong)    UIColor *highlightColor;        //链接点击时背景高亮色
+@property (nonatomic,strong)    UIColor *linkColor;             //链接色
+@property (nonatomic,assign)    BOOL    underLineForLink;       //链接是否带下划线
+@property (nonatomic,assign)    BOOL    autoDetectLinks;        //自动检测
+@property (nonatomic,assign)    NSInteger   numberOfLines;      //行数
+@property (nonatomic,assign)    CTTextAlignment textAlignment;  //文字排版样式
+@property (nonatomic,assign)    CTLineBreakMode lineBreakMode;  //LineBreakMode
+@property (nonatomic,assign)    CGFloat lineSpacing;            //行间距
+@property (nonatomic,assign)    CGFloat paragraphSpacing;       //段间距
 @end

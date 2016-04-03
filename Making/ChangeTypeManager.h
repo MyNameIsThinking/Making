@@ -17,6 +17,6 @@
 
 @interface XMLUtil : NSObject
 
-@property (nonatomic, retain) NSArray *models;
+@property (nonatomic, retain) CoreTextModel *model;
 - (id)initWithFileName:(NSString *)name;
 @end

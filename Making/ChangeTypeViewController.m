@@ -64,11 +64,11 @@
     cell.scale = 2;
     if (_changeType==ChangeTypeBackground) {
         cell.backgroundColor = [ChangeTypeManager shareInstance].colors[indexPath.row];
-        [cell showWithModels:self.defaultModels];
+        [cell showWithModel:self.defaultModel];
     } else {
         cell.backgroundColor = self.defaultColor;
         XMLUtil *xml = [ChangeTypeManager shareInstance].xmls[indexPath.row];
-        [cell showWithModels:xml.models];
+        [cell showWithModel:xml.model];
     }
     
     return cell;

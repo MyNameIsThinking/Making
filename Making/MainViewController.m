@@ -54,17 +54,13 @@
     
     CoreTextModel *model1 = [[CoreTextModel alloc] init];
     model1.text = @"TEST";
-    model1.fontSize = 20;
-    model1.frame = CGRectMake(100, 100, 10, 10);
     
     CoreTextModel *model2 = [[CoreTextModel alloc] init];
     model2.text = @"TEST2";
-    model2.fontSize = 20;
-    model2.frame = CGRectMake(100, 150, 10, 10);
     
     cell.backgroundColor = [UIColor orangeColor];
     cell.isShadow = YES;
-    [cell showWithModels:[NSArray arrayWithObjects:model1,model2, nil]];
+    [cell showWithModel:model1];
     return cell;
 }
 

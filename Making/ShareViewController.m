@@ -151,7 +151,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
-    [cell showWithModels:nil];
+    [cell showWithModel:nil];
     return cell;
 }
 - (UICollectionView *)collectionView {

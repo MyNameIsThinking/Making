@@ -7,6 +7,7 @@
 //
 
 #import "ChangeTypeManager.h"
+#import "CoreTextModel.h"
 
 @implementation ChangeTypeManager
 
@@ -51,7 +52,6 @@ static ChangeTypeManager *_instance;
 @property (nonatomic, strong) NSXMLParser *parser;
 @property (nonatomic, strong) NSMutableArray *list;
 @property (nonatomic, copy) NSString *currentElement;
-@property (nonatomic, retain) CoreTextModel *model;
 
 @end
 @implementation XMLUtil
@@ -88,12 +88,12 @@ static ChangeTypeManager *_instance;
     
     if ([self.currentElement isEqualToString:@"text"]) {
         _model.text = string;
-    } else if ([self.currentElement isEqualToString:@"fontSize"]) {
-        _model.fontSize = [string floatValue];
+    } else if ([self.currentElement isEqualToString:@"font"]) {
+        _model.font = [UIFont fontWithName:string size:10];
     } else if ([self.currentElement isEqualToString:@"alignment"]) {
-        _model.alignment = [NSNumber numberWithInt:[string intValue]];
+        _model.textAlignment = [string integerValue];
     } else if ([self.currentElement isEqualToString:@"frame"]) {
-        _model.frame = CGRectFromString(string);
+//        _model.frame = CGRectFromString(string);
     }
 }
 
@@ -108,6 +108,5 @@ static ChangeTypeManager *_instance;
 //解析结束
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
 
-    _models = [[NSArray alloc] initWithObjects:_model, nil];
 }
 @end

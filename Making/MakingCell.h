@@ -13,10 +13,10 @@
 @interface MakingCell : UICollectionViewCell
 @property (nonatomic, assign) BOOL isShadow;
 @property (nonatomic, retain) UIColor *backgroundColor;
-@property (nonatomic, retain) NSArray *models;
+@property (nonatomic, retain) CoreTextModel *model;
 @property (nonatomic, assign) CGFloat scale;
 + (NSString *)identifier;
-- (void)showWithModels:(NSArray *)models;
+- (void)showWithModel:(CoreTextModel *)model;
 @end
 
 

@@ -79,7 +79,7 @@
     
     CountMakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[CountMakingCell identifier] forIndexPath:indexPath];
     cell.delegate = self;
-    [cell showWithModels:nil];
+    [cell showWithModel:nil];
     
     return cell;
 }
@@ -192,9 +192,9 @@
     self.addBtn = nil;
     self.delBtn = nil;
 }
-- (void)showWithModels:(NSArray *)models {
+- (void)showWithModel:(CoreTextModel *)model {
 
-    [super showWithModels:models];
+    [super showWithModel:model];
     [self addSubview:self.addBtn];
     [self addSubview:self.delBtn];
 }
