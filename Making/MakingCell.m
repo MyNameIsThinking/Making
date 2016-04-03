@@ -19,7 +19,7 @@
     return @"MakingCell";
 }
 - (void)dealloc {
-    self.backgroundColor = nil;
+    self.BGColor = nil;
     self.model = nil;
     self.label = nil;
 }
