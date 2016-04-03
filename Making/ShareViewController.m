@@ -151,10 +151,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
-    [cell initialize];
-    cell.makingLayer.masksToBounds = YES;
-    cell.makingLayer.borderWidth = 2;
-    cell.makingLayer.borderColor = [UIColor yellowColor].CGColor;
+    [cell showWithModels:nil];
     return cell;
 }
 - (UICollectionView *)collectionView {

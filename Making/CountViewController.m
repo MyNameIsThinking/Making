@@ -79,10 +79,7 @@
     
     CountMakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[CountMakingCell identifier] forIndexPath:indexPath];
     cell.delegate = self;
-    [cell initialize];
-    cell.makingLayer.masksToBounds = YES;
-    cell.makingLayer.borderWidth = 2;
-    cell.makingLayer.borderColor = [UIColor yellowColor].CGColor;
+    [cell showWithModels:nil];
     
     return cell;
 }
@@ -197,7 +194,7 @@
 }
 - (void)initialize {
 
-    [super initialize];
+    [super showWithModels:nil];
     [self addSubview:self.addBtn];
     [self addSubview:self.delBtn];
 }
