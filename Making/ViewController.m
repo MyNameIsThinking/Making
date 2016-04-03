@@ -12,7 +12,7 @@
 #import "EditTextViewController.h"
 #import "ShareViewController.h"
 #import "CountViewController.h"
-#import "MakingLayer.h"
+#import "MakingCell.h"
 
 @interface ViewController () <MainDelegate,ChangeTypeDelegate>
 
@@ -36,11 +36,11 @@
         case PressTypeChangeType:
         case PressTypeChangeBackground: {
         
-            self.animationLayer.frame = _mainViewController.currCell.makingLayer.frame;
-            self.animationLayer.backgroundColor = _mainViewController.currCell.makingLayer.backgroundColor;
+            self.animationLayer.frame = _mainViewController.currCell.frame;
+            self.animationLayer.backgroundColor = _mainViewController.currCell.backgroundColor.CGColor;
             [self.view.layer addSublayer:self.animationLayer];
             [self toCell:self.animationLayer];
-            [_mainViewController.currCell.makingLayer removeFromSuperlayer];
+            [_mainViewController.currCell removeFromSuperview];
             
             [self.view insertSubview:self.changeTypeViewController.view belowSubview:_mainViewController.view];
             [UIView animateWithDuration:1 animations:^{

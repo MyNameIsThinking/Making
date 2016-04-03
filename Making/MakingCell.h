@@ -7,12 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MakingLayer.h"
+#import <QuartzCore/QuartzCore.h>
+#import "CoreTextModel.h"
+
+@interface MakingLayer : CALayer
+
+@end
 
 @interface MakingCell : UICollectionViewCell
-@property (nonatomic, retain) MakingLayer *makingLayer;
 @property (nonatomic, assign) BOOL isShadow;
 @property (nonatomic, retain) UIColor *backgroundColor;
 + (NSString *)identifier;
 - (void)showWithModels:(NSArray *)models;
 @end
+
+

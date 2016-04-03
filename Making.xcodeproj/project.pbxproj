@@ -20,7 +20,6 @@
 		1FD0D7511CABF9CE00501D52 /* ChangeTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D7501CABF9CE00501D52 /* ChangeTypeViewController.m */; };
 		1FD0D7541CABF9E700501D52 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D7531CABF9E700501D52 /* EditTextViewController.m */; };
 		1FD0D7571CABF9F800501D52 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D7561CABF9F800501D52 /* ShareViewController.m */; };
-		1FD0D75A1CABFECE00501D52 /* MakingLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D7591CABFECE00501D52 /* MakingLayer.m */; };
 		1FD0D75D1CABFF0700501D52 /* MakingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D75C1CABFF0700501D52 /* MakingCell.m */; };
 /* End PBXBuildFile section */
 
@@ -49,8 +48,6 @@
 		1FD0D7531CABF9E700501D52 /* EditTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextViewController.m; sourceTree = "<group>"; };
 		1FD0D7551CABF9F800501D52 /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
 		1FD0D7561CABF9F800501D52 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
-		1FD0D7581CABFECE00501D52 /* MakingLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakingLayer.h; sourceTree = "<group>"; };
-		1FD0D7591CABFECE00501D52 /* MakingLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakingLayer.m; sourceTree = "<group>"; };
 		1FD0D75B1CABFF0700501D52 /* MakingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakingCell.h; sourceTree = "<group>"; };
 		1FD0D75C1CABFF0700501D52 /* MakingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakingCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -101,8 +98,6 @@
 				1F0B6DAC1CAF4DF000E9088F /* CountViewController.m */,
 				1FD0D75B1CABFF0700501D52 /* MakingCell.h */,
 				1FD0D75C1CABFF0700501D52 /* MakingCell.m */,
-				1FD0D7581CABFECE00501D52 /* MakingLayer.h */,
-				1FD0D7591CABFECE00501D52 /* MakingLayer.m */,
 				1F16E2521CAEA6CA0009AA13 /* BaseViewController.h */,
 				1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */,
 				1F2A8C071CB0B4A500A496BE /* CoreTextModel.h */,
@@ -202,7 +197,6 @@
 				1F80C2341CAAA86800961DA0 /* AppDelegate.m in Sources */,
 				1F2A8C091CB0B4A500A496BE /* CoreTextModel.m in Sources */,
 				1F80C2311CAAA86800961DA0 /* main.m in Sources */,
-				1FD0D75A1CABFECE00501D52 /* MakingLayer.m in Sources */,
 				1FD0D75D1CABFF0700501D52 /* MakingCell.m in Sources */,
 				1FD0D7571CABF9F800501D52 /* ShareViewController.m in Sources */,
 				1FD0D74E1CABF8CA00501D52 /* MainViewController.m in Sources */,
