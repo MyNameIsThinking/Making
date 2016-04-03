@@ -192,9 +192,9 @@
     self.addBtn = nil;
     self.delBtn = nil;
 }
-- (void)initialize {
+- (void)showWithModels:(NSArray *)models {
 
-    [super showWithModels:nil];
+    [super showWithModels:models];
     [self addSubview:self.addBtn];
     [self addSubview:self.delBtn];
 }
