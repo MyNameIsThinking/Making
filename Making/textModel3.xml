@@ -5,6 +5,6 @@
         <text>testModel3</text>
         <fontSize>40</fontSize>
         <alignment>2</alignment>
-        <frame>{{0, 20}, {100, 100}}</frame>
+        <frame>{{0, 0}, {100, 100}}</frame>
     </mainText>
 </model>

@@ -41,9 +41,9 @@
             self.animationLabel.textAlignment = currCell.model.textAlignment;
             self.animationLabel.text      = currCell.model.text;
             self.animationLabel.font      = [UIFont fontWithName:@"Zapfino" size:25];
-            self.animationLabel.textColor = [UIColor redColor];
+            self.animationLabel.textColor = [UIColor grayColor];
             self.animationLabel.backgroundColor = currCell.backgroundColor;
-            self.animationLabel.frame     = CGRectInset(currCell.bounds,20,20);
+            self.animationLabel.frame     = CGRectInset(currCell.bounds,0,0);
             
             self.animationLabel.frame = currCell.frame;
             self.animationLabel.backgroundColor = currCell.backgroundColor;
@@ -106,14 +106,19 @@
     self.animationLabel.textAlignment = cell.model.textAlignment;
     self.animationLabel.text      = cell.model.text;
     self.animationLabel.font      = [UIFont fontWithName:@"Zapfino" size:25/2];
-    self.animationLabel.textColor = [UIColor redColor];
+    self.animationLabel.textColor = [UIColor grayColor];
     self.animationLabel.backgroundColor = cell.backgroundColor;
-    self.animationLabel.frame     = CGRectInset(cell.bounds,20/2,20/2);
+    self.animationLabel.frame     = CGRectInset(cell.bounds,0,0);
     [self toMain:self.animationLabel scroller:scrollView cell:cell];
 }
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    [_animationLabel removeFromSuperview];
-    _animationLabel = nil;
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [_animationLabel removeFromSuperview];
+        _animationLabel = nil;
+    });
+    
 }
 - (void)toCell:(M80AttributedLabel *)label {
     
