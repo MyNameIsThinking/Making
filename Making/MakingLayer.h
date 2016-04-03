@@ -7,7 +7,10 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import "CoreTextModel.h"
 
 @interface MakingLayer : CALayer
 
+@property (nonatomic, retain) NSArray *models;
+@property (nonatomic, assign) BOOL isShadow;
 @end

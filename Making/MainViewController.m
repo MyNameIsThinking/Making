@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "CoreTextModel.h"
 
 @interface MainViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, retain) UICollectionViewFlowLayout *collectionViewLayout;
@@ -48,6 +49,17 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
+    CoreTextModel *model = [[CoreTextModel alloc] init];
+    model.text = @"TEST";
+    model.fontSize = 20;
+    model.frame = CGRectMake(100, 100, 10, 10);
+    
+    CoreTextModel *model2 = [[CoreTextModel alloc] init];
+    model2.text = @"TEST2";
+    model2.fontSize = 20;
+    model2.frame = CGRectMake(100, 150, 10, 10);
+    
+    cell.makingLayer.models = [NSArray arrayWithObjects:model,model2, nil];
     _currCell = cell;
     [cell initialize];
     return cell;

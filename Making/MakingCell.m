@@ -22,6 +22,7 @@
 - (void)initialize {
 
     [self.layer addSublayer:self.makingLayer];
+    [self.makingLayer setNeedsDisplay];
 }
 - (MakingLayer *)makingLayer {
 
