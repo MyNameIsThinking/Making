@@ -26,6 +26,7 @@
 @interface MakingLayer ()
 @property (nonatomic, retain) NSArray *models;
 @property (nonatomic, assign) BOOL isShadow;
+@property (nonatomic, assign) CGFloat scale;
 @end
 @implementation MakingLayer
 
@@ -54,7 +55,7 @@
 }
 - (void)drawTextAtPoint:(CGPoint)location withContext:(CGContextRef)ctx withModel:(CoreTextModel *)model {
     
-    CGAffineTransform textMatrix = CGAffineTransformMakeTranslation(location.x, location.y);
+    CGAffineTransform textMatrix = CGAffineTransformMakeTranslation(location.x/_scale, location.y/_scale);
     textMatrix = CGAffineTransformScale(textMatrix, 1, -1);
     CGContextSetTextMatrix(ctx, textMatrix);
     
@@ -68,7 +69,7 @@
         NSString *fontName = model.fontName;
         
         NSUInteger myLength = subText.length;
-        CTFontRef ctfont = CTFontCreateWithName((CFStringRef)fontName, model.fontSize, NULL);
+        CTFontRef ctfont = CTFontCreateWithName((CFStringRef)fontName, model.fontSize/_scale, NULL);
         CGGlyph *glyphs = malloc(sizeof(CGGlyph) *myLength);
         UniChar *characters = malloc(sizeof(UniChar) *myLength);
         CGSize *advances = malloc(sizeof(CGSize) *myLength);
@@ -77,7 +78,7 @@
         if (!CTFontGetGlyphsForCharacters(ctfont, characters, glyphs, myLength)) {
             CFRelease(ctfont);
             fontName = @"STHeitiSC-Medium";
-            ctfont = CTFontCreateWithName((CFStringRef)fontName, model.fontSize, NULL);
+            ctfont = CTFontCreateWithName((CFStringRef)fontName, model.fontSize/_scale, NULL);
             CTFontGetGlyphsForCharacters(ctfont, characters, glyphs, myLength);
         }
         CTFontGetAdvancesForGlyphs(ctfont, kCTFontOrientationHorizontal, glyphs, advances, myLength);
@@ -97,10 +98,10 @@
         }
         
         location.y = -CTFontGetAscent(ctfont);
-        CGFloat kern = model.kern;
+        CGFloat kern = model.kern/_scale;
         
         CGFloat offsetX = 0;
-        CGSize originalSize = model.originalSize;
+        CGSize originalSize = CGSizeMake(model.originalSize.width/_scale, model.originalSize.height/_scale);
         
         switch ([model.alignment integerValue]) {
             case kCTTextAlignmentLeft: {
@@ -108,11 +109,11 @@
             }
                 break;
             case kCTTextAlignmentRight: {
-                offsetX = model.frame.size.width - originalSize.width;
+                offsetX = model.frame.size.width/_scale - originalSize.width;
             }
                 break;
             case kCTTextAlignmentCenter: {
-                offsetX = (model.frame.size.width - originalSize.width)/2;
+                offsetX = (model.frame.size.width/_scale - originalSize.width)/2;
             }
                 break;
                 
@@ -125,7 +126,7 @@
         CGContextShowGlyphsAtPositions(ctx, &glyphs[0], &location, 1);
         width += advances->width;
         
-        verticalKern = model.kern;
+        verticalKern = model.kern/_scale;
         
         free(glyphs);
         free(advances);
@@ -157,6 +158,7 @@
     self.makingLayer.models = models;
     self.makingLayer.isShadow = _isShadow;
     self.makingLayer.backgroundColor = _backgroundColor.CGColor;
+    self.makingLayer.scale = _scale;;
     [self.makingLayer setNeedsDisplay];
 }
 - (MakingLayer *)makingLayer {

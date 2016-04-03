@@ -11,13 +11,13 @@
 #import "CoreTextModel.h"
 
 @interface MakingLayer : CALayer
-
 @end
 
 @interface MakingCell : UICollectionViewCell
 @property (nonatomic, assign) BOOL isShadow;
 @property (nonatomic, retain) UIColor *backgroundColor;
 @property (nonatomic, retain) NSArray *models;
+@property (nonatomic, assign) CGFloat scale;
 + (NSString *)identifier;
 - (void)showWithModels:(NSArray *)models;
 @end

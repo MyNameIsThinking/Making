@@ -61,6 +61,7 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
+    cell.scale = 4;
     if (_changeType==ChangeTypeBackground) {
         cell.backgroundColor = [ChangeTypeManager shareInstance].colors[indexPath.row];
         [cell showWithModels:self.defaultModels];
