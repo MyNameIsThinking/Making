@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "CoreTextModel.h"
+#import "ChangeTypeManager.h"
 
 @interface MainViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, retain) UICollectionViewFlowLayout *collectionViewLayout;
@@ -17,6 +18,8 @@
 @property (nonatomic, retain) UIButton *shareBtn;
 @property (nonatomic, retain) UIButton *countBtn;
 @property (nonatomic, retain) UIButton *infoBtn;
+@property (nonatomic, retain) NSMutableArray *mainModels;
+@property (nonatomic, retain) MakingCell *currCell;
 @end
 
 @implementation MainViewController
@@ -34,6 +37,17 @@
     [self.view addSubview:self.countBtn];
     [self.view addSubview:self.infoBtn];
 }
+- (void)setSelectCell:(MakingCell *)selectCell {
+    
+    CoreTextModel *model = selectCell.model;
+    CoreTextModel *newModel = [[CoreTextModel alloc] initWithModel:model];
+    newModel.BGColor = selectCell.backgroundColor;
+    [_mainModels replaceObjectAtIndex:_currIndex withObject:newModel];
+    [_collectionView reloadData];
+}
+- (MakingCell *)getCurrCell {
+    return _currCell;
+}
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return self.collectionView.frame.size;
 }
@@ -44,22 +58,18 @@
     return 0;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 1;
+    return self.mainModels.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     cell.scale = 1;
     _currCell = cell;
+    _currIndex = indexPath.row;
+    CoreTextModel *model = _mainModels[indexPath.row];
+    cell.backgroundColor = model.BGColor;
+    [cell showWithModel:model];
     
-    CoreTextModel *model1 = [[CoreTextModel alloc] init];
-    model1.text = @"testModel3";
-    model1.identifier = @"testModel3";
-    cell.BGColor = [UIColor blackColor];
-    
-    
-    cell.isShadow = YES;
-    [cell showWithModel:model1];
     return cell;
 }
 
@@ -197,5 +207,17 @@
     }
     
     return _infoBtn;
+}
+- (NSMutableArray *)mainModels {
+
+    if (!_mainModels) {
+        _mainModels = [[NSMutableArray alloc] init];
+        XMLUtil *xml = [ChangeTypeManager shareInstance].xmls[0];
+        CoreTextModel *model = [[CoreTextModel alloc] initWithModel:xml.model];
+        model.BGColor = [UIColor whiteColor];
+        [_mainModels addObject:model];
+    }
+    
+    return _mainModels;
 }
 @end

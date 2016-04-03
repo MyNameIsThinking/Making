@@ -4,7 +4,7 @@
     <mainText>
         <text>testModel2</text>
         <fontSize>40</fontSize>
-        <alignment>2</alignment>
+        <alignment>1</alignment>
         <frame>{{0, 20}, {100, 100}}</frame>
     </mainText>
 </model>

@@ -25,4 +25,7 @@
 @property (nonatomic,assign)    CTLineBreakMode lineBreakMode;  //LineBreakMode
 @property (nonatomic,assign)    CGFloat lineSpacing;            //行间距
 @property (nonatomic,assign)    CGFloat paragraphSpacing;       //段间距
+@property (nonatomic,strong)    UIColor *BGColor;               //背景颜色
+
+- (id)initWithModel:(CoreTextModel *)model;
 @end

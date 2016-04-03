@@ -41,6 +41,7 @@ static ChangeTypeManager *_instance;
                    [UIColor blueColor],
                    [UIColor blackColor],
                    [UIColor greenColor],
+                   [UIColor whiteColor],
                    nil];
     }
     

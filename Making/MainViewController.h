@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import "MakingCell.h"
+#import "CoreTextModel.h"
 
 typedef NS_OPTIONS(NSUInteger, PressType) {
     PressTypeChangeType = 0,
@@ -25,6 +26,8 @@ typedef NS_OPTIONS(NSUInteger, PressType) {
 
 @interface MainViewController : BaseViewController
 @property (nonatomic, retain) UICollectionView *collectionView;
-@property (nonatomic, retain) MakingCell *currCell;
+@property (nonatomic, assign) NSInteger currIndex;
 @property (nonatomic, weak) id<MainDelegate> delegate;
+- (MakingCell *)getCurrCell;
+- (void)setSelectCell:(MakingCell *)selectCell;
 @end

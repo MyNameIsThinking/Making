@@ -115,10 +115,10 @@
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     cell.scale = 2;
     if (_changeType==ChangeTypeBackground) {
-        cell.BGColor = _colors[indexPath.row];
+        cell.backgroundColor = _colors[indexPath.row];
         [cell showWithModel:self.defaultModel];
     } else {
-        cell.BGColor = self.defaultColor;
+        cell.backgroundColor = self.defaultColor;
         XMLUtil *xml = _xmls[indexPath.row];
         [cell showWithModel:xml.model];
     }

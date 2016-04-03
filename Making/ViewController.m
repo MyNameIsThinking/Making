@@ -37,21 +37,22 @@
         case PressTypeChangeType:
         case PressTypeChangeBackground: {
         
-            self.animationLabel.textAlignment = _mainViewController.currCell.model.textAlignment;
-            self.animationLabel.text      = _mainViewController.currCell.model.text;
+            MakingCell *currCell = [_mainViewController getCurrCell];
+            self.animationLabel.textAlignment = currCell.model.textAlignment;
+            self.animationLabel.text      = currCell.model.text;
             self.animationLabel.font      = [UIFont fontWithName:@"Zapfino" size:25];
             self.animationLabel.textColor = [UIColor redColor];
-            self.animationLabel.backgroundColor = _mainViewController.currCell.BGColor;
-            self.animationLabel.frame     = CGRectInset(_mainViewController.currCell.bounds,20,20);
+            self.animationLabel.backgroundColor = currCell.backgroundColor;
+            self.animationLabel.frame     = CGRectInset(currCell.bounds,20,20);
             
-            self.animationLabel.frame = _mainViewController.currCell.frame;
-            self.animationLabel.backgroundColor = _mainViewController.currCell.BGColor;
+            self.animationLabel.frame = currCell.frame;
+            self.animationLabel.backgroundColor = currCell.backgroundColor;
             [self.view addSubview:self.animationLabel];
             [self toCell:self.animationLabel];
-            [_mainViewController.currCell removeFromSuperview];
+            [currCell removeFromSuperview];
             
-            self.changeTypeViewController.defaultColor = _mainViewController.currCell.backgroundColor;
-            self.changeTypeViewController.defaultModel = _mainViewController.currCell.model;
+            self.changeTypeViewController.defaultColor = currCell.backgroundColor;
+            self.changeTypeViewController.defaultModel = currCell.model;
             self.changeTypeViewController.changeType = (ChangeType)pressType;
             
             [self.view insertSubview:self.changeTypeViewController.view belowSubview:_mainViewController.view];
@@ -99,12 +100,14 @@
     }];
 }
 - (void)pressCell:(MakingCell *)cell scrollView:(UIScrollView *)scrollView {
+    
+    [self.mainViewController setSelectCell:cell];
     [self pressClose];
     self.animationLabel.textAlignment = cell.model.textAlignment;
     self.animationLabel.text      = cell.model.text;
     self.animationLabel.font      = [UIFont fontWithName:@"Zapfino" size:25/2];
     self.animationLabel.textColor = [UIColor redColor];
-    self.animationLabel.backgroundColor = cell.BGColor;
+    self.animationLabel.backgroundColor = cell.backgroundColor;
     self.animationLabel.frame     = CGRectInset(cell.bounds,20/2,20/2);
     [self toMain:self.animationLabel scroller:scrollView cell:cell];
 }
