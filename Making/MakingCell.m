@@ -8,137 +8,17 @@
 
 #import "MakingCell.h"
 #import <CoreText/CoreText.h>
+#import "M80AttributedLabel.h"
 
-@interface NSString (SafeRang)
-- (NSString *)substringSafeWithRange:(NSRange)range;
-@end
-@implementation NSString (SafeRang)
+#define UIColorFromRGB(rgbValue) [UIColor \
+colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 \
+green:((float)((rgbValue & 0x00FF00) >> 8))/255.0 \
+blue:((float)(rgbValue & 0x0000FF))/255.0 \
+alpha:1.0]
 
-- (NSString *)substringSafeWithRange:(NSRange)range {
-    
-    if (self.length > range.location+range.length-1) {
-        return [self substringWithRange:range];
-    }
-    
-    return self;
-}
-@end
-@interface MakingLayer ()
-@property (nonatomic, retain) NSArray *models;
-@property (nonatomic, assign) BOOL isShadow;
-@property (nonatomic, assign) CGFloat scale;
-@end
-@implementation MakingLayer
-
-- (void)dealloc {
-    
-    self.models = nil;
-}
-- (void)drawInContext:(CGContextRef)ctx {
-    
-    [super drawInContext:ctx];
-    
-    if (self.isShadow) {
-        CGContextSetShadowWithColor(ctx, CGSizeMake (0, 5), 4, [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5].CGColor);
-        CGContextBeginTransparencyLayer (ctx, NULL);
-        CGContextEndTransparencyLayer (ctx);
-    }
-    
-    for (CoreTextModel *model in _models) {
-        CGPoint shadowPoint = CGPointMake(model.frame.origin.x, model.frame.origin.y);
-        model.color = [UIColor yellowColor];
-        [self drawTextAtPoint:shadowPoint withContext:ctx withModel:model];
-    }
-    CGContextSetShadowWithColor(ctx, CGSizeMake (0, 0), 0, [UIColor colorWithRed:0 green:0 blue:0 alpha:0].CGColor);
-    CGContextBeginTransparencyLayer (ctx, NULL);
-    CGContextEndTransparencyLayer (ctx);
-}
-- (void)drawTextAtPoint:(CGPoint)location withContext:(CGContextRef)ctx withModel:(CoreTextModel *)model {
-    
-    CGAffineTransform textMatrix = CGAffineTransformMakeTranslation(location.x/_scale, location.y/_scale);
-    textMatrix = CGAffineTransformScale(textMatrix, 1, -1);
-    CGContextSetTextMatrix(ctx, textMatrix);
-    
-    CGFloat width = 0;
-    CGFloat verticalKern = 0;
-    
-    for (NSInteger j = 0; j < model.text.length; j++) {
-        
-        NSString *subText = [model.text substringSafeWithRange:NSMakeRange(j, 1)];
-        
-        NSString *fontName = model.fontName;
-        
-        NSUInteger myLength = subText.length;
-        CTFontRef ctfont = CTFontCreateWithName((CFStringRef)fontName, model.fontSize/_scale, NULL);
-        CGGlyph *glyphs = malloc(sizeof(CGGlyph) *myLength);
-        UniChar *characters = malloc(sizeof(UniChar) *myLength);
-        CGSize *advances = malloc(sizeof(CGSize) *myLength);
-        [subText getCharacters:characters range:NSMakeRange(0,myLength)];
-        
-        if (!CTFontGetGlyphsForCharacters(ctfont, characters, glyphs, myLength)) {
-            CFRelease(ctfont);
-            fontName = @"STHeitiSC-Medium";
-            ctfont = CTFontCreateWithName((CFStringRef)fontName, model.fontSize/_scale, NULL);
-            CTFontGetGlyphsForCharacters(ctfont, characters, glyphs, myLength);
-        }
-        CTFontGetAdvancesForGlyphs(ctfont, kCTFontOrientationHorizontal, glyphs, advances, myLength);
-        free(characters);
-        CGFontRef cgfont = CTFontCopyGraphicsFont(ctfont, NULL);
-        CGContextSetFont(ctx, cgfont);
-        CGContextSetFontSize(ctx, CTFontGetSize(ctfont));
-        
-        //畫字
-        CGContextSetTextDrawingMode(ctx, kCGTextFill);
-        CGContextSetFillColorWithColor(ctx, model.color.CGColor);
-        //加粗
-        if (model.isStrokeWidth) {
-            CGContextSetLineWidth(ctx, 5);
-            CGContextSetTextDrawingMode(ctx, kCGTextFillStroke);
-            CGContextSetStrokeColorWithColor(ctx,model.color.CGColor);
-        }
-        
-        location.y = -CTFontGetAscent(ctfont);
-        CGFloat kern = model.kern/_scale;
-        
-        CGFloat offsetX = 0;
-        CGSize originalSize = CGSizeMake(model.originalSize.width/_scale, model.originalSize.height/_scale);
-        
-        switch ([model.alignment integerValue]) {
-            case kCTTextAlignmentLeft: {
-                offsetX = 0;
-            }
-                break;
-            case kCTTextAlignmentRight: {
-                offsetX = model.frame.size.width/_scale - originalSize.width;
-            }
-                break;
-            case kCTTextAlignmentCenter: {
-                offsetX = (model.frame.size.width/_scale - originalSize.width)/2;
-            }
-                break;
-                
-            default:
-                break;
-        }
-        location.x = CTFontGetAdvancesForGlyphs(ctfont, kCTFontOrientationHorizontal, glyphs, advances, 0);
-        location.x += offsetX+(j*kern)+width;
-        location.y = -CTFontGetAscent(ctfont);
-        CGContextShowGlyphsAtPositions(ctx, &glyphs[0], &location, 1);
-        width += advances->width;
-        
-        verticalKern = model.kern/_scale;
-        
-        free(glyphs);
-        free(advances);
-        CGFontRelease(cgfont);
-        CFRelease(ctfont);
-    }
-    
-}
-@end
 
 @interface MakingCell ()
-@property (nonatomic, retain) MakingLayer *makingLayer;
+@property (nonatomic, retain) M80AttributedLabel *label;
 @end
 @implementation MakingCell
 
@@ -148,30 +28,23 @@
 - (void)dealloc {
     self.backgroundColor = nil;
     self.models = nil;
-    self.makingLayer = nil;
+    self.label = nil;
 }
 - (void)showWithModels:(NSArray *)models {
     _models = models;
     [self setBackgroundColor:_backgroundColor];
-    
-    [self.layer addSublayer:self.makingLayer];
-    self.makingLayer.models = models;
-    self.makingLayer.isShadow = _isShadow;
-    self.makingLayer.backgroundColor = _backgroundColor.CGColor;
-    self.makingLayer.scale = _scale;;
-    [self.makingLayer setNeedsDisplay];
+    [self addSubview:self.label];
 }
-- (MakingLayer *)makingLayer {
+- (M80AttributedLabel *)label {
 
-    if (!_makingLayer) {
-        _makingLayer = [[MakingLayer alloc] init];
-        _makingLayer.frame = self.bounds;
-        _makingLayer.cornerRadius = 10.0;
-        _makingLayer.masksToBounds = YES;
-        _makingLayer.borderWidth = 2;
-        _makingLayer.borderColor = [UIColor yellowColor].CGColor;
+    if (!_label) {
+        _label = [[M80AttributedLabel alloc] initWithFrame:CGRectZero];
+        _label.text      = @"Hello M80AttributedLabel";
+        _label.font      = [UIFont fontWithName:@"Zapfino" size:25];
+        _label.textColor = UIColorFromRGB(0xFF9F00);
+        _label.frame     = CGRectInset(self.bounds,0,0);
     }
     
-    return _makingLayer;
+    return _label;
 }
 @end

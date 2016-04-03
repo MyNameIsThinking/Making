@@ -18,7 +18,7 @@
 
 @property (nonatomic, retain) MainViewController *mainViewController;
 @property (nonatomic, retain) ChangeTypeViewController *changeTypeViewController;
-@property (nonatomic, retain) MakingLayer *animationLayer;
+@property (nonatomic, retain) CALayer *animationLayer;
 @end
 
 @implementation ViewController
@@ -100,7 +100,7 @@
     [_animationLayer removeFromSuperlayer];
     _animationLayer = nil;
 }
-- (void)toCell:(MakingLayer *)layer {
+- (void)toCell:(CALayer *)layer {
     
     CFTimeInterval time = 0.2f;
     
@@ -126,7 +126,7 @@
     animationGroup.removedOnCompletion = NO;
     [layer addAnimation:animationGroup forKey:@"toCell"];
 }
-- (void)toMain:(MakingLayer *)layer  scroller:(UIScrollView *)scroller {
+- (void)toMain:(CALayer *)layer  scroller:(UIScrollView *)scroller {
     layer.frame = CGRectMake(layer.frame.origin.x, layer.frame.origin.y-scroller.contentOffset.y, layer.frame.size.width, layer.frame.size.height);
     [self.view.layer addSublayer:layer];
     
@@ -179,10 +179,10 @@
     
     return _changeTypeViewController;
 }
-- (MakingLayer *)animationLayer {
+- (CALayer *)animationLayer {
 
     if (!_animationLayer) {
-        _animationLayer = [[MakingLayer alloc] init];
+        _animationLayer = [[CALayer alloc] init];
     }
     
     return _animationLayer;

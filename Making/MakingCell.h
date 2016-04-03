@@ -10,9 +10,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import "CoreTextModel.h"
 
-@interface MakingLayer : CALayer
-@end
-
 @interface MakingCell : UICollectionViewCell
 @property (nonatomic, assign) BOOL isShadow;
 @property (nonatomic, retain) UIColor *backgroundColor;

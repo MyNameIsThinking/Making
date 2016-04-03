@@ -21,5 +21,4 @@
 @property (nonatomic, assign) CGSize originalSize;              //字原始大小
 @property (nonatomic, retain) NSNumber *alignment;              //字對齊
 @property (nonatomic, assign) CGRect frame;                     //字邊框
-@property (nonatomic, assign) UIEdgeInsets edgeInsets;          //
 @end

@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model>
     <mainText>
-        <defaultText>1</defaultText>
-        <fontSize>2</fontSize>
-        <alignment>3</alignment>
-        <edgeInsets>{10, 10, 10, 10}</edgeInsets>
+        <text>12好4a5B789</text>
+        <fontSize>40</fontSize>
+        <alignment>2</alignment>
+        <frame>{{0, 20}, {100, 100}}</frame>
     </mainText>
-    <forewordText>
-        <defaultText>4</defaultText>
-        <fontSize>5</fontSize>
-        <alignment>6</alignment>
-        <edgeInsets>{20, 20, 20, 20}</edgeInsets>
-    </forewordText>
 </model>

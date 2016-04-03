@@ -86,14 +86,14 @@ static ChangeTypeManager *_instance;
 //获取节点内容
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
     
-    if ([self.currentElement isEqualToString:@"defaultText"]) {
-        _model.defaultText = string;
+    if ([self.currentElement isEqualToString:@"text"]) {
+        _model.text = string;
     } else if ([self.currentElement isEqualToString:@"fontSize"]) {
         _model.fontSize = [string floatValue];
     } else if ([self.currentElement isEqualToString:@"alignment"]) {
         _model.alignment = [NSNumber numberWithInt:[string intValue]];
-    } else if ([self.currentElement isEqualToString:@"edgeInsets"]) {
-        _model.edgeInsets = UIEdgeInsetsFromString(string);
+    } else if ([self.currentElement isEqualToString:@"frame"]) {
+        _model.frame = CGRectFromString(string);
     }
 }
 

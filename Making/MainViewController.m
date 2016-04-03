@@ -52,8 +52,6 @@
     cell.scale = 1;
     _currCell = cell;
     
-    
-    
     CoreTextModel *model1 = [[CoreTextModel alloc] init];
     model1.text = @"TEST";
     model1.fontSize = 20;
