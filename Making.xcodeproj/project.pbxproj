@@ -10,6 +10,8 @@
 		1F0B6DAD1CAF4DF000E9088F /* CountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B6DAC1CAF4DF000E9088F /* CountViewController.m */; };
 		1F16E2541CAEA6CA0009AA13 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */; };
 		1F2A8C091CB0B4A500A496BE /* CoreTextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8C081CB0B4A500A496BE /* CoreTextModel.m */; };
+		1F2A8C0B1CB0D44D00A496BE /* textModel.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1F2A8C0A1CB0D44D00A496BE /* textModel.xml */; };
+		1F2A8C111CB0E94100A496BE /* ChangeTypeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8C101CB0E94100A496BE /* ChangeTypeManager.m */; };
 		1F80C2311CAAA86800961DA0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2301CAAA86800961DA0 /* main.m */; };
 		1F80C2341CAAA86800961DA0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2331CAAA86800961DA0 /* AppDelegate.m */; };
 		1F80C2371CAAA86800961DA0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2361CAAA86800961DA0 /* ViewController.m */; };
@@ -30,6 +32,9 @@
 		1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		1F2A8C071CB0B4A500A496BE /* CoreTextModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreTextModel.h; sourceTree = "<group>"; };
 		1F2A8C081CB0B4A500A496BE /* CoreTextModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTextModel.m; sourceTree = "<group>"; };
+		1F2A8C0A1CB0D44D00A496BE /* textModel.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel.xml; sourceTree = "<group>"; };
+		1F2A8C0F1CB0E94100A496BE /* ChangeTypeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeTypeManager.h; sourceTree = "<group>"; };
+		1F2A8C101CB0E94100A496BE /* ChangeTypeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeTypeManager.m; sourceTree = "<group>"; };
 		1F80C22C1CAAA86800961DA0 /* Making.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Making.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F80C2301CAAA86800961DA0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1F80C2321CAAA86800961DA0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -102,11 +107,14 @@
 				1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */,
 				1F2A8C071CB0B4A500A496BE /* CoreTextModel.h */,
 				1F2A8C081CB0B4A500A496BE /* CoreTextModel.m */,
+				1F2A8C0F1CB0E94100A496BE /* ChangeTypeManager.h */,
+				1F2A8C101CB0E94100A496BE /* ChangeTypeManager.m */,
 				1F80C2381CAAA86800961DA0 /* Main.storyboard */,
 				1F80C23B1CAAA86800961DA0 /* Assets.xcassets */,
 				1F80C23D1CAAA86800961DA0 /* LaunchScreen.storyboard */,
 				1F80C2401CAAA86800961DA0 /* Info.plist */,
 				1F80C22F1CAAA86800961DA0 /* Supporting Files */,
+				1F2A8C0A1CB0D44D00A496BE /* textModel.xml */,
 			);
 			path = Making;
 			sourceTree = "<group>";
@@ -179,6 +187,7 @@
 			files = (
 				1F80C23F1CAAA86800961DA0 /* LaunchScreen.storyboard in Resources */,
 				1F80C23C1CAAA86800961DA0 /* Assets.xcassets in Resources */,
+				1F2A8C0B1CB0D44D00A496BE /* textModel.xml in Resources */,
 				1F80C23A1CAAA86800961DA0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,6 +209,7 @@
 				1FD0D75D1CABFF0700501D52 /* MakingCell.m in Sources */,
 				1FD0D7571CABF9F800501D52 /* ShareViewController.m in Sources */,
 				1FD0D74E1CABF8CA00501D52 /* MainViewController.m in Sources */,
+				1F2A8C111CB0E94100A496BE /* ChangeTypeManager.m in Sources */,
 				1FD0D7541CABF9E700501D52 /* EditTextViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,6 +12,7 @@
 @interface CoreTextModel : NSObject
 
 @property (nonatomic, retain) NSString *text;                   //文字
+@property (nonatomic, retain) NSString *defaultText;            //默認文案
 @property (nonatomic, retain) NSString *fontName;               //字體
 @property (nonatomic, assign) CGFloat fontSize;                 //字大小
 @property (nonatomic, retain) UIColor *color;                   //字顏色
@@ -20,4 +21,5 @@
 @property (nonatomic, assign) CGSize originalSize;              //字原始大小
 @property (nonatomic, retain) NSNumber *alignment;              //字對齊
 @property (nonatomic, assign) CGRect frame;                     //字邊框
+@property (nonatomic, assign) UIEdgeInsets edgeInsets;          //
 @end

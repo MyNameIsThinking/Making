@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model>
+    <mainText>
+        <defaultText>1</defaultText>
+        <fontSize>2</fontSize>
+        <alignment>3</alignment>
+        <edgeInsets>{10, 10, 10, 10}</edgeInsets>
+    </mainText>
+    <forewordText>
+        <defaultText>4</defaultText>
+        <fontSize>5</fontSize>
+        <alignment>6</alignment>
+        <edgeInsets>{20, 20, 20, 20}</edgeInsets>
+    </forewordText>
+</model>

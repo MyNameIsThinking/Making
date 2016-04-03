@@ -145,10 +145,12 @@
     return @"MakingCell";
 }
 - (void)dealloc {
+    self.backgroundColor = nil;
+    self.models = nil;
     self.makingLayer = nil;
 }
 - (void)showWithModels:(NSArray *)models {
-
+    _models = models;
     [self setBackgroundColor:_backgroundColor];
     
     [self.layer addSublayer:self.makingLayer];

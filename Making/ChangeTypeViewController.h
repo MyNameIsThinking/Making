@@ -8,6 +8,12 @@
 
 #import "BaseViewController.h"
 #import "MakingCell.h"
+#import "CoreTextModel.h"
+
+typedef NS_OPTIONS(NSUInteger, ChangeType) {
+    ChangeTypeAlignment = 0,
+    ChangeTypeBackground = 1,
+};
 
 @protocol ChangeTypeDelegate <NSObject>
 
@@ -16,5 +22,8 @@
 
 @end
 @interface ChangeTypeViewController : BaseViewController
-@property (nonatomic, assign) id<ChangeTypeDelegate> delegate;
+@property (nonatomic, weak) id<ChangeTypeDelegate> delegate;
+@property (nonatomic, assign) ChangeType changeType;
+@property (nonatomic, retain) NSArray *defaultModels;
+@property (nonatomic, retain) UIColor *defaultColor;
 @end

@@ -24,7 +24,7 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+    [super viewDidLoad];    
     [self.view addSubview:self.mainViewController.view];
     // Do any additional setup after loading the view, typically from a nib.
 }
@@ -41,6 +41,10 @@
             [self.view.layer addSublayer:self.animationLayer];
             [self toCell:self.animationLayer];
             [_mainViewController.currCell removeFromSuperview];
+            
+            self.changeTypeViewController.defaultColor = _mainViewController.currCell.backgroundColor;
+            self.changeTypeViewController.defaultModels = _mainViewController.currCell.models;
+            self.changeTypeViewController.changeType = (ChangeType)pressType;
             
             [self.view insertSubview:self.changeTypeViewController.view belowSubview:_mainViewController.view];
             [UIView animateWithDuration:1 animations:^{

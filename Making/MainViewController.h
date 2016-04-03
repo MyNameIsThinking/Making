@@ -26,5 +26,5 @@ typedef NS_OPTIONS(NSUInteger, PressType) {
 @interface MainViewController : BaseViewController
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) MakingCell *currCell;
-@property (nonatomic, assign) id<MainDelegate> delegate;
+@property (nonatomic, weak) id<MainDelegate> delegate;
 @end

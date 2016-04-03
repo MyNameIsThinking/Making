@@ -17,6 +17,7 @@
 @interface MakingCell : UICollectionViewCell
 @property (nonatomic, assign) BOOL isShadow;
 @property (nonatomic, retain) UIColor *backgroundColor;
+@property (nonatomic, retain) NSArray *models;
 + (NSString *)identifier;
 - (void)showWithModels:(NSArray *)models;
 @end

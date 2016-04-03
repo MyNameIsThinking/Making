@@ -8,6 +8,7 @@
 
 #import "ChangeTypeViewController.h"
 #import "MakingCell.h"
+#import "ChangeTypeManager.h"
 
 @interface ChangeTypeViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, retain) UICollectionView *collectionView;
@@ -26,9 +27,14 @@
     [super viewDidLoad];
     [self.view addSubview:self.collectionView];
     [self.view addSubview:self.closeBtn];
-    // Do any additional setup after loading the view.
 }
+- (void)setChangeType:(ChangeType)changeType {
 
+    if (_changeType != changeType) {
+        _changeType = changeType;
+        [_collectionView reloadData];
+    }
+}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
     MakingCell *cell = (MakingCell *)[collectionView cellForItemAtIndexPath:indexPath];
@@ -47,12 +53,23 @@
     return 0;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 10;
+    if (_changeType == ChangeTypeAlignment) {
+        return [ChangeTypeManager shareInstance].xmls.count;
+    }
+    return [ChangeTypeManager shareInstance].colors.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
-    [cell showWithModels:nil];
+    if (_changeType==ChangeTypeBackground) {
+        cell.backgroundColor = [ChangeTypeManager shareInstance].colors[indexPath.row];
+        [cell showWithModels:self.defaultModels];
+    } else {
+        cell.backgroundColor = self.defaultColor;
+        XMLUtil *xml = [ChangeTypeManager shareInstance].xmls[indexPath.row];
+        [cell showWithModels:xml.models];
+    }
+    
     return cell;
 }
 
@@ -60,6 +77,7 @@
     
     if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:self.collectionViewLayout];
+        _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.pagingEnabled = NO;

@@ -63,7 +63,7 @@
     model2.fontSize = 20;
     model2.frame = CGRectMake(100, 150, 10, 10);
     
-    cell.backgroundColor = [UIColor blueColor];
+    cell.backgroundColor = [UIColor orangeColor];
     cell.isShadow = YES;
     [cell showWithModels:[NSArray arrayWithObjects:model1,model2, nil]];
     return cell;
