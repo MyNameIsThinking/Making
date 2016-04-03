@@ -49,6 +49,10 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
+    _currCell = cell;
+    
+    
+    
     CoreTextModel *model1 = [[CoreTextModel alloc] init];
     model1.text = @"TEST";
     model1.fontSize = 20;
@@ -59,8 +63,8 @@
     model2.fontSize = 20;
     model2.frame = CGRectMake(100, 150, 10, 10);
     
-    _currCell = cell;
     cell.backgroundColor = [UIColor blueColor];
+    cell.isShadow = YES;
     [cell showWithModels:[NSArray arrayWithObjects:model1,model2, nil]];
     return cell;
 }
