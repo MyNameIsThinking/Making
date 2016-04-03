@@ -10,7 +10,6 @@
 		1F0B6DAD1CAF4DF000E9088F /* CountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B6DAC1CAF4DF000E9088F /* CountViewController.m */; };
 		1F16E2541CAEA6CA0009AA13 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */; };
 		1F2A8C091CB0B4A500A496BE /* CoreTextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8C081CB0B4A500A496BE /* CoreTextModel.m */; };
-		1F2A8C0B1CB0D44D00A496BE /* textModel.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1F2A8C0A1CB0D44D00A496BE /* textModel.xml */; };
 		1F2A8C111CB0E94100A496BE /* ChangeTypeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8C101CB0E94100A496BE /* ChangeTypeManager.m */; };
 		1F80C2311CAAA86800961DA0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2301CAAA86800961DA0 /* main.m */; };
 		1F80C2341CAAA86800961DA0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2331CAAA86800961DA0 /* AppDelegate.m */; };
@@ -18,6 +17,11 @@
 		1F80C23A1CAAA86800961DA0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F80C2381CAAA86800961DA0 /* Main.storyboard */; };
 		1F80C23C1CAAA86800961DA0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F80C23B1CAAA86800961DA0 /* Assets.xcassets */; };
 		1F80C23F1CAAA86800961DA0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F80C23D1CAAA86800961DA0 /* LaunchScreen.storyboard */; };
+		1F85642C1CB14AFC003B9AE1 /* textModel5.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1F8564271CB14AFC003B9AE1 /* textModel5.xml */; };
+		1F85642D1CB14AFC003B9AE1 /* textModel4.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1F8564281CB14AFC003B9AE1 /* textModel4.xml */; };
+		1F85642E1CB14AFC003B9AE1 /* textModel3.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1F8564291CB14AFC003B9AE1 /* textModel3.xml */; };
+		1F85642F1CB14AFC003B9AE1 /* textModel2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1F85642A1CB14AFC003B9AE1 /* textModel2.xml */; };
+		1F8564301CB14AFC003B9AE1 /* textModel1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1F85642B1CB14AFC003B9AE1 /* textModel1.xml */; };
 		1FBFA0FA1CB10A1D00334E95 /* M80AttributedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBFA0F91CB10A1D00334E95 /* M80AttributedLabel.m */; };
 		1FBFA1021CB10A8100334E95 /* NSMutableAttributedString+M80.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBFA0FB1CB10A8100334E95 /* NSMutableAttributedString+M80.m */; };
 		1FBFA1031CB10A8100334E95 /* M80AttributedLabelURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FBFA0FD1CB10A8100334E95 /* M80AttributedLabelURL.m */; };
@@ -36,7 +40,6 @@
 		1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		1F2A8C071CB0B4A500A496BE /* CoreTextModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreTextModel.h; sourceTree = "<group>"; };
 		1F2A8C081CB0B4A500A496BE /* CoreTextModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTextModel.m; sourceTree = "<group>"; };
-		1F2A8C0A1CB0D44D00A496BE /* textModel.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel.xml; sourceTree = "<group>"; };
 		1F2A8C0F1CB0E94100A496BE /* ChangeTypeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeTypeManager.h; sourceTree = "<group>"; };
 		1F2A8C101CB0E94100A496BE /* ChangeTypeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeTypeManager.m; sourceTree = "<group>"; };
 		1F80C22C1CAAA86800961DA0 /* Making.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Making.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +52,11 @@
 		1F80C23B1CAAA86800961DA0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F80C23E1CAAA86800961DA0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F80C2401CAAA86800961DA0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F8564271CB14AFC003B9AE1 /* textModel5.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel5.xml; sourceTree = "<group>"; };
+		1F8564281CB14AFC003B9AE1 /* textModel4.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel4.xml; sourceTree = "<group>"; };
+		1F8564291CB14AFC003B9AE1 /* textModel3.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel3.xml; sourceTree = "<group>"; };
+		1F85642A1CB14AFC003B9AE1 /* textModel2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel2.xml; sourceTree = "<group>"; };
+		1F85642B1CB14AFC003B9AE1 /* textModel1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel1.xml; sourceTree = "<group>"; };
 		1FBFA0F81CB10A1D00334E95 /* M80AttributedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = M80AttributedLabel.h; sourceTree = "<group>"; };
 		1FBFA0F91CB10A1D00334E95 /* M80AttributedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = M80AttributedLabel.m; sourceTree = "<group>"; };
 		1FBFA0FB1CB10A8100334E95 /* NSMutableAttributedString+M80.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+M80.m"; sourceTree = "<group>"; };
@@ -122,9 +130,9 @@
 				1F2A8C101CB0E94100A496BE /* ChangeTypeManager.m */,
 				1F16E2521CAEA6CA0009AA13 /* BaseViewController.h */,
 				1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */,
+				1F8564311CB14DAE003B9AE1 /* Models */,
 				1FBFA1051CB10D1200334E95 /* ThirdParty */,
 				1F80C22F1CAAA86800961DA0 /* Supporting Files */,
-				1F2A8C0A1CB0D44D00A496BE /* textModel.xml */,
 			);
 			path = Making;
 			sourceTree = "<group>";
@@ -139,6 +147,18 @@
 				1F80C2301CAAA86800961DA0 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1F8564311CB14DAE003B9AE1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1F8564271CB14AFC003B9AE1 /* textModel5.xml */,
+				1F8564281CB14AFC003B9AE1 /* textModel4.xml */,
+				1F8564291CB14AFC003B9AE1 /* textModel3.xml */,
+				1F85642A1CB14AFC003B9AE1 /* textModel2.xml */,
+				1F85642B1CB14AFC003B9AE1 /* textModel1.xml */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		1FBFA1051CB10D1200334E95 /* ThirdParty */ = {
@@ -215,9 +235,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F85642F1CB14AFC003B9AE1 /* textModel2.xml in Resources */,
+				1F85642D1CB14AFC003B9AE1 /* textModel4.xml in Resources */,
+				1F85642C1CB14AFC003B9AE1 /* textModel5.xml in Resources */,
+				1F85642E1CB14AFC003B9AE1 /* textModel3.xml in Resources */,
+				1F8564301CB14AFC003B9AE1 /* textModel1.xml in Resources */,
 				1F80C23F1CAAA86800961DA0 /* LaunchScreen.storyboard in Resources */,
 				1F80C23C1CAAA86800961DA0 /* Assets.xcassets in Resources */,
-				1F2A8C0B1CB0D44D00A496BE /* textModel.xml in Resources */,
 				1F80C23A1CAAA86800961DA0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

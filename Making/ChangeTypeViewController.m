@@ -9,11 +9,29 @@
 #import "ChangeTypeViewController.h"
 #import "MakingCell.h"
 #import "ChangeTypeManager.h"
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
+
+@implementation UIColor (ColorSame)
+
+- (BOOL)isSameToColor:(UIColor *)color {
+    
+    if (CGColorEqualToColor(self.CGColor, color.CGColor)) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+@end
 
 @interface ChangeTypeViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) UICollectionViewFlowLayout *collectionViewLayout;
 @property (nonatomic, retain) UIButton *closeBtn;
+@property (nonatomic, retain) NSMutableArray *colors;
+@property (nonatomic, retain) NSMutableArray *xmls;
 @end
 
 @implementation ChangeTypeViewController
@@ -30,6 +48,40 @@
 }
 - (void)setChangeType:(ChangeType)changeType {
 
+    {
+        self.colors = nil;
+        _colors = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].colors];
+        int selectIndex = -1;
+        for (int i = 0; i < _colors.count; i++) {
+            UIColor *color = _colors[i];
+            if ([_defaultColor isSameToColor:color]) {
+                selectIndex = i;
+                break;
+            }
+        }
+        
+        if (selectIndex != -1 && selectIndex != 1) {
+            [_colors exchangeObjectAtIndex:1 withObjectAtIndex:selectIndex];
+        }
+    }
+    
+    {
+        self.xmls = nil;
+        _xmls = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].xmls];
+        int selectIndex = -1;
+        for (int i = 0; i < _xmls.count; i++) {
+            XMLUtil *xml = _xmls[i];
+            if ([_defaultModel.identifier isEqualToString:xml.model.identifier]) {
+                selectIndex = i;
+                break;
+            }
+        }
+        
+        if (selectIndex != -1 && selectIndex != 1) {
+            [_xmls exchangeObjectAtIndex:1 withObjectAtIndex:selectIndex];
+        }
+    }
+    
     if (_changeType != changeType) {
         _changeType = changeType;
         [_collectionView reloadData];
@@ -54,20 +106,20 @@
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (_changeType == ChangeTypeAlignment) {
-        return [ChangeTypeManager shareInstance].xmls.count;
+        return _xmls.count;
     }
-    return [ChangeTypeManager shareInstance].colors.count;
+    return _colors.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     cell.scale = 2;
     if (_changeType==ChangeTypeBackground) {
-        cell.BGColor = [ChangeTypeManager shareInstance].colors[indexPath.row];
+        cell.BGColor = _colors[indexPath.row];
         [cell showWithModel:self.defaultModel];
     } else {
         cell.BGColor = self.defaultColor;
-        XMLUtil *xml = [ChangeTypeManager shareInstance].xmls[indexPath.row];
+        XMLUtil *xml = _xmls[indexPath.row];
         [cell showWithModel:xml.model];
     }
     
@@ -113,5 +165,8 @@
     
     return _closeBtn;
 }
+- (BOOL)isSameColor:(UIColor *)colorA withColor:(UIColor *)colorB {
 
+    return YES;
+}
 @end

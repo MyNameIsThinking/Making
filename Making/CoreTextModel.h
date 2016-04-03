@@ -12,6 +12,7 @@
 
 @interface CoreTextModel : NSObject
 
+@property (nonatomic,strong)    NSString *identifier;           //唯一標示符
 @property (nonatomic,strong)    NSString *text;                 //文字
 @property (nonatomic,strong)    UIFont *font;                   //字体
 @property (nonatomic,strong)    UIColor *textColor;             //文字颜色

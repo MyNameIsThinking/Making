@@ -53,12 +53,11 @@
     _currCell = cell;
     
     CoreTextModel *model1 = [[CoreTextModel alloc] init];
-    model1.text = @"TEST";
+    model1.text = @"testModel3";
+    model1.identifier = @"testModel3";
+    cell.BGColor = [UIColor blackColor];
     
-    CoreTextModel *model2 = [[CoreTextModel alloc] init];
-    model2.text = @"TEST2";
     
-    cell.BGColor = [UIColor yellowColor];
     cell.isShadow = YES;
     [cell showWithModel:model1];
     return cell;

@@ -25,10 +25,11 @@ static ChangeTypeManager *_instance;
 }
 - (void)startParser {
     NSMutableArray *array = [NSMutableArray array];
-    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel"]];
-    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel"]];
-    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel"]];
-    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel"]];
+    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel1"]];
+    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel2"]];
+    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel3"]];
+    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel4"]];
+    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel5"]];
     _xmls = [[NSArray alloc] initWithArray:array];
 }
 - (NSArray *)colors {
@@ -94,6 +95,8 @@ static ChangeTypeManager *_instance;
         _model.textAlignment = [string integerValue];
     } else if ([self.currentElement isEqualToString:@"frame"]) {
 //        _model.frame = CGRectFromString(string);
+    } else if ([self.currentElement isEqualToString:@"identifier"]) {
+        _model.identifier = string;
     }
 }
 

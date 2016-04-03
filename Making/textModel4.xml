@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model>
+    <identifier>testModel4</identifier>
+    <mainText>
+        <text>testModel4</text>
+        <fontSize>40</fontSize>
+        <alignment>2</alignment>
+        <frame>{{0, 20}, {100, 100}}</frame>
+    </mainText>
+</model>
