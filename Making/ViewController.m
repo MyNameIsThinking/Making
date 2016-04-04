@@ -46,7 +46,7 @@ const NSTimeInterval durationTime = 0.4;
         }
             break;
         case PressTypeCount: {
-            [self presentViewController:[[CountViewController alloc] init] animated:YES completion:^{
+            [self presentViewController:[[CountViewController alloc] initWithMainModels:_mainViewController.mainModels] animated:YES completion:^{
             }];
         
         }
@@ -69,7 +69,6 @@ const NSTimeInterval durationTime = 0.4;
         [_changeTypeViewController.view removeFromSuperview];
         self.changeTypeViewController = nil;
         [_mainViewController.view addSubview:_mainViewController.collectionView];
-        [_mainViewController.collectionView reloadData];
     }];
 }
 - (void)pressCell:(MakingCell *)cell Type:(PressType)type {

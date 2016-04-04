@@ -8,6 +8,7 @@
 
 #import "CountViewController.h"
 #import "MakingCell.h"
+#import "CoreTextModel.h"
 
 @class CountMakingCell;
 
@@ -34,7 +35,8 @@
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) CenterLayout *collectionViewLayout;
 @property (nonatomic, retain) UIButton *closeBtn;
-@property (nonatomic, assign) int count;
+@property (nonatomic, retain) NSIndexPath *currIndexPath;
+@property (nonatomic, retain) NSMutableArray *mainModels;
 @end
 
 @implementation CountViewController
@@ -46,10 +48,11 @@
     self.collectionViewLayout = nil;
     self.closeBtn = nil;
 }
-- (id)init {
+- (id)initWithMainModels:(NSMutableArray *)mainModels {
 
     self = [super init];
     if (self) {
+        _mainModels = mainModels;
         self.view.backgroundColor = [UIColor whiteColor];
     }
     
@@ -57,7 +60,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.count = 1;
     [self.view addSubview:self.titleLabel];
     [self.view addSubview:self.collectionView];
     [self.view addSubview:self.closeBtn];
@@ -73,13 +75,16 @@
     return 0;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.count;
+    return _mainModels.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     CountMakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[CountMakingCell identifier] forIndexPath:indexPath];
     cell.delegate = self;
-    [cell showWithModel:nil];
+    cell.scale = 3;
+    CoreTextModel *model = _mainModels[indexPath.row];
+    cell.backgroundColor = model.BGColor;
+    [cell showWithModel:model];
     
     return cell;
 }
@@ -96,7 +101,7 @@
     
     if (scrollView == self.collectionView) {
         float minDis = CGRectGetHeight(scrollView.frame);
-        NSIndexPath *minIndexPath = nil;
+        _currIndexPath = nil;
         float scrollViewCenter = scrollView.contentOffset.x+(CGRectGetWidth(scrollView.frame)/2);
         NSArray *array = [self.collectionView indexPathsForVisibleItems];
         for (NSIndexPath *cellIndexPath in array) {
@@ -104,16 +109,19 @@
             float cellCenter = cell.center.x;
             if (fabsf(scrollViewCenter-cellCenter) < minDis) {
                 minDis = fabsf(scrollViewCenter-cellCenter);
-                minIndexPath = cellIndexPath;
+                _currIndexPath = cellIndexPath;
             }
         }
-        [self.collectionView scrollToItemAtIndexPath:minIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+        [self.collectionView scrollToItemAtIndexPath:_currIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
     }
 }
 - (void)pressAdd:(CountMakingCell *)cell {
 
-    if (self.count < 9) {
-        self.count++;
+    if (_mainModels.count < 9) {
+        
+        CoreTextModel *copyModel = _mainModels[_currIndexPath.row];
+        CoreTextModel *model = [[CoreTextModel alloc] initWithModel:copyModel];
+        [_mainModels insertObject:model atIndex:_currIndexPath.row+1];
         [self.collectionView performBatchUpdates:^{
             NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
             [self.collectionView insertItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
@@ -123,8 +131,8 @@
 }
 - (void)pressDel:(CountMakingCell *)cell {
     
-    if (self.count > 1) {
-        self.count--;
+    if (_mainModels.count > 1) {
+        [_mainModels removeObjectAtIndex:_currIndexPath.row];
         [self.collectionView performBatchUpdates:^{
             NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
             [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];

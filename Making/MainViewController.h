@@ -28,5 +28,6 @@ typedef NS_OPTIONS(NSUInteger, PressType) {
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, assign) NSInteger currIndex;
 @property (nonatomic, weak) id<MainDelegate> delegate;
+@property (nonatomic, retain) NSMutableArray *mainModels;
 - (void)setSelectCell:(MakingCell *)selectCell;
 @end

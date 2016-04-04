@@ -18,7 +18,6 @@
 @property (nonatomic, retain) UIButton *shareBtn;
 @property (nonatomic, retain) UIButton *countBtn;
 @property (nonatomic, retain) UIButton *infoBtn;
-@property (nonatomic, retain) NSMutableArray *mainModels;
 @property (nonatomic, retain) MakingCell *currCell;
 @end
 
@@ -26,6 +25,11 @@
 
 - (void)dealloc {
     self.collectionView = nil;
+}
+- (void)viewWillAppear:(BOOL)animated {
+
+    [super viewWillAppear:animated];
+    [_collectionView reloadData];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
