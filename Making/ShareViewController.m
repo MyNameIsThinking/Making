@@ -8,6 +8,7 @@
 
 #import "ShareViewController.h"
 #import "MakingCell.h"
+#import "CoreTextModel.h"
 
 @interface ShareView : UIView
 @property (nonatomic, retain) NSMutableArray *shares;
@@ -21,6 +22,7 @@
 @property (nonatomic, retain) UILabel *countLabel;
 @property (nonatomic, retain) UIView *grayLine;
 @property (nonatomic, retain) ShareView *shareView;
+@property (nonatomic, assign) CGFloat scale;
 @end
 
 @implementation ShareViewController
@@ -39,6 +41,7 @@
     self = [super init];
     if (self) {
         self.view.backgroundColor = [UIColor whiteColor];
+        _models = models;
     }
     
     return self;
@@ -104,41 +107,51 @@
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
+    _scale = 1;
     switch (self.models.count) {
         case 1: {
             self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            _scale = 1;
         }
             break;
         case 2: {
             self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds)/2);
+            _scale = 2;
         }
             break;
         case 3: {
             self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds)/3);
+            _scale = 3;
         }
             break;
         case 4: {
             self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            _scale = 2;
         }
             break;
         case 5: {
             self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), (CGRectGetWidth(self.view.bounds)/3)*2);
+            _scale = 3;
         }
             break;
         case 6: {
             self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), (CGRectGetWidth(self.view.bounds)/3)*2);
+            _scale = 3;
         }
             break;
         case 7: {
             self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            _scale = 3;
         }
             break;
         case 8: {
             self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            _scale = 3;
         }
             break;
         case 9: {
             self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            _scale = 3;
         }
             break;
             
@@ -151,7 +164,10 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
-    [cell showWithModel:nil];
+    CoreTextModel *model = _models[indexPath.row];
+    cell.scale = _scale;
+    cell.backgroundColor = model.BGColor;
+    [cell showWithModel:model];
     return cell;
 }
 - (UICollectionView *)collectionView {
@@ -217,14 +233,6 @@
     }
     
     return _grayLine;
-}
-- (NSArray *)models {
-
-    if (!_models) {
-        _models = [[NSArray alloc] initWithObjects:@"",@"",@"",@"",@"",@"",@"", nil];
-    }
-    
-    return _models;
 }
 - (ShareView *)shareView {
 

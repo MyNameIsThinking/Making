@@ -42,7 +42,8 @@ const NSTimeInterval durationTime = 0.4;
         }
             break;
         case PressTypeShare: {
-            [self.navigationController pushViewController:[[ShareViewController alloc] initWithModels:nil] animated:YES];
+            NSArray *models = [[NSArray alloc] initWithArray:_mainViewController.mainModels];
+            [self.navigationController pushViewController:[[ShareViewController alloc] initWithModels:models] animated:YES];
         }
             break;
         case PressTypeCount: {
