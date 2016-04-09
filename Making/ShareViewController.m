@@ -9,12 +9,26 @@
 #import "ShareViewController.h"
 #import "MakingCell.h"
 #import "CoreTextModel.h"
+#import "UIImage+Save.h"
 
+typedef NS_OPTIONS(NSUInteger, ShareType) {
+    ShareTypeLocal = 0,
+    ShareTypeWeChat = 1,
+    ShareTypeWeiBo = 2,
+    ShareTypeQZone = 3,
+};
+
+@protocol  ShareViewDelegate <NSObject>
+
+- (void)pressShare:(ShareType)type;
+
+@end
 @interface ShareView : UIView
 @property (nonatomic, retain) NSMutableArray *shares;
+@property (nonatomic, weak) id<ShareViewDelegate> delegate;
 @end
 
-@interface ShareViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ShareViewController () <UICollectionViewDelegate, UICollectionViewDataSource, ShareViewDelegate>
 @property (nonatomic, retain) NSArray *models;
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) UICollectionViewFlowLayout *collectionViewLayout;
@@ -53,6 +67,39 @@
     [self.view addSubview:self.countLabel];
     [self.view insertSubview:self.grayLine belowSubview:self.countLabel];
     [self.view addSubview:self.shareView];
+}
+- (void)pressShare:(ShareType)type {
+
+    NSMutableArray *images = [NSMutableArray array];
+    for (int i = 0; i < _models.count; i++) {
+        CoreTextModel *model = _models[i];
+        MakingCell *cell = [[MakingCell alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds))];
+        cell.scale = 1;
+        cell.backgroundColor = model.BGColor;
+        [cell showWithModel:model];
+        UIImage *image = [cell getImageFromView];
+        
+        [images addObject:image];
+        
+    }
+    
+    switch (type) {
+        case ShareTypeLocal: {
+        
+            for (int i = 0; i < images.count; i++) {
+                UIImage *image = images[i];
+                [image saveToPhotosAlbumOnSuccess:^{
+                    NSLog(@"Success");
+                } onError:^{
+                    NSLog(@"Fail");
+                }];
+            }
+        }
+            break;
+            
+        default:
+            break;
+    }
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     switch (self.models.count) {
@@ -168,6 +215,7 @@
     cell.scale = _scale;
     cell.backgroundColor = model.BGColor;
     [cell showWithModel:model];
+    
     return cell;
 }
 - (UICollectionView *)collectionView {
@@ -238,6 +286,7 @@
 
     if (!_shareView) {
         _shareView = [[ShareView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), MIN(self.backBtn.frame.origin.y-self.countLabel.frame.origin.y-self.countLabel.frame.size.height, 50))];
+        _shareView.delegate = self;
         _shareView.center = CGPointMake(_shareView.center.x, self.countLabel.frame.origin.y+self.countLabel.frame.size.height+60);
     }
     
@@ -266,6 +315,7 @@
         for (int i = 0; i < self.shares.count; i++) {
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+            btn.tag = i;
             [btn setTitle:self.shares[i] forState:UIControlStateNormal];
             [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             btn.titleLabel.font = [UIFont systemFontOfSize:20];
@@ -276,11 +326,18 @@
             btn.layer.borderWidth = 2;
             btn.layer.cornerRadius = width/2;
             btn.layer.borderColor = [UIColor yellowColor].CGColor;
+            [btn addTarget:self action:@selector(pressShare:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:btn];
         }
     }
     
     return self;
+}
+- (void)pressShare:(UIButton *)sender {
+
+    if ([_delegate respondsToSelector:@selector(pressShare:)]) {
+        [_delegate pressShare:(ShareType)sender.tag];
+    }
 }
 - (NSMutableArray *)shares {
 

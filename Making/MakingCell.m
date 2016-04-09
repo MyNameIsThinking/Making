@@ -43,4 +43,13 @@
     
     return _label;
 }
+- (UIImage *)getImageFromView {
+    
+    CGSize size = CGSizeMake(500, 500);
+    UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
+    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage*image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
+}
 @end

@@ -16,6 +16,7 @@
 @property (nonatomic, assign) CGFloat scale;
 + (NSString *)identifier;
 - (void)showWithModel:(CoreTextModel *)model;
+- (UIImage *)getImageFromView;
 @end
 
 
