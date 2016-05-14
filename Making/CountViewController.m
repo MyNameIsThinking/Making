@@ -200,9 +200,9 @@
     self.addBtn = nil;
     self.delBtn = nil;
 }
-- (void)showWithModel:(CoreTextModel *)model {
+- (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName {
 
-    [super showWithModel:model withFontName:nil];
+    [super showWithModel:model withFontName:fontName];
     [self addSubview:self.addBtn];
     [self addSubview:self.delBtn];
 }
