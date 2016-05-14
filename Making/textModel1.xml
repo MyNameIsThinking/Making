@@ -6,5 +6,6 @@
         <fontSize>40</fontSize>
         <alignment>0</alignment>
         <frame>{{0, 0}, {100, 100}}</frame>
+        <fontName>Zapfino</fontName>
     </mainText>
 </model>

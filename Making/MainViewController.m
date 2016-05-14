@@ -46,6 +46,7 @@
     CoreTextModel *model = selectCell.model;
     CoreTextModel *newModel = [[CoreTextModel alloc] initWithModel:model];
     newModel.BGColor = selectCell.backgroundColor;
+    newModel.fontName = selectCell.fontName;
     [_mainModels replaceObjectAtIndex:_currIndex withObject:newModel];
     [_collectionView reloadData];
 }
@@ -69,7 +70,7 @@
     _currIndex = indexPath.row;
     CoreTextModel *model = _mainModels[indexPath.row];
     cell.backgroundColor = model.BGColor;
-    [cell showWithModel:model];
+    [cell showWithModel:model withFontName:nil];
     
     return cell;
 }
@@ -145,10 +146,7 @@
         [_editTextBtn setTitle:@"編輯" forState:UIControlStateNormal];
         [_editTextBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _editTextBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        if ([_delegate respondsToSelector:@selector(pressBtnWithType:)]) {
-            [_editTextBtn addTarget:_delegate action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
-        }
-        
+        [_editTextBtn addTarget:self action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _editTextBtn;

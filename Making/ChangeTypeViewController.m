@@ -32,6 +32,7 @@
 @property (nonatomic, retain) UIButton *closeBtn;
 @property (nonatomic, retain) NSMutableArray *colors;
 @property (nonatomic, retain) NSMutableArray *xmls;
+@property (nonatomic, retain) NSMutableArray *fonts;
 @end
 
 @implementation ChangeTypeViewController
@@ -82,6 +83,22 @@
         }
     }
     
+    {
+        self.fonts = nil;
+        _fonts = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].fonts];
+        int selectIndex = -1;
+        for (int i = 0; i < _fonts.count; i++) {
+            NSString *fontName = _fonts[i];
+            if ([_defaultFont isEqualToString:fontName]) {
+                selectIndex = i;
+                break;
+            }
+        }
+        
+        if (selectIndex != -1 && selectIndex != 1) {
+            [_fonts exchangeObjectAtIndex:1 withObjectAtIndex:selectIndex];
+        }
+    }
     if (_changeType != changeType) {
         _changeType = changeType;
         [_collectionView reloadData];
@@ -107,8 +124,12 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     if (_changeType == ChangeTypeAlignment) {
         return _xmls.count;
+    } else if (_changeType==ChangeTypeBackground) {
+        return _colors.count;
+    } else if (_changeType==ChangeTypeFont) {
+        return _fonts.count;
     }
-    return _colors.count;
+    return 0;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -116,11 +137,15 @@
     cell.scale = 2;
     if (_changeType==ChangeTypeBackground) {
         cell.backgroundColor = _colors[indexPath.row];
-        [cell showWithModel:self.defaultModel];
-    } else {
+        [cell showWithModel:self.defaultModel withFontName:nil];
+    } else if (_changeType==ChangeTypeAlignment) {
         cell.backgroundColor = self.defaultColor;
         XMLUtil *xml = _xmls[indexPath.row];
-        [cell showWithModel:xml.model];
+        [cell showWithModel:xml.model withFontName:nil];
+    } else if (_changeType==ChangeTypeFont) {
+        cell.backgroundColor = self.defaultColor;
+        NSString *fontName = _fonts[indexPath.row];
+        [cell showWithModel:self.defaultModel withFontName:fontName];
     }
     
     return cell;
@@ -164,9 +189,5 @@
     }
     
     return _closeBtn;
-}
-- (BOOL)isSameColor:(UIColor *)colorA withColor:(UIColor *)colorB {
-
-    return YES;
 }
 @end

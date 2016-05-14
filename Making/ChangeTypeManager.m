@@ -47,6 +47,19 @@ static ChangeTypeManager *_instance;
     
     return _colors;
 }
+- (NSArray *)fonts {
+
+    if (!_fonts) {
+        _fonts = [[NSArray alloc] initWithObjects:
+                  @"STHeitiJ-Medium",
+                  @"TimesNewRomanPSMT",
+                  @"Verdana-Bold",
+                  @"Zapfino",
+                  nil];
+    }
+    
+    return _fonts;
+}
 @end
 
 @interface XMLUtil () <NSXMLParserDelegate>
@@ -90,8 +103,8 @@ static ChangeTypeManager *_instance;
     
     if ([self.currentElement isEqualToString:@"text"]) {
         _model.text = string;
-    } else if ([self.currentElement isEqualToString:@"font"]) {
-        _model.font = [UIFont fontWithName:string size:10];
+    } else if ([self.currentElement isEqualToString:@"fontName"]) {
+        _model.fontName = string;
     } else if ([self.currentElement isEqualToString:@"alignment"]) {
         _model.textAlignment = [string integerValue];
     } else if ([self.currentElement isEqualToString:@"frame"]) {

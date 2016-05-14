@@ -76,7 +76,7 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
         MakingCell *cell = [[MakingCell alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds))];
         cell.scale = 1;
         cell.backgroundColor = model.BGColor;
-        [cell showWithModel:model];
+        [cell showWithModel:model withFontName:nil];
         UIImage *image = [cell getImageFromView];
         
         [images addObject:image];
@@ -214,7 +214,7 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
     CoreTextModel *model = _models[indexPath.row];
     cell.scale = _scale;
     cell.backgroundColor = model.BGColor;
-    [cell showWithModel:model];
+    [cell showWithModel:model withFontName:nil];
     
     return cell;
 }

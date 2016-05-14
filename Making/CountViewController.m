@@ -84,7 +84,7 @@
     cell.scale = 3;
     CoreTextModel *model = _mainModels[indexPath.row];
     cell.backgroundColor = model.BGColor;
-    [cell showWithModel:model];
+    [cell showWithModel:model withFontName:nil];
     
     return cell;
 }
@@ -202,7 +202,7 @@
 }
 - (void)showWithModel:(CoreTextModel *)model {
 
-    [super showWithModel:model];
+    [super showWithModel:model withFontName:nil];
     [self addSubview:self.addBtn];
     [self addSubview:self.delBtn];
 }

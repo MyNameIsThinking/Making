@@ -17,7 +17,7 @@
     if (self) {
         self.identifier = model.identifier;             //唯一標示符
         self.text = model.text;                         //文字
-        self.font = model.font;                         //字体
+        self.fontName = model.fontName;                 //字体
         self.textColor = model.textColor;               //文字颜色
         self.highlightColor = model.highlightColor;     //链接点击时背景高亮色
         self.linkColor = model.linkColor;               //链接色

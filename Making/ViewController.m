@@ -86,6 +86,7 @@ const NSTimeInterval durationTime = 0.4;
     
     self.changeTypeViewController.defaultColor = cell.backgroundColor;
     self.changeTypeViewController.defaultModel = cell.model;
+    self.changeTypeViewController.defaultFont = cell.fontName;
     self.changeTypeViewController.changeType = (ChangeType)type;
     
     [self.view insertSubview:self.changeTypeViewController.view belowSubview:_mainViewController.view];
@@ -102,7 +103,7 @@ const NSTimeInterval durationTime = 0.4;
     
     self.animationLabel.textAlignment = cell.model.textAlignment;
     self.animationLabel.text      = cell.model.text;
-    self.animationLabel.font      = [UIFont fontWithName:@"Zapfino" size:26/2];
+    self.animationLabel.font      = [UIFont fontWithName:cell.fontName size:26/2];
     self.animationLabel.textColor = [UIColor grayColor];
     self.animationLabel.backgroundColor = cell.backgroundColor;
     self.animationLabel.frame     = CGRectInset(cell.bounds,0,0);

@@ -12,6 +12,7 @@
 @interface ChangeTypeManager : NSObject
 @property (nonatomic, retain) NSArray *xmls;
 @property (nonatomic, retain) NSArray *colors;
+@property (nonatomic, retain) NSArray *fonts;
 + (ChangeTypeManager *)shareInstance;
 @end
 
