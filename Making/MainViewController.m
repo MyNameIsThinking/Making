@@ -50,6 +50,7 @@
     [_mainModels replaceObjectAtIndex:_currIndex withObject:newModel];
     [_collectionView reloadData];
 }
+#pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return self.collectionView.frame.size;
 }
@@ -59,6 +60,7 @@
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }
+#pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.mainModels.count;
 }
@@ -74,7 +76,13 @@
     
     return cell;
 }
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
+    if ([_delegate respondsToSelector:@selector(pressMainCell)]) {
+        [_delegate pressMainCell];
+    }
+}
 - (UICollectionView *)collectionView {
 
     if (!_collectionView) {
@@ -97,10 +105,10 @@
     
     return _collectionViewLayout;
 }
-- (void)pressBtnWithType:(UIButton *)sender {
+- (void)pressCellWithChangeType:(UIButton *)sender {
 
-    if ([_delegate respondsToSelector:@selector(pressCell:Type:)]) {
-        [_delegate pressCell:_currCell Type:(PressType)sender.tag];
+    if ([_delegate respondsToSelector:@selector(pressCell:changeType:)]) {
+        [_delegate pressCell:_currCell changeType:(PressType)sender.tag];
     }
 }
 - (UIButton *)changeTypeBtn {
@@ -114,7 +122,7 @@
         [_changeTypeBtn setTitle:@"風格" forState:UIControlStateNormal];
         [_changeTypeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _changeTypeBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [_changeTypeBtn addTarget:self action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
+        [_changeTypeBtn addTarget:self action:@selector(pressCellWithChangeType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _changeTypeBtn;
@@ -130,7 +138,7 @@
         [_changeBackgroundBtn setTitle:@"背景" forState:UIControlStateNormal];
         [_changeBackgroundBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _changeBackgroundBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [_changeBackgroundBtn addTarget:self action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
+        [_changeBackgroundBtn addTarget:self action:@selector(pressCellWithChangeType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _changeBackgroundBtn;
@@ -139,14 +147,14 @@
     
     if (!_editTextBtn) {
         _editTextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _editTextBtn.tag = PressTypeEditText;
+        _editTextBtn.tag = PressTypeChangeFont;
         CGFloat width = 60;
         _editTextBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y, width, width);
         _editTextBtn.center = CGPointMake((CGRectGetWidth(_collectionView.frame)/4)*3, _changeTypeBtn.center.y);
-        [_editTextBtn setTitle:@"編輯" forState:UIControlStateNormal];
+        [_editTextBtn setTitle:@"字體" forState:UIControlStateNormal];
         [_editTextBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _editTextBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
-        [_editTextBtn addTarget:self action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
+        [_editTextBtn addTarget:self action:@selector(pressCellWithChangeType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _editTextBtn;

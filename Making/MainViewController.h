@@ -13,7 +13,7 @@
 typedef NS_OPTIONS(NSUInteger, PressType) {
     PressTypeChangeType = 0,
     PressTypeChangeBackground = 1,
-    PressTypeEditText = 2,
+    PressTypeChangeFont = 2,
     PressTypeShare = 3,
     PressTypeCount = 4,
     PressTypeInfo = 5,
@@ -21,7 +21,8 @@ typedef NS_OPTIONS(NSUInteger, PressType) {
 @protocol MainDelegate <NSObject>
 
 - (void)pressBtnWithType:(UIButton *)sender;
-- (void)pressCell:(MakingCell *)cell Type:(PressType)type;
+- (void)pressMainCell;
+- (void)pressCell:(MakingCell *)cell changeType:(PressType)type;
 @end
 
 @interface MainViewController : BaseViewController

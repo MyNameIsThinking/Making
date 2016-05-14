@@ -31,16 +31,11 @@ const NSTimeInterval durationTime = 0.4;
     [self.view addSubview:self.mainViewController.view];
     // Do any additional setup after loading the view, typically from a nib.
 }
-
+#pragma mark - MainDelegate
 - (void)pressBtnWithType:(UIButton *)sender {
 
     PressType pressType = (PressType)sender.tag;
     switch (pressType) {
-        case PressTypeEditText: {
-            [self presentViewController:[[EditTextViewController alloc] init] animated:YES completion:^{
-            }];
-        }
-            break;
         case PressTypeShare: {
             NSArray *models = [[NSArray alloc] initWithArray:_mainViewController.mainModels];
             [self.navigationController pushViewController:[[ShareViewController alloc] initWithModels:models] animated:YES];
@@ -49,7 +44,6 @@ const NSTimeInterval durationTime = 0.4;
         case PressTypeCount: {
             [self presentViewController:[[CountViewController alloc] initWithMainModels:_mainViewController.mainModels] animated:YES completion:^{
             }];
-        
         }
             break;
         case PressTypeInfo:
@@ -60,27 +54,19 @@ const NSTimeInterval durationTime = 0.4;
             break;
     }
 }
-- (void)pressClose {
-    
-    [UIView animateWithDuration:durationTime animations:^{
-        _changeTypeViewController.view.alpha = 0;
-    } completion:^(BOOL finished) {
-        [self.view insertSubview:_changeTypeViewController.view belowSubview:_mainViewController.view];
-        _changeTypeViewController.view.alpha = 1;
-        [_changeTypeViewController.view removeFromSuperview];
-        self.changeTypeViewController = nil;
-        [_mainViewController.view addSubview:_mainViewController.collectionView];
+- (void)pressMainCell {
+    [self presentViewController:[[EditTextViewController alloc] init] animated:YES completion:^{
     }];
 }
-- (void)pressCell:(MakingCell *)cell Type:(PressType)type {
-
+- (void)pressCell:(MakingCell *)cell changeType:(PressType)type {
+    
     self.animationLabel.textAlignment = cell.model.textAlignment;
     self.animationLabel.text      = cell.model.text;
-    self.animationLabel.font      = [UIFont fontWithName:@"Zapfino" size:26];
+    self.animationLabel.font      = [UIFont fontWithName:cell.fontName size:26];
     self.animationLabel.textColor = [UIColor grayColor];
     self.animationLabel.backgroundColor = cell.backgroundColor;
     self.animationLabel.frame     = CGRectInset(cell.bounds,0,0);
-
+    
     [self toCell:self.animationLabel];
     [_mainViewController.collectionView removeFromSuperview];
     
@@ -97,6 +83,19 @@ const NSTimeInterval durationTime = 0.4;
         _mainViewController.view.alpha = 1;
     }];
 }
+#pragma mark - ChangeTypeDelegate
+- (void)pressClose {
+    
+    [UIView animateWithDuration:durationTime animations:^{
+        _changeTypeViewController.view.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.view insertSubview:_changeTypeViewController.view belowSubview:_mainViewController.view];
+        _changeTypeViewController.view.alpha = 1;
+        [_changeTypeViewController.view removeFromSuperview];
+        self.changeTypeViewController = nil;
+        [_mainViewController.view addSubview:_mainViewController.collectionView];
+    }];
+}
 - (void)pressCell:(MakingCell *)cell scrollView:(UIScrollView *)scrollView {
     
     [self.mainViewController setSelectCell:cell];
@@ -111,6 +110,7 @@ const NSTimeInterval durationTime = 0.4;
     [self toMain:self.animationLabel scroller:scrollView cell:cell];
     [self pressClose];
 }
+#pragma mark - event
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
     [_animationLabel removeFromSuperview];
     _animationLabel = nil;
