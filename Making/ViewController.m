@@ -21,7 +21,7 @@ const NSTimeInterval durationTime = 0.4;
 
 @property (nonatomic, retain) MainViewController *mainViewController;
 @property (nonatomic, retain) ChangeTypeViewController *changeTypeViewController;
-@property (nonatomic, retain) M80AttributedLabel *animationLabel;
+@property (nonatomic, retain) UIImageView *animationImageView;
 @end
 
 @implementation ViewController
@@ -60,14 +60,10 @@ const NSTimeInterval durationTime = 0.4;
 }
 - (void)pressCell:(MakingCell *)cell changeType:(PressType)type {
     
-    self.animationLabel.textAlignment = cell.model.textAlignment;
-    self.animationLabel.text      = cell.model.text;
-    self.animationLabel.font      = [UIFont fontWithName:cell.fontName size:26];
-    self.animationLabel.textColor = [UIColor grayColor];
-    self.animationLabel.backgroundColor = cell.backgroundColor;
-    self.animationLabel.frame     = CGRectInset(cell.bounds,0,0);
-    
-    [self toCell:self.animationLabel];
+    UIImage *image = [cell getImageFromView];
+    self.animationImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    self.animationImageView.image = image;
+    [self toCell:self.animationImageView];
     [_mainViewController.collectionView removeFromSuperview];
     
     self.changeTypeViewController.defaultColor = cell.backgroundColor;
@@ -99,31 +95,26 @@ const NSTimeInterval durationTime = 0.4;
 - (void)pressCell:(MakingCell *)cell scrollView:(UIScrollView *)scrollView {
     
     [self.mainViewController setSelectCell:cell];
-    
-    self.animationLabel.textAlignment = cell.model.textAlignment;
-    self.animationLabel.text      = cell.model.text;
-    self.animationLabel.font      = [UIFont fontWithName:cell.fontName size:26/2];
-    self.animationLabel.textColor = [UIColor grayColor];
-    self.animationLabel.backgroundColor = cell.backgroundColor;
-    self.animationLabel.frame     = CGRectInset(cell.bounds,0,0);
-    
-    [self toMain:self.animationLabel scroller:scrollView cell:cell];
+    UIImage *image = [cell getImageFromView];
+    self.animationImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    self.animationImageView.image = image;
+    [self toMain:self.animationImageView scroller:scrollView cell:cell];
     [self pressClose];
 }
 #pragma mark - event
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-    [_animationLabel removeFromSuperview];
-    _animationLabel = nil;
+    [_animationImageView removeFromSuperview];
+    _animationImageView = nil;
 }
-- (void)toCell:(M80AttributedLabel *)label {
+- (void)toCell:(UIImageView *)imageView {
     
-    [self.view addSubview:self.animationLabel];
+    [self.view addSubview:imageView];
     
     CFTimeInterval time = durationTime;
     
     CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-    positionAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(label.layer.frame.origin.x+(label.layer.frame.size.width/2), label.layer.frame.origin.y+(label.layer.frame.size.height/2))];
-    positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*3, CGRectGetHeight(label.layer.frame)/4)];
+    positionAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(imageView.layer.frame.origin.x+(imageView.layer.frame.size.width/2), imageView.layer.frame.origin.y+(imageView.layer.frame.size.height/2))];
+    positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*3, CGRectGetHeight(imageView.layer.frame)/4)];
     positionAnimation.fillMode = kCAFillModeForwards;
     positionAnimation.removedOnCompletion = NO;
     positionAnimation.duration = time;
@@ -141,17 +132,17 @@ const NSTimeInterval durationTime = 0.4;
     [animationGroup setAnimations:[NSArray arrayWithObjects:positionAnimation,scaleAnimation, nil]];
     animationGroup.fillMode = kCAFillModeForwards;
     animationGroup.removedOnCompletion = NO;
-    [label.layer addAnimation:animationGroup forKey:@"toCell"];
+    [imageView.layer addAnimation:animationGroup forKey:@"toCell"];
 }
-- (void)toMain:(M80AttributedLabel *)label  scroller:(UIScrollView *)scroller cell:(MakingCell *)cell {
-    label.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y-scroller.contentOffset.y, cell.frame.size.width, cell.frame.size.height);
-    [self.view addSubview:label];
+- (void)toMain:(UIImageView *)imageView  scroller:(UIScrollView *)scroller cell:(MakingCell *)cell {
+    imageView.frame = CGRectMake(cell.frame.origin.x, cell.frame.origin.y-scroller.contentOffset.y, cell.frame.size.width, cell.frame.size.height);
+    [self.view addSubview:imageView];
     
     CFTimeInterval time = durationTime;
     
     CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-    positionAnimation.fromValue = [NSValue valueWithCGPoint:label.layer.position];
-    positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((int)(CGRectGetWidth(self.view.bounds)/2), CGRectGetHeight(label.layer.frame))];
+    positionAnimation.fromValue = [NSValue valueWithCGPoint:imageView.layer.position];
+    positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((int)(CGRectGetWidth(self.view.bounds)/2), CGRectGetHeight(imageView.layer.frame))];
     positionAnimation.fillMode = kCAFillModeForwards;
     positionAnimation.removedOnCompletion = NO;
     positionAnimation.duration = time;
@@ -169,7 +160,7 @@ const NSTimeInterval durationTime = 0.4;
     [animationGroup setAnimations:[NSArray arrayWithObjects:positionAnimation,scaleAnimation, nil]];
     animationGroup.fillMode = kCAFillModeForwards;
     animationGroup.removedOnCompletion = NO;
-    [label.layer addAnimation:animationGroup forKey:@"toMain"];
+    [imageView.layer addAnimation:animationGroup forKey:@"toMain"];
     
 }
 - (MainViewController *)mainViewController {
@@ -196,13 +187,13 @@ const NSTimeInterval durationTime = 0.4;
     
     return _changeTypeViewController;
 }
-- (M80AttributedLabel *)animationLabel {
+- (UIImageView *)animationImageView {
 
-    if (!_animationLabel) {
-        _animationLabel = [[M80AttributedLabel alloc] init];
+    if (!_animationImageView) {
+        _animationImageView = [[UIImageView alloc] init];
     }
     
-    return _animationLabel;
+    return _animationImageView;
 }
 
 @end

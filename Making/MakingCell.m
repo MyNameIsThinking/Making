@@ -58,7 +58,7 @@
     if (!_mainView) {
         
         _mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-(100/_scale))];
-        _mainView.backgroundColor = [UIColor redColor];
+        _mainView.backgroundColor = [UIColor clearColor];
     }
     
     return _mainView;
@@ -68,7 +68,7 @@
     if (!_forewordView) {
         
         _forewordView = [[UIView alloc] initWithFrame:CGRectMake(0, self.mainView.frame.size.height, self.bounds.size.width, self.bounds.size.height-self.mainView.frame.size.height)];
-        _forewordView.backgroundColor = [UIColor greenColor];
+        _forewordView.backgroundColor = [UIColor clearColor];
     }
     
     return _forewordView;
@@ -93,10 +93,10 @@
 }
 - (UIImage *)getImageFromView {
     
-    CGSize size = [UIScreen mainScreen].bounds.size;
+    CGSize size = self.bounds.size;
     UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
     [self.layer renderInContext:UIGraphicsGetCurrentContext()];
-    UIImage*image = UIGraphicsGetImageFromCurrentImageContext();
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
 }
