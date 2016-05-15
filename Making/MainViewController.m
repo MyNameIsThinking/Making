@@ -80,8 +80,9 @@
 #pragma mark - UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
-    if ([_delegate respondsToSelector:@selector(pressMainCell)]) {
-        [_delegate pressMainCell];
+    if ([_delegate respondsToSelector:@selector(pressMainCellWithModel:)]) {
+        CoreTextModel *model = _mainModels[indexPath.row];
+        [_delegate pressMainCellWithModel:model];
     }
 }
 - (UICollectionView *)collectionView {

@@ -21,7 +21,7 @@ typedef NS_OPTIONS(NSUInteger, PressType) {
 @protocol MainDelegate <NSObject>
 
 - (void)pressBtnWithType:(UIButton *)sender;
-- (void)pressMainCell;
+- (void)pressMainCellWithModel:(CoreTextModel *)model;
 - (void)pressCell:(MakingCell *)cell changeType:(PressType)type;
 @end
 

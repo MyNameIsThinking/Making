@@ -54,8 +54,8 @@ const NSTimeInterval durationTime = 0.4;
             break;
     }
 }
-- (void)pressMainCell {
-    [self presentViewController:[[EditTextViewController alloc] init] animated:YES completion:^{
+- (void)pressMainCellWithModel:(CoreTextModel *)model {
+    [self presentViewController:[[EditTextViewController alloc] initWithModel:model] animated:YES completion:^{
     }];
 }
 - (void)pressCell:(MakingCell *)cell changeType:(PressType)type {

@@ -9,6 +9,7 @@
 #import "EditTextViewController.h"
 
 @interface EditTextViewController () <UITextViewDelegate>
+@property (nonatomic, retain) CoreTextModel *model;
 @property (nonatomic, retain) UITextView *mainTextView;
 @property (nonatomic, retain) UITextView *forewordTextView;
 @property (nonatomic, retain) UIButton *doneBtn;
@@ -21,10 +22,11 @@
     self.mainTextView = nil;
     self.forewordTextView = nil;
 }
-- (id)init {
+- (id)initWithModel:(CoreTextModel *)model {
 
     self = [super init];
     if (self) {
+        _model = model;
         self.view.backgroundColor = [UIColor whiteColor];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
@@ -72,6 +74,8 @@
 - (void)goBack:(UIButton *)sender {
 
     if ([sender isEqual:_doneBtn]) {
+        _model.text = _mainTextView.text;
+        _model.forewordText = _forewordTextView.text;
         NSLog(@"保存");
     } else if ([sender isEqual:_returnBtn]) {
         NSLog(@"放棄");
@@ -87,6 +91,7 @@
         _mainTextView.delegate = self;
         _mainTextView.backgroundColor = [UIColor yellowColor];
         _mainTextView.returnKeyType = UIReturnKeyNext;
+        _mainTextView.text = _model.text;
     }
     
     return _mainTextView;
@@ -99,6 +104,7 @@
         _forewordTextView.delegate = self;
         _forewordTextView.backgroundColor = [UIColor redColor];
         _forewordTextView.returnKeyType = UIReturnKeyNext;
+        _forewordTextView.text = _model.forewordText;
     }
     
     return _forewordTextView;

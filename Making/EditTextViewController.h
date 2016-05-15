@@ -7,7 +7,9 @@
 //
 
 #import "BaseViewController.h"
+#import "CoreTextModel.h"
 
 @interface EditTextViewController : BaseViewController
 
+- (id)initWithModel:(CoreTextModel *)model;
 @end
