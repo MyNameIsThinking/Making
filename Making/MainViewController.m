@@ -47,6 +47,7 @@
     CoreTextModel *newModel = [[CoreTextModel alloc] initWithModel:model];
     newModel.BGColor = selectCell.backgroundColor;
     newModel.fontName = selectCell.fontName;
+    newModel.forewordFontName = selectCell.forewordFontName;
     [_mainModels replaceObjectAtIndex:_currIndex withObject:newModel];
     [_collectionView reloadData];
 }

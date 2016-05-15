@@ -47,7 +47,7 @@
     
     self.forewordLabel.textAlignment = model.forewordAlignment;
     self.forewordLabel.text = model.forewordText;
-    self.fontName = fontName?fontName:model.forewordFontName;
+    self.forewordFontName = fontName?fontName:model.forewordFontName;
     self.forewordLabel.font = [UIFont fontWithName:self.fontName size:12/_scale];
     self.forewordLabel.textColor = [UIColor grayColor];
     self.forewordLabel.frame = CGRectInset(self.forewordView.bounds,10,10);
