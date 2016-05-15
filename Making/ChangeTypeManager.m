@@ -111,6 +111,16 @@ static ChangeTypeManager *_instance;
 //        _model.frame = CGRectFromString(string);
     } else if ([self.currentElement isEqualToString:@"identifier"]) {
         _model.identifier = string;
+    } else if ([self.currentElement isEqualToString:@"forewordText"]) {
+        _model.forewordText = string;
+    } else if ([self.currentElement isEqualToString:@"forewordFontSize"]) {
+        _model.forewordFontSize = [string integerValue];
+    } else if ([self.currentElement isEqualToString:@"forewordAlignment"]) {
+        _model.forewordAlignment = [string integerValue];
+    } else if ([self.currentElement isEqualToString:@"forewordFrame"]) {
+//        _model.forewordFrame = CGRectFromString(string);
+    } else if ([self.currentElement isEqualToString:@"forewordFontName"]) {
+        _model.forewordFontName = string;
     }
 }
 

@@ -8,4 +8,11 @@
         <frame>{{0, 0}, {100, 100}}</frame>
         <fontName>Zapfino</fontName>
     </mainText>
+    <forewordText>
+        <forewordText>foreword1</forewordText>
+        <forewordFontSize>40</forewordFontSize>
+        <forewordAlignment>1</forewordAlignment>
+        <forewordFrame>{{0, 0}, {100, 100}}</forewordFrame>
+        <forewordFontName>Zapfino</forewordFontName>
+    </forewordText>
 </model>
