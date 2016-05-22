@@ -68,7 +68,6 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
-    cell.scale = 1;
     _currCell = cell;
     _currIndex = indexPath.row;
     CoreTextModel *model = _mainModels[indexPath.row];
@@ -88,7 +87,7 @@
 - (UICollectionView *)collectionView {
 
     if (!_collectionView) {
-        CGFloat width = CGRectGetWidth(self.view.bounds);
+        CGFloat width = [MakingCell getCellSize].width;
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, width, width) collectionViewLayout:self.collectionViewLayout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;

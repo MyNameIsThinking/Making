@@ -10,54 +10,98 @@
 #import "CoreTextModel.h"
 #import "M80AttributedLabel.h"
 
-@interface MakingCell ()
+@interface MakingCell () {
+
+    CGSize size;
+}
+
+@property (nonatomic, retain) UIImageView *cellImageView;
+@property (nonatomic, retain) UIView *cellView;
 @property (nonatomic, retain) UIView *mainView;
 @property (nonatomic, retain) UIView *forewordView;
-@property (nonatomic, retain) M80AttributedLabel *label;
+@property (nonatomic, retain) M80AttributedLabel *mainLabel;
 @property (nonatomic, retain) M80AttributedLabel *forewordLabel;
+
 @end
 @implementation MakingCell
 
 + (NSString *)identifier {
     return @"MakingCell";
 }
++ (CGSize)getCellSize {
+    return CGSizeMake(CGRectGetWidth([UIScreen mainScreen].bounds), CGRectGetWidth([UIScreen mainScreen].bounds));
+}
 - (void)dealloc {
+    self.cellImage = nil;
     self.model = nil;
-    self.label = nil;
+    self.cellImageView = nil;
+    self.cellView = nil;
+    self.mainView = nil;
+    self.forewordView = nil;
+    self.mainLabel = nil;
     self.forewordLabel = nil;
+}
+- (id)initWithFrame:(CGRect)frame {
+
+    self = [super initWithFrame:frame];
+    if (self) {
+        size = [MakingCell getCellSize];
+    }
+    
+    return self;
 }
 - (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName {
     
-    [_label removeFromSuperview];
-    _label = nil;
+    [_mainLabel removeFromSuperview];
+    _mainLabel = nil;
     [_forewordLabel removeFromSuperview];
     _forewordLabel = nil;
     
-    [self addSubview:self.mainView];
-    [self addSubview:self.forewordView];
+    [self.cellView addSubview:self.mainView];
+    [self.cellView addSubview:self.forewordView];
     
     _model = model;
-    self.label.textAlignment = model.textAlignment;
-    self.label.text = model.text;
+    self.mainLabel.textAlignment = model.textAlignment;
+    self.mainLabel.text = model.text;
     self.fontName = fontName?fontName:model.fontName;
-    self.label.font = [UIFont fontWithName:self.fontName size:26/_scale];
-    self.label.textColor = [UIColor grayColor];
-    self.label.frame = CGRectInset(self.mainView.bounds,10,10);
-    [self.mainView addSubview:self.label];
+    self.mainLabel.font = [UIFont fontWithName:self.fontName size:26];
+    self.mainLabel.textColor = [UIColor grayColor];
+    self.mainLabel.frame = CGRectInset(self.mainView.bounds,10,10);
+    [self.mainView addSubview:self.mainLabel];
     
     self.forewordLabel.textAlignment = model.forewordAlignment;
     self.forewordLabel.text = model.forewordText;
     self.forewordFontName = fontName?fontName:model.forewordFontName;
-    self.forewordLabel.font = [UIFont fontWithName:self.fontName size:12/_scale];
+    self.forewordLabel.font = [UIFont fontWithName:self.fontName size:12];
     self.forewordLabel.textColor = [UIColor grayColor];
     self.forewordLabel.frame = CGRectInset(self.forewordView.bounds,10,10);
     [self.forewordView addSubview:self.forewordLabel];
+    
+    _cellImage = [self getImageFromView];
+    self.cellImageView.image = _cellImage;
+    [self addSubview:self.cellImageView];
+}
+- (UIImageView *)cellImageView {
+
+    if (!_cellImageView) {
+        _cellImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    }
+    
+    return _cellImageView;
+}
+- (UIView *)cellView {
+
+    if (!_cellView) {
+        _cellView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    }
+    
+    return _cellView;
 }
 - (UIView *)mainView {
 
     if (!_mainView) {
         
-        _mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height-(100/_scale))];
+        _mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height-(100))];
         _mainView.backgroundColor = [UIColor clearColor];
     }
     
@@ -67,20 +111,20 @@
     
     if (!_forewordView) {
         
-        _forewordView = [[UIView alloc] initWithFrame:CGRectMake(0, self.mainView.frame.size.height, self.bounds.size.width, self.bounds.size.height-self.mainView.frame.size.height)];
+        _forewordView = [[UIView alloc] initWithFrame:CGRectMake(0, self.mainView.frame.size.height, size.width, size.height-self.mainView.frame.size.height)];
         _forewordView.backgroundColor = [UIColor clearColor];
     }
     
     return _forewordView;
 }
-- (M80AttributedLabel *)label {
+- (M80AttributedLabel *)mainLabel {
 
-    if (!_label) {
-        _label = [[M80AttributedLabel alloc] initWithFrame:CGRectZero];
-        _label.backgroundColor = [UIColor clearColor];
+    if (!_mainLabel) {
+        _mainLabel = [[M80AttributedLabel alloc] initWithFrame:CGRectZero];
+        _mainLabel.backgroundColor = [UIColor clearColor];
     }
     
-    return _label;
+    return _mainLabel;
 }
 - (M80AttributedLabel *)forewordLabel {
     
@@ -93,9 +137,8 @@
 }
 - (UIImage *)getImageFromView {
     
-    CGSize size = self.bounds.size;
     UIGraphicsBeginImageContextWithOptions(size, NO, [UIScreen mainScreen].scale);
-    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
+    [self.cellView.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;

@@ -81,7 +81,6 @@
     
     CountMakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[CountMakingCell identifier] forIndexPath:indexPath];
     cell.delegate = self;
-    cell.scale = 3;
     CoreTextModel *model = _mainModels[indexPath.row];
     cell.backgroundColor = model.BGColor;
     [cell showWithModel:model withFontName:nil];

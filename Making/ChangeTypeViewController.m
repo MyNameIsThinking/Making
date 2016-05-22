@@ -134,7 +134,6 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
-    cell.scale = 2;
     if (_changeType==ChangeTypeBackground) {
         cell.backgroundColor = _colors[indexPath.row];
         [cell showWithModel:self.defaultModel withFontName:nil];

@@ -74,7 +74,6 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
     for (int i = 0; i < _models.count; i++) {
         CoreTextModel *model = _models[i];
         MakingCell *cell = [[MakingCell alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds))];
-        cell.scale = 1;
         cell.backgroundColor = model.BGColor;
         [cell showWithModel:model withFontName:nil];
         UIImage *image = [cell getImageFromView];
@@ -212,7 +211,6 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     CoreTextModel *model = _models[indexPath.row];
-    cell.scale = _scale;
     cell.backgroundColor = model.BGColor;
     [cell showWithModel:model withFontName:nil];
     

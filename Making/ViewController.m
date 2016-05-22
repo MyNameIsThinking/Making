@@ -60,9 +60,10 @@ const NSTimeInterval durationTime = 0.4;
 }
 - (void)pressCell:(MakingCell *)cell changeType:(PressType)type {
     
-    UIImage *image = [cell getImageFromView];
-    self.animationImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    UIImage *image = cell.cellImage;
+    self.animationImageView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
     self.animationImageView.image = image;
+    self.animationImageView.backgroundColor = cell.backgroundColor;
     [self toCell:self.animationImageView];
     [_mainViewController.collectionView removeFromSuperview];
     
@@ -95,9 +96,10 @@ const NSTimeInterval durationTime = 0.4;
 - (void)pressCell:(MakingCell *)cell scrollView:(UIScrollView *)scrollView {
     
     [self.mainViewController setSelectCell:cell];
-    UIImage *image = [cell getImageFromView];
-    self.animationImageView.frame = CGRectMake(0, 0, image.size.width, image.size.height);
+    UIImage *image = cell.cellImage;
+    self.animationImageView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
     self.animationImageView.image = image;
+    self.animationImageView.backgroundColor = cell.backgroundColor;
     [self toMain:self.animationImageView scroller:scrollView cell:cell];
     [self pressClose];
 }

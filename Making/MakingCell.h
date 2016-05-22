@@ -12,11 +12,12 @@
 
 @interface MakingCell : UICollectionViewCell
 @property (nonatomic, assign) BOOL isShadow;
+@property (nonatomic, retain) UIImage *cellImage;
 @property (nonatomic, retain) CoreTextModel *model;
 @property (nonatomic, retain) NSString *fontName;
 @property (nonatomic, retain) NSString *forewordFontName;
-@property (nonatomic, assign) CGFloat scale;
 + (NSString *)identifier;
++ (CGSize)getCellSize;
 - (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName;
 - (UIImage *)getImageFromView;
 @end
