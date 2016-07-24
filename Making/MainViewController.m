@@ -117,12 +117,11 @@
     if (!_changeTypeBtn) {
         _changeTypeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _changeTypeBtn.tag = PressTypeChangeType;
-        CGFloat width = 60;
-        _changeTypeBtn.frame = CGRectMake(0, CGRectGetHeight(_collectionView.frame)+width, width, width);
+        UIImage *image = [UIImage imageNamed:@"btn-layout"];
+        [_changeTypeBtn setImage:image forState:UIControlStateNormal];
+        _changeTypeBtn.frame = CGRectMake(0, CGRectGetHeight(_collectionView.frame)+image.size.width/2, image.size.width, image
+                                          .size.height);
         _changeTypeBtn.center = CGPointMake(CGRectGetWidth(_collectionView.frame)/2, _changeTypeBtn.center.y);
-        [_changeTypeBtn setTitle:@"風格" forState:UIControlStateNormal];
-        [_changeTypeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _changeTypeBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         [_changeTypeBtn addTarget:self action:@selector(pressCellWithChangeType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -133,12 +132,10 @@
     if (!_changeBackgroundBtn) {
         _changeBackgroundBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _changeBackgroundBtn.tag = PressTypeChangeBackground;
-        CGFloat width = 60;
-        _changeBackgroundBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y, width, width);
-        _changeBackgroundBtn.center = CGPointMake(CGRectGetWidth(_collectionView.frame)/4, _changeTypeBtn.center.y);
-        [_changeBackgroundBtn setTitle:@"背景" forState:UIControlStateNormal];
-        [_changeBackgroundBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _changeBackgroundBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+        UIImage *image = [UIImage imageNamed:@"btn-theme"];
+        [_changeBackgroundBtn setImage:image forState:UIControlStateNormal];
+        _changeBackgroundBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y, image.size.width, image.size.height);
+        _changeBackgroundBtn.center = CGPointMake(_changeTypeBtn.frame.origin.x/2, _changeTypeBtn.center.y);
         [_changeBackgroundBtn addTarget:self action:@selector(pressCellWithChangeType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -149,12 +146,10 @@
     if (!_editTextBtn) {
         _editTextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _editTextBtn.tag = PressTypeChangeFont;
-        CGFloat width = 60;
-        _editTextBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y, width, width);
-        _editTextBtn.center = CGPointMake((CGRectGetWidth(_collectionView.frame)/4)*3, _changeTypeBtn.center.y);
-        [_editTextBtn setTitle:@"字體" forState:UIControlStateNormal];
-        [_editTextBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _editTextBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+        UIImage *image = [UIImage imageNamed:@"btn-font"];
+        [_editTextBtn setImage:image forState:UIControlStateNormal];
+        _editTextBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y, image.size.width, image.size.height);
+        _editTextBtn.center = CGPointMake(_changeTypeBtn.frame.origin.x+_changeTypeBtn.frame.size.width+_changeBackgroundBtn.center.x, _changeTypeBtn.center.y);
         [_editTextBtn addTarget:self action:@selector(pressCellWithChangeType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -165,12 +160,10 @@
     if (!_shareBtn) {
         _shareBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _shareBtn.tag = PressTypeShare;
-        CGFloat width = 60;
-        _shareBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y+CGRectGetHeight(_changeTypeBtn.frame)+width/2, width, width);
+        UIImage *image = [UIImage imageNamed:@"btn-share"];
+        [_shareBtn setImage:image forState:UIControlStateNormal];
+        _shareBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y+CGRectGetHeight(_changeTypeBtn.frame)+image.size.width/2, image.size.width, image.size.height);
         _shareBtn.center = CGPointMake(_changeTypeBtn.center.x, _shareBtn.center.y);
-        [_shareBtn setTitle:@"分享" forState:UIControlStateNormal];
-        [_shareBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _shareBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         if ([_delegate respondsToSelector:@selector(pressBtnWithType:)]) {
             [_shareBtn addTarget:_delegate action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
         }
@@ -184,12 +177,9 @@
     if (!_countBtn) {
         _countBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _countBtn.tag = PressTypeCount;
-        CGFloat width = 60;
-        _countBtn.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds)-width, width, width);
-        _countBtn.center = CGPointMake(CGRectGetWidth(_collectionView.frame)/4, _countBtn.center.y);
-        [_countBtn setTitle:@"新增" forState:UIControlStateNormal];
-        [_countBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _countBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+        UIImage *image = [UIImage imageNamed:@"btn-add"];
+        [_countBtn setImage:image forState:UIControlStateNormal];
+        _countBtn.frame = CGRectMake(10, CGRectGetHeight(self.view.bounds)-image.size.height-10, image.size.width, image.size.height);
         if ([_delegate respondsToSelector:@selector(pressBtnWithType:)]) {
             [_countBtn addTarget:_delegate action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
         }
@@ -203,12 +193,9 @@
     if (!_infoBtn) {
         _infoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         _infoBtn.tag = PressTypeInfo;
-        CGFloat width = 60;
-        _infoBtn.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds)-width, width, width);
-        _infoBtn.center = CGPointMake((CGRectGetWidth(_collectionView.frame)/4)*3, _infoBtn.center.y);
-        [_infoBtn setTitle:@"信息" forState:UIControlStateNormal];
-        [_infoBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _infoBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+        UIImage *image = [UIImage imageNamed:@"btn-info"];
+        [_infoBtn setImage:image forState:UIControlStateNormal];
+        _infoBtn.frame = CGRectMake(CGRectGetWidth(self.view.bounds)-image.size.width-10, CGRectGetHeight(self.view.bounds)-image.size.height-10, image.size.width, image.size.height);
         if ([_delegate respondsToSelector:@selector(pressBtnWithType:)]) {
             [_infoBtn addTarget:_delegate action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
         }
