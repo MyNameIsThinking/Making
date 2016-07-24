@@ -241,12 +241,10 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
 - (UIButton *)backBtn {
 
     if (!_backBtn) {
+        UIImage *image = [UIImage imageNamed:@"btn-back"];
         _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_backBtn setTitle:@"<" forState:UIControlStateNormal];
-        [_backBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-        _backBtn.titleLabel.font = [UIFont systemFontOfSize:50];
-        CGSize size = [_backBtn.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_backBtn.titleLabel.font}];
-        _backBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-size.width)/2, CGRectGetHeight(self.view.bounds)-20-size.height, size.width,size.height);
+        [_backBtn setImage:image forState:UIControlStateNormal];
+        _backBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-image.size.width)/2, CGRectGetHeight(self.view.bounds)-20-image.size.height, image.size.width,image.size.height);
         [_backBtn addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
         
     }
@@ -303,26 +301,24 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
     self = [super initWithFrame:frame];
     
     if (self) {
-        [self.shares addObject:@"本地"];
-        [self.shares addObject:@"微信"];
-        [self.shares addObject:@"微博"];
-        [self.shares addObject:@"空間"];
+        UIImage *saveImage = [UIImage imageNamed:@"btn-share-save"];
+        [self.shares addObject:saveImage];
+        [self.shares addObject:[UIImage imageNamed:@"btn-share-wechat"]];
+        [self.shares addObject:[UIImage imageNamed:@"btn-share-weibo"]];
+        [self.shares addObject:[UIImage imageNamed:@"btn-share-pinterest"]];
         
-        CGFloat offset = (frame.size.width-(frame.size.height*self.shares.count))/self.shares.count;
+        CGFloat offset = (frame.size.width-(saveImage.size.width*self.shares.count))/self.shares.count;
         
         for (int i = 0; i < self.shares.count; i++) {
             
             UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
             btn.tag = i;
-            [btn setTitle:self.shares[i] forState:UIControlStateNormal];
-            [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            btn.titleLabel.font = [UIFont systemFontOfSize:20];
-            btn.titleLabel.textAlignment = NSTextAlignmentCenter;
-            CGFloat width = frame.size.height;
-            btn.frame = CGRectMake((offset/2)+((width+offset)*i), 0, width, width);
+            UIImage *image = self.shares[i];
+            [btn setImage:image forState:UIControlStateNormal];
+            btn.frame = CGRectMake((offset/2)+((image.size.width+offset)*i), 0, image.size.width, image.size.height);
             btn.layer.masksToBounds = YES;
             btn.layer.borderWidth = 2;
-            btn.layer.cornerRadius = width/2;
+            btn.layer.cornerRadius = image.size.width/2;
             btn.layer.borderColor = [UIColor yellowColor].CGColor;
             [btn addTarget:self action:@selector(pressShare:) forControlEvents:UIControlEventTouchUpInside];
             [self addSubview:btn];

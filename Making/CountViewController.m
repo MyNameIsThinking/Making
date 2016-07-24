@@ -180,12 +180,11 @@
 - (UIButton *)closeBtn {
 
     if (!_closeBtn) {
+        UIImage *image = [UIImage imageNamed:@"btn-confirm"];
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_closeBtn setTitle:@"關" forState:UIControlStateNormal];
-        _closeBtn.titleLabel.font = [UIFont systemFontOfSize:20];
-        [_closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        CGSize size = [_closeBtn.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_closeBtn.titleLabel.font}];
-        _closeBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-size.width)/2, CGRectGetHeight(self.view.bounds)-(CGRectGetHeight(self.view.bounds)/6)+(size.height/2), size.width, size.height);
+        [_closeBtn setImage:image forState:UIControlStateNormal];
+        CGSize size = image.size;
+        _closeBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-size.width)/2, CGRectGetHeight(self.view.bounds)-image.size.height-10, size.width, size.height);
         [_closeBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -208,11 +207,10 @@
 - (UIButton *)addBtn {
 
     if (!_addBtn) {
+        UIImage *image = [UIImage imageNamed:@"btn-copy"];
         _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_addBtn setTitle:@"+" forState:UIControlStateNormal];
-        [_addBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _addBtn.titleLabel.font = [UIFont systemFontOfSize:40];
-        CGSize size = [_addBtn.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_addBtn.titleLabel.font}];
+        [_addBtn setImage:image forState:UIControlStateNormal];
+        CGSize size = image.size;
         _addBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-size.width-10, CGRectGetHeight(self.frame)-size.height-10, size.width, size.height);
         [_addBtn addTarget:self action:@selector(pressAdd) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -222,11 +220,10 @@
 - (UIButton *)delBtn {
     
     if (!_delBtn) {
+        UIImage *image = [UIImage imageNamed:@"btn-remove"];
         _delBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_delBtn setTitle:@"-" forState:UIControlStateNormal];
-        [_delBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _delBtn.titleLabel.font = [UIFont systemFontOfSize:40];
-        CGSize size = [_delBtn.titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_delBtn.titleLabel.font}];
+        [_delBtn setImage:image forState:UIControlStateNormal];
+        CGSize size = image.size;;
         _delBtn.frame = CGRectMake(10, CGRectGetHeight(self.frame)-size.height-10, size.width, size.height);
         [_delBtn addTarget:self action:@selector(pressDel) forControlEvents:UIControlEventTouchUpInside];
     }

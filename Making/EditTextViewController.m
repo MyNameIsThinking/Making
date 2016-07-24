@@ -58,9 +58,9 @@
     NSDictionary *info = [notification userInfo];
     CGSize size = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;//得到鍵盤的高度
     
-    self.copyedBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-CGRectGetWidth(self.copyedBtn.frame))/2, CGRectGetHeight(self.view.bounds)-size.height-CGRectGetHeight(self.copyedBtn.frame), CGRectGetWidth(self.copyedBtn.frame), CGRectGetHeight(self.copyedBtn.frame));
-    self.returnBtn.center = CGPointMake(CGRectGetWidth(self.returnBtn.frame)*1.5, self.copyedBtn.center.y);
-    self.doneBtn.center = CGPointMake(CGRectGetWidth(self.view.bounds)-CGRectGetWidth(self.returnBtn.frame)*1.5, self.copyedBtn.center.y);
+    self.copyedBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-CGRectGetWidth(self.copyedBtn.frame))/2, CGRectGetHeight(self.view.bounds)-size.height-CGRectGetHeight(self.copyedBtn.frame)-10, CGRectGetWidth(self.copyedBtn.frame), CGRectGetHeight(self.copyedBtn.frame));
+    self.returnBtn.center = CGPointMake(10+CGRectGetWidth(self.returnBtn.frame)/2, self.copyedBtn.center.y);
+    self.doneBtn.center = CGPointMake(CGRectGetWidth(self.view.bounds)-self.returnBtn.center.x, self.copyedBtn.center.y);
     
     self.forewordTextView.center = CGPointMake(CGRectGetWidth(self.view.bounds)/2, self.copyedBtn.center.y-(CGRectGetHeight(self.copyedBtn.frame)/2)-(CGRectGetHeight(self.forewordTextView.frame)/2));
     
@@ -112,11 +112,10 @@
 - (UIButton *)doneBtn {
 
     if (!_doneBtn) {
-        CGFloat width = 30;
+        UIImage *image = [UIImage imageNamed:@"btn-confirm-small"];
         _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _doneBtn.frame = CGRectMake(0, -width, width, width);
-        [_doneBtn setTitle:@"完" forState:UIControlStateNormal];
-        [_doneBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_doneBtn setImage:image forState:UIControlStateNormal];
+        _doneBtn.frame = CGRectMake(0, -10, image.size.width, image.size.height);
         [_doneBtn addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -125,11 +124,10 @@
 - (UIButton *)returnBtn {
 
     if (!_returnBtn) {
-        CGFloat width = 30;
+        UIImage *image = [UIImage imageNamed:@"btn-cancel-small"];
         _returnBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _returnBtn.frame = CGRectMake(0, -width, width, width);
-        [_returnBtn setTitle:@"返" forState:UIControlStateNormal];
-        [_returnBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_returnBtn setImage:image forState:UIControlStateNormal];
+        _returnBtn.frame = CGRectMake(0, -10, image.size.width, image.size.height);
         [_returnBtn addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -138,11 +136,10 @@
 - (UIButton *)copyedBtn {
 
     if (!_copyedBtn) {
-        CGFloat width = 30;
+        UIImage *image = [UIImage imageNamed:@"btn-paste"];
         _copyedBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _copyedBtn.frame = CGRectMake(0, -width, width, width);
-        [_copyedBtn setTitle:@"拷" forState:UIControlStateNormal];
-        [_copyedBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [_copyedBtn setImage:image forState:UIControlStateNormal];
+        _copyedBtn.frame = CGRectMake(0, -10, image.size.width, image.size.height);
     }
     
     return _copyedBtn;

@@ -175,13 +175,11 @@
 - (UIButton *)closeBtn {
 
     if (!_closeBtn) {
-        CGFloat width = 60;
+        UIImage *image = [UIImage imageNamed:@"btn-cancel-shadowed"];
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _closeBtn.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds)-width, width, width);
+        [_closeBtn setImage:image forState:UIControlStateNormal];
+        _closeBtn.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds)-image.size.height, image.size.width, image.size.height);
         _closeBtn.center = CGPointMake(CGRectGetWidth(self.view.bounds)/2, _closeBtn.frame.origin.y);
-        [_closeBtn setTitle:@"關閉" forState:UIControlStateNormal];
-        [_closeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        _closeBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
         if ([_delegate respondsToSelector:@selector(pressClose)]) {
             [_closeBtn addTarget:_delegate action:@selector(pressClose) forControlEvents:UIControlEventTouchUpInside];
         }
