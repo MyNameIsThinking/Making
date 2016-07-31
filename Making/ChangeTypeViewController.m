@@ -64,8 +64,8 @@
             }
         }
         
-        if (selectIndex != -1 && selectIndex != 1) {
-            [_colors exchangeObjectAtIndex:1 withObjectAtIndex:selectIndex];
+        if (selectIndex != -1 && selectIndex != 0) {
+            [_colors exchangeObjectAtIndex:0 withObjectAtIndex:selectIndex];
         }
     }
     
@@ -128,7 +128,7 @@
     if (_changeType == ChangeTypeAlignment) {
         return _xmls.count;
     } else if (_changeType==ChangeTypeBackground) {
-        return _colors.count;
+        return _colors.count+1;
     } else if (_changeType==ChangeTypeFont) {
         return _fonts.count;
     }
@@ -138,23 +138,18 @@
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     if (_changeType==ChangeTypeBackground) {
-        if ([_colors[indexPath.row] isKindOfClass:[UIColor class]]) {
-            cell.backgroundColor = _colors[indexPath.row];
-            [cell showWithModel:self.defaultModel withFontName:nil withBackgroundImage:nil];
-        } else if ([_colors[indexPath.row] isKindOfClass:[UIImage class]]) {
-            cell.backgroundColor = [UIColor clearColor];
-            [cell showWithModel:self.defaultModel withFontName:nil withBackgroundImage:_colors[indexPath.row]];
-        }
+        cell.backgroundColor = indexPath.row==0?[UIColor whiteColor]:_colors[indexPath.row-1];
+        [cell showWithModel:self.defaultModel withFontName:nil withBackgroundImage:indexPath.row==0?self.defaultModel.BGImage:nil];
         cell.cellDelegate = self;
     } else if (_changeType==ChangeTypeAlignment) {
         cell.backgroundColor = self.defaultColor;
         XMLUtil *xml = _xmls[indexPath.row];
-        [cell showWithModel:xml.model withFontName:nil withBackgroundImage:nil];
+        [cell showWithModel:xml.model withFontName:nil withBackgroundImage:self.defaultModel.BGImage];
         cell.cellDelegate = nil;
     } else if (_changeType==ChangeTypeFont) {
         cell.backgroundColor = self.defaultColor;
         NSString *fontName = _fonts[indexPath.row];
-        [cell showWithModel:self.defaultModel withFontName:fontName withBackgroundImage:nil];
+        [cell showWithModel:self.defaultModel withFontName:fontName withBackgroundImage:self.defaultModel.BGImage];
         cell.cellDelegate = nil;
     }
     
@@ -171,11 +166,7 @@
 }
 #pragma mark - UIImagePickerControllerDelegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo {
-    
-    NSMutableArray *colors = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].colors];
-    [colors replaceObjectAtIndex:0 withObject:image];
-    [ChangeTypeManager shareInstance].colors = [NSArray arrayWithArray:colors];
-    _colors = colors;
+    self.defaultModel.BGImage = image;
     [self dismissViewControllerAnimated:YES completion:^{
         [self.collectionView reloadData];
     }];

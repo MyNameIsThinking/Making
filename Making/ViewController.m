@@ -64,7 +64,7 @@ const NSTimeInterval durationTime = 0.4;
     self.animationImageView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
     self.animationImageView.image = image;
     self.animationImageView.backgroundColor = cell.backgroundColor;
-    [self toCell:self.animationImageView];
+    [self toCell:self.animationImageView toIndex:cell.model.BGImage?0:1];
     [_mainViewController.collectionView removeFromSuperview];
     
     self.changeTypeViewController.defaultColor = cell.backgroundColor;
@@ -108,7 +108,7 @@ const NSTimeInterval durationTime = 0.4;
     [_animationImageView removeFromSuperview];
     _animationImageView = nil;
 }
-- (void)toCell:(UIImageView *)imageView {
+- (void)toCell:(UIImageView *)imageView toIndex:(NSInteger)index {
     
     [self.view addSubview:imageView];
     
@@ -116,7 +116,12 @@ const NSTimeInterval durationTime = 0.4;
     
     CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
     positionAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(imageView.layer.frame.origin.x+(imageView.layer.frame.size.width/2), imageView.layer.frame.origin.y+(imageView.layer.frame.size.height/2))];
-    positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*3, CGRectGetHeight(imageView.layer.frame)/4)];
+    
+    if (index==0) {
+        positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*1, CGRectGetHeight(imageView.layer.frame)/4)];
+    } else if (index==1) {
+        positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*3, CGRectGetHeight(imageView.layer.frame)/4)];
+    }
     positionAnimation.fillMode = kCAFillModeForwards;
     positionAnimation.removedOnCompletion = NO;
     positionAnimation.duration = time;
