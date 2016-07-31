@@ -26,13 +26,14 @@
 
 @end
 
-@interface ChangeTypeViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface ChangeTypeViewController () <UICollectionViewDelegate, UICollectionViewDataSource,UINavigationControllerDelegate, UIImagePickerControllerDelegate, MakingCellDelegate>
 @property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) UICollectionViewFlowLayout *collectionViewLayout;
 @property (nonatomic, retain) UIButton *closeBtn;
 @property (nonatomic, retain) NSMutableArray *colors;
 @property (nonatomic, retain) NSMutableArray *xmls;
 @property (nonatomic, retain) NSMutableArray *fonts;
+@property (nonatomic, retain) UIImagePickerController *imagePicker;
 @end
 
 @implementation ChangeTypeViewController
@@ -54,10 +55,12 @@
         _colors = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].colors];
         int selectIndex = -1;
         for (int i = 0; i < _colors.count; i++) {
-            UIColor *color = _colors[i];
-            if ([_defaultColor isSameToColor:color]) {
-                selectIndex = i;
-                break;
+            if ([_colors[i] isKindOfClass:[UIColor class]]) {
+                UIColor *color = _colors[i];
+                if ([_defaultColor isSameToColor:color]) {
+                    selectIndex = i;
+                    break;
+                }
             }
         }
         
@@ -135,21 +138,48 @@
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     if (_changeType==ChangeTypeBackground) {
-        cell.backgroundColor = _colors[indexPath.row];
-        [cell showWithModel:self.defaultModel withFontName:nil];
+        if ([_colors[indexPath.row] isKindOfClass:[UIColor class]]) {
+            cell.backgroundColor = _colors[indexPath.row];
+            [cell showWithModel:self.defaultModel withFontName:nil withBackgroundImage:nil];
+        } else if ([_colors[indexPath.row] isKindOfClass:[UIImage class]]) {
+            cell.backgroundColor = [UIColor clearColor];
+            [cell showWithModel:self.defaultModel withFontName:nil withBackgroundImage:_colors[indexPath.row]];
+        }
+        cell.cellDelegate = self;
     } else if (_changeType==ChangeTypeAlignment) {
         cell.backgroundColor = self.defaultColor;
         XMLUtil *xml = _xmls[indexPath.row];
-        [cell showWithModel:xml.model withFontName:nil];
+        [cell showWithModel:xml.model withFontName:nil withBackgroundImage:nil];
+        cell.cellDelegate = nil;
     } else if (_changeType==ChangeTypeFont) {
         cell.backgroundColor = self.defaultColor;
         NSString *fontName = _fonts[indexPath.row];
-        [cell showWithModel:self.defaultModel withFontName:fontName];
+        [cell showWithModel:self.defaultModel withFontName:fontName withBackgroundImage:nil];
+        cell.cellDelegate = nil;
     }
+    
+    cell.isShowPhoto = (indexPath.item==0 && _changeType==ChangeTypeBackground);
     
     return cell;
 }
+#pragma mark - MakingCellDelegate
+- (void)openImagePicker {
 
+    [self presentViewController:self.imagePicker animated:YES completion:^{
+        
+    }];
+}
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo {
+    
+    NSMutableArray *colors = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].colors];
+    [colors replaceObjectAtIndex:0 withObject:image];
+    [ChangeTypeManager shareInstance].colors = [NSArray arrayWithArray:colors];
+    _colors = colors;
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.collectionView reloadData];
+    }];
+}
 - (UICollectionView *)collectionView {
     
     if (!_collectionView) {
@@ -186,5 +216,16 @@
     }
     
     return _closeBtn;
+}
+- (UIImagePickerController *)imagePicker {
+    
+    if (!_imagePicker) {
+        _imagePicker = [[UIImagePickerController alloc] init];
+        _imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        _imagePicker.delegate = self;
+        
+    }
+    
+    return _imagePicker;
 }
 @end

@@ -29,6 +29,7 @@
         self.lineSpacing = model.lineSpacing;           //行间距
         self.paragraphSpacing = model.paragraphSpacing; //段间距
         self.BGColor = model.BGColor;                   //背景颜色
+        self.BGImage = model.BGImage;                   //背景圖
         
         self.forewordText = model.forewordText;
         self.forewordFontSize = model.forewordFontSize;

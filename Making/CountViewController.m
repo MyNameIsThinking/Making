@@ -83,7 +83,7 @@
     cell.delegate = self;
     CoreTextModel *model = _mainModels[indexPath.row];
     cell.backgroundColor = model.BGColor;
-    [cell showWithModel:model withFontName:nil];
+    [cell showWithModel:model withFontName:nil withBackgroundImage:model.BGImage];
     
     return cell;
 }
@@ -200,7 +200,7 @@
 }
 - (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName {
 
-    [super showWithModel:model withFontName:fontName];
+    [super showWithModel:model withFontName:fontName withBackgroundImage:model.BGImage];
     [self addSubview:self.addBtn];
     [self addSubview:self.delBtn];
 }

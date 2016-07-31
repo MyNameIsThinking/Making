@@ -72,7 +72,7 @@
     _currIndex = indexPath.row;
     CoreTextModel *model = _mainModels[indexPath.row];
     cell.backgroundColor = model.BGColor;
-    [cell showWithModel:model withFontName:nil];
+    [cell showWithModel:model withFontName:nil withBackgroundImage:model.BGImage];
     
     return cell;
 }

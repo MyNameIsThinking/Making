@@ -26,6 +26,7 @@
 @property (nonatomic, assign) CGFloat lineSpacing;            //行间距
 @property (nonatomic, assign) CGFloat paragraphSpacing;       //段间距
 @property (nonatomic, retain) UIColor *BGColor;               //背景颜色
+@property (nonatomic, retain) UIImage *BGImage;               //背景圖
 
 @property (nonatomic, retain) NSString *forewordText;
 @property (nonatomic, assign) CGFloat forewordFontSize;

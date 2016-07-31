@@ -36,6 +36,7 @@ static ChangeTypeManager *_instance;
 
     if (!_colors) {
         _colors = [[NSArray alloc] initWithObjects:
+                   [UIImage imageNamed:@"btn-add"],
                    [UIColor redColor],
                    [UIColor yellowColor],
                    [UIColor blueColor],

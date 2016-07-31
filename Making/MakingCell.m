@@ -21,6 +21,8 @@
 @property (nonatomic, retain) UIView *forewordView;
 @property (nonatomic, retain) M80AttributedLabel *mainLabel;
 @property (nonatomic, retain) M80AttributedLabel *forewordLabel;
+@property (nonatomic, retain) UIButton *photoBtn;
+@property (nonatomic, retain) UIImageView *cellBackGroundImageView;
 
 @end
 @implementation MakingCell
@@ -50,17 +52,33 @@
     
     return self;
 }
-- (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName {
+- (void)layoutSubviews {
+
+    [super layoutSubviews];
+    self.photoBtn.hidden = !_isShowPhoto;
+}
+- (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName withBackgroundImage:(UIImage *)image {
     
     [_mainLabel removeFromSuperview];
     _mainLabel = nil;
     [_forewordLabel removeFromSuperview];
     _forewordLabel = nil;
     
+    [_cellBackGroundImageView removeFromSuperview];
+    _cellBackGroundImageView = nil;
+    
+    _model = [[CoreTextModel alloc] initWithModel:model];
+    _model.BGImage = image;
+    if (_model.BGImage) {
+        [self.cellView addSubview:self.cellBackGroundImageView];
+        self.cellBackGroundImageView.image = _model.BGImage;
+    }
+    
     [self.cellView addSubview:self.mainView];
     [self.cellView addSubview:self.forewordView];
     
-    _model = model;
+    
+    
     self.mainLabel.textAlignment = model.textAlignment;
     self.mainLabel.text = model.text;
     self.fontName = fontName?fontName:model.fontName;
@@ -80,6 +98,11 @@
     _cellImage = [self getImageFromView];
     self.cellImageView.image = _cellImage;
     [self addSubview:self.cellImageView];
+    
+    [self addSubview:self.photoBtn];
+}
+- (void)openImagePicker:(UIButton *)sender {
+    NSLog(@"openImagePicker");
 }
 - (UIImageView *)cellImageView {
 
@@ -134,6 +157,33 @@
     }
     
     return _forewordLabel;
+}
+- (void)openImagePicker {
+
+    if ([_cellDelegate respondsToSelector:@selector(openImagePicker)]) {
+        [_cellDelegate openImagePicker];
+    }
+}
+- (UIButton *)photoBtn {
+
+    if (!_photoBtn) {
+        UIImage *image = [UIImage imageNamed:@"btn-image-edit"];
+        _photoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        _photoBtn.frame = CGRectMake(10, CGRectGetHeight(self.frame)-image.size.height-10, image.size.width, image.size.height);
+        [_photoBtn setImage:image forState:UIControlStateNormal];
+        [_photoBtn addTarget:self action:@selector(openImagePicker) forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return _photoBtn;
+}
+- (UIImageView *)cellBackGroundImageView {
+
+    if (!_cellBackGroundImageView) {
+        _cellBackGroundImageView = [[UIImageView alloc] initWithFrame:self.cellView.bounds];
+        _cellBackGroundImageView.backgroundColor = [UIColor clearColor];
+    }
+    
+    return _cellBackGroundImageView;
 }
 - (UIImage *)getImageFromView {
     
