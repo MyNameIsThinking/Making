@@ -12,6 +12,7 @@
 		1F2A8C091CB0B4A500A496BE /* CoreTextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8C081CB0B4A500A496BE /* CoreTextModel.m */; };
 		1F2A8C111CB0E94100A496BE /* ChangeTypeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8C101CB0E94100A496BE /* ChangeTypeManager.m */; };
 		1F6628FF1CB88F09002D404C /* UIImage+Save.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6628FE1CB88F09002D404C /* UIImage+Save.m */; };
+		1F6768F01DB357F6006B895D /* FitHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F6768EF1DB357F6006B895D /* FitHelper.m */; };
 		1F80C2311CAAA86800961DA0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2301CAAA86800961DA0 /* main.m */; };
 		1F80C2341CAAA86800961DA0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2331CAAA86800961DA0 /* AppDelegate.m */; };
 		1F80C2371CAAA86800961DA0 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F80C2361CAAA86800961DA0 /* ViewController.m */; };
@@ -99,6 +100,8 @@
 		1F2A8C101CB0E94100A496BE /* ChangeTypeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeTypeManager.m; sourceTree = "<group>"; };
 		1F6628FD1CB88F09002D404C /* UIImage+Save.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Save.h"; sourceTree = "<group>"; };
 		1F6628FE1CB88F09002D404C /* UIImage+Save.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Save.m"; sourceTree = "<group>"; };
+		1F6768EE1DB357F5006B895D /* FitHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FitHelper.h; sourceTree = "<group>"; };
+		1F6768EF1DB357F6006B895D /* FitHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FitHelper.m; sourceTree = "<group>"; };
 		1F80C22C1CAAA86800961DA0 /* Making.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Making.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F80C2301CAAA86800961DA0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1F80C2321CAAA86800961DA0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -250,6 +253,8 @@
 				1F2A8C101CB0E94100A496BE /* ChangeTypeManager.m */,
 				1F16E2521CAEA6CA0009AA13 /* BaseViewController.h */,
 				1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */,
+				1F6768EE1DB357F5006B895D /* FitHelper.h */,
+				1F6768EF1DB357F6006B895D /* FitHelper.m */,
 				1FC66BAF1D4448E3004ECB69 /* Image */,
 				1F6628FC1CB88E84002D404C /* Category */,
 				1F8564311CB14DAE003B9AE1 /* Models */,
@@ -495,6 +500,7 @@
 				1F0B6DAD1CAF4DF000E9088F /* CountViewController.m in Sources */,
 				1F80C2371CAAA86800961DA0 /* ViewController.m in Sources */,
 				1F80C2341CAAA86800961DA0 /* AppDelegate.m in Sources */,
+				1F6768F01DB357F6006B895D /* FitHelper.m in Sources */,
 				1F6628FF1CB88F09002D404C /* UIImage+Save.m in Sources */,
 				1F2A8C091CB0B4A500A496BE /* CoreTextModel.m in Sources */,
 				1FBFA1021CB10A8100334E95 /* NSMutableAttributedString+M80.m in Sources */,
@@ -618,6 +624,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3Y5P5B554L;
 				INFOPLIST_FILE = Making/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -633,6 +640,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 3Y5P5B554L;
 				INFOPLIST_FILE = Making/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

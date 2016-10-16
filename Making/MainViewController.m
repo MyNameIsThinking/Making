@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "CoreTextModel.h"
 #import "ChangeTypeManager.h"
+#import "FitHelper.h"
 
 @interface MainViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
 @property (nonatomic, retain) UICollectionViewFlowLayout *collectionViewLayout;
@@ -119,7 +120,7 @@
         _changeTypeBtn.tag = PressTypeChangeType;
         UIImage *image = [UIImage imageNamed:@"btn-layout"];
         [_changeTypeBtn setImage:image forState:UIControlStateNormal];
-        _changeTypeBtn.frame = CGRectMake(0, CGRectGetHeight(_collectionView.frame)+image.size.width/2, image.size.width, image
+        _changeTypeBtn.frame = CGRectMake(0, CGRectGetHeight(_collectionView.frame)+[FitHelper fitHeight:56], image.size.width, image
                                           .size.height);
         _changeTypeBtn.center = CGPointMake(CGRectGetWidth(_collectionView.frame)/2, _changeTypeBtn.center.y);
         [_changeTypeBtn addTarget:self action:@selector(pressCellWithChangeType:) forControlEvents:UIControlEventTouchUpInside];
@@ -134,8 +135,7 @@
         _changeBackgroundBtn.tag = PressTypeChangeBackground;
         UIImage *image = [UIImage imageNamed:@"btn-theme"];
         [_changeBackgroundBtn setImage:image forState:UIControlStateNormal];
-        _changeBackgroundBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y, image.size.width, image.size.height);
-        _changeBackgroundBtn.center = CGPointMake(_changeTypeBtn.frame.origin.x/2, _changeTypeBtn.center.y);
+        _changeBackgroundBtn.frame = CGRectMake([FitHelper fitWidth:30], _changeTypeBtn.frame.origin.y, image.size.width, image.size.height);
         [_changeBackgroundBtn addTarget:self action:@selector(pressCellWithChangeType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -148,8 +148,7 @@
         _editTextBtn.tag = PressTypeChangeFont;
         UIImage *image = [UIImage imageNamed:@"btn-font"];
         [_editTextBtn setImage:image forState:UIControlStateNormal];
-        _editTextBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y, image.size.width, image.size.height);
-        _editTextBtn.center = CGPointMake(_changeTypeBtn.frame.origin.x+_changeTypeBtn.frame.size.width+_changeBackgroundBtn.center.x, _changeTypeBtn.center.y);
+        _editTextBtn.frame = CGRectMake(CGRectGetWidth(self.view.frame)-image.size.width-[FitHelper fitWidth:30], _changeTypeBtn.frame.origin.y, image.size.width, image.size.height);
         [_editTextBtn addTarget:self action:@selector(pressCellWithChangeType:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -162,7 +161,7 @@
         _shareBtn.tag = PressTypeShare;
         UIImage *image = [UIImage imageNamed:@"btn-share"];
         [_shareBtn setImage:image forState:UIControlStateNormal];
-        _shareBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y+CGRectGetHeight(_changeTypeBtn.frame)+image.size.width/2, image.size.width, image.size.height);
+        _shareBtn.frame = CGRectMake(0, _changeTypeBtn.frame.origin.y+CGRectGetHeight(_changeTypeBtn.frame)+[FitHelper fitHeight:40], image.size.width, image.size.height);
         _shareBtn.center = CGPointMake(_changeTypeBtn.center.x, _shareBtn.center.y);
         if ([_delegate respondsToSelector:@selector(pressBtnWithType:)]) {
             [_shareBtn addTarget:_delegate action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
@@ -179,7 +178,7 @@
         _countBtn.tag = PressTypeCount;
         UIImage *image = [UIImage imageNamed:@"btn-add"];
         [_countBtn setImage:image forState:UIControlStateNormal];
-        _countBtn.frame = CGRectMake(10, CGRectGetHeight(self.view.bounds)-image.size.height-10, image.size.width, image.size.height);
+        _countBtn.frame = CGRectMake([FitHelper fitWidth:15], CGRectGetHeight(self.view.bounds)-image.size.height-[FitHelper fitWidth:15], image.size.width, image.size.height);
         if ([_delegate respondsToSelector:@selector(pressBtnWithType:)]) {
             [_countBtn addTarget:_delegate action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
         }
@@ -195,7 +194,7 @@
         _infoBtn.tag = PressTypeInfo;
         UIImage *image = [UIImage imageNamed:@"btn-info"];
         [_infoBtn setImage:image forState:UIControlStateNormal];
-        _infoBtn.frame = CGRectMake(CGRectGetWidth(self.view.bounds)-image.size.width-10, CGRectGetHeight(self.view.bounds)-image.size.height-10, image.size.width, image.size.height);
+        _infoBtn.frame = CGRectMake(CGRectGetWidth(self.view.bounds)-image.size.width-[FitHelper fitWidth:15], CGRectGetHeight(self.view.bounds)-image.size.height-[FitHelper fitWidth:15], image.size.width, image.size.height);
         if ([_delegate respondsToSelector:@selector(pressBtnWithType:)]) {
             [_infoBtn addTarget:_delegate action:@selector(pressBtnWithType:) forControlEvents:UIControlEventTouchUpInside];
         }

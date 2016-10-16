@@ -9,6 +9,7 @@
 #import "CountViewController.h"
 #import "MakingCell.h"
 #import "CoreTextModel.h"
+#import "FitHelper.h"
 
 @class CountMakingCell;
 
@@ -37,6 +38,7 @@
 @property (nonatomic, retain) UIButton *closeBtn;
 @property (nonatomic, retain) NSIndexPath *currIndexPath;
 @property (nonatomic, retain) NSMutableArray *mainModels;
+@property (nonatomic, retain) UIPageControl *pageControl;
 @end
 
 @implementation CountViewController
@@ -63,6 +65,7 @@
     [self.view addSubview:self.titleLabel];
     [self.view addSubview:self.collectionView];
     [self.view addSubview:self.closeBtn];
+    [self.view addSubview:self.pageControl];
 }
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat height = CGRectGetHeight(self.view.bounds)/3;
@@ -75,6 +78,7 @@
     return 0;
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    [self.pageControl setNumberOfPages:_mainModels.count];
     return _mainModels.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -112,6 +116,7 @@
             }
         }
         [self.collectionView scrollToItemAtIndexPath:_currIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+        [self.pageControl setCurrentPage:_currIndexPath.item];
     }
 }
 - (void)pressAdd:(CountMakingCell *)cell {
@@ -147,7 +152,7 @@
         _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.font = [UIFont systemFontOfSize:20];
         CGSize size = [_titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_titleLabel.font}];
-        _titleLabel.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-size.width)/2, (CGRectGetHeight(self.view.bounds)/6)+(size.height/2), size.width, size.height);
+        _titleLabel.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-size.width)/2, [FitHelper fitHeight:80], size.width, size.height);
     }
     
     return _titleLabel;
@@ -155,8 +160,9 @@
 - (UICollectionView *)collectionView {
     
     if (!_collectionView) {
-        CGFloat height = CGRectGetHeight(self.view.bounds)/3;
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, height, CGRectGetWidth(self.view.bounds), height) collectionViewLayout:self.collectionViewLayout];
+        CGFloat y = self.titleLabel.frame.origin.y+CGRectGetHeight(self.titleLabel.frame)+[FitHelper fitHeight:80];
+        CGFloat height = [FitHelper fitWidth:250]+[FitHelper fitWidth:30];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, y, CGRectGetWidth(self.view.bounds), height) collectionViewLayout:self.collectionViewLayout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
@@ -184,11 +190,22 @@
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_closeBtn setImage:image forState:UIControlStateNormal];
         CGSize size = image.size;
-        _closeBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-size.width)/2, CGRectGetHeight(self.view.bounds)-image.size.height-10, size.width, size.height);
+        _closeBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-size.width)/2, CGRectGetHeight(self.view.bounds)-image.size.height-[FitHelper fitHeight:20], size.width, size.height);
         [_closeBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _closeBtn;
+}
+- (UIPageControl *)pageControl {
+
+    if (!_pageControl) {
+        _pageControl = [[UIPageControl alloc] init];
+        _pageControl.frame = CGRectMake(0, _collectionView.frame.origin.y+CGRectGetHeight(_collectionView.frame)+[FitHelper fitHeight:10], CGRectGetWidth(self.view.frame), 8);
+        [_pageControl setPageIndicatorTintColor:[UIColor blackColor]];
+        [_pageControl setCurrentPageIndicatorTintColor:[UIColor redColor]];
+    }
+    
+    return _pageControl;
 }
 @end
 @implementation CountMakingCell
@@ -198,7 +215,7 @@
     self.addBtn = nil;
     self.delBtn = nil;
 }
-- (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName {
+- (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName withBackgroundImage:(UIImage *)image {
 
     [super showWithModel:model withFontName:fontName withBackgroundImage:model.BGImage];
     [self addSubview:self.addBtn];
@@ -211,7 +228,7 @@
         _addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_addBtn setImage:image forState:UIControlStateNormal];
         CGSize size = image.size;
-        _addBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-size.width-10, CGRectGetHeight(self.frame)-size.height-10, size.width, size.height);
+        _addBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-size.width-[FitHelper fitWidth:10], CGRectGetHeight(self.frame)-size.height-[FitHelper fitWidth:10], size.width, size.height);
         [_addBtn addTarget:self action:@selector(pressAdd) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -224,7 +241,7 @@
         _delBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_delBtn setImage:image forState:UIControlStateNormal];
         CGSize size = image.size;;
-        _delBtn.frame = CGRectMake(10, CGRectGetHeight(self.frame)-size.height-10, size.width, size.height);
+        _delBtn.frame = CGRectMake([FitHelper fitWidth:10], CGRectGetHeight(self.frame)-size.height-[FitHelper fitWidth:10], size.width, size.height);
         [_delBtn addTarget:self action:@selector(pressDel) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -278,7 +295,8 @@
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
 
     UICollectionViewLayoutAttributes *theAttributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-    theAttributes.size = CGSizeMake(CGRectGetHeight(self.collectionView.frame), CGRectGetHeight(self.collectionView.frame));
+    CGFloat width = [FitHelper fitWidth:250];
+    theAttributes.size = CGSizeMake(width, width);
     theAttributes.center = CGPointMake((CGRectGetWidth(self.collectionView.frame)/2)+((CGRectGetHeight(self.collectionView.frame))*(indexPath.item)), CGRectGetHeight(self.collectionView.frame)/2);
     return theAttributes;
 }
