@@ -19,7 +19,7 @@
 @interface MakingCell : UICollectionViewCell
 
 @property (nonatomic, weak) id<MakingCellDelegate> cellDelegate;
-@property (nonatomic, assign) BOOL isShowPhoto;
+@property (nonatomic, assign) NSInteger isShowPhoto;
 @property (nonatomic, assign) BOOL isShowCheck;
 @property (nonatomic, retain) UIImage *cellImage;
 @property (nonatomic, retain) CoreTextModel *model;

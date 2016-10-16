@@ -154,7 +154,7 @@
         cell.cellDelegate = nil;
     }
     
-    cell.isShowPhoto = (indexPath.item==0 && _changeType==ChangeTypeBackground);
+    cell.isShowPhoto = (indexPath.item==0 && _changeType==ChangeTypeBackground)?1:0;
     cell.isShowCheck = indexPath.item==1;
     
     return cell;

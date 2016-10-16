@@ -11,7 +11,7 @@
 #import "ChangeTypeManager.h"
 #import "FitHelper.h"
 
-@interface MainViewController () <UICollectionViewDelegate, UICollectionViewDataSource>
+@interface MainViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UINavigationControllerDelegate, UIImagePickerControllerDelegate, MakingCellDelegate>
 @property (nonatomic, retain) UICollectionViewFlowLayout *collectionViewLayout;
 @property (nonatomic, retain) UIButton *changeBackgroundBtn;
 @property (nonatomic, retain) UIButton *changeTypeBtn;
@@ -101,7 +101,7 @@
     CoreTextModel *model = _mainModels[indexPath.row];
     cell.backgroundColor = model.BGColor;
     [cell showWithModel:model withFontName:nil withBackgroundImage:model.BGImage];
-    cell.isShowPhoto = model.BGImage;
+    cell.isShowPhoto = model.BGImage?2:0;
     
     return cell;
 }
@@ -262,7 +262,6 @@
         _imagePicker = [[UIImagePickerController alloc] init];
         _imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         _imagePicker.delegate = self;
-        
     }
     
     return _imagePicker;

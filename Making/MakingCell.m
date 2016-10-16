@@ -50,7 +50,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         size = [MakingCell getCellSize];
-        self.isShowPhoto = NO;
+        self.isShowPhoto = 0;
         self.isShowCheck = NO;
     }
     
@@ -59,7 +59,7 @@
 - (void)layoutSubviews {
 
     [super layoutSubviews];
-    self.photoBtn.hidden = !_isShowPhoto;
+    self.photoBtn.hidden = _isShowPhoto==0;
     self.checkImageView.hidden = !_isShowCheck;
 }
 - (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName withBackgroundImage:(UIImage *)image {
@@ -169,14 +169,14 @@
 }
 - (UIButton *)photoBtn {
 
+    UIImage *image = [UIImage imageNamed:@"btn-image-edit"];
+    
     if (!_photoBtn) {
-        UIImage *image = [UIImage imageNamed:@"btn-image-edit"];
         _photoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _photoBtn.frame = CGRectMake([FitHelper fitWidth:10], CGRectGetHeight(self.frame)-image.size.height-[FitHelper fitWidth:10], image.size.width, image.size.height);
         [_photoBtn setImage:image forState:UIControlStateNormal];
         [_photoBtn addTarget:self action:@selector(openImagePicker) forControlEvents:UIControlEventTouchUpInside];
     }
-    
+    _photoBtn.frame = CGRectMake([FitHelper fitWidth:_isShowPhoto==1?10:15], CGRectGetHeight(self.frame)-image.size.height-[FitHelper fitWidth:_isShowPhoto==1?10:15], image.size.width, image.size.height);
     return _photoBtn;
 }
 - (UIImageView *)cellBackGroundImageView {
