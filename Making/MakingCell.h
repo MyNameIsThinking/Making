@@ -21,7 +21,6 @@
 @property (nonatomic, weak) id<MakingCellDelegate> cellDelegate;
 @property (nonatomic, assign) BOOL isShowPhoto;
 @property (nonatomic, assign) BOOL isShowCheck;
-@property (nonatomic, assign) BOOL isShadow;
 @property (nonatomic, retain) UIImage *cellImage;
 @property (nonatomic, retain) CoreTextModel *model;
 @property (nonatomic, retain) NSString *fontName;

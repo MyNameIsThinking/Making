@@ -21,6 +21,7 @@
 @property (nonatomic, retain) UIButton *infoBtn;
 @property (nonatomic, retain) MakingCell *currCell;
 @property (nonatomic, retain) UIPageControl *pageControl;
+@property (nonatomic, retain) UIImagePickerController *imagePicker;
 @end
 
 @implementation MainViewController
@@ -54,6 +55,22 @@
     [_mainModels replaceObjectAtIndex:_currIndex withObject:newModel];
     [_collectionView reloadData];
 }
+#pragma mark - MakingCellDelegate
+- (void)openImagePicker {
+    
+    [self presentViewController:self.imagePicker animated:YES completion:^{
+        
+    }];
+}
+#pragma mark - UIImagePickerControllerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(nullable NSDictionary<NSString *,id> *)editingInfo {
+    CoreTextModel *model = _mainModels[_currIndex];
+    model.BGImage = image;
+    [_mainModels replaceObjectAtIndex:_currIndex withObject:model];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self.collectionView reloadData];
+    }];
+}
 #pragma mark - UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat pageWidth = CGRectGetWidth(scrollView.frame);
@@ -78,11 +95,13 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
+    cell.cellDelegate = self;
     _currCell = cell;
     _currIndex = indexPath.row;
     CoreTextModel *model = _mainModels[indexPath.row];
     cell.backgroundColor = model.BGColor;
     [cell showWithModel:model withFontName:nil withBackgroundImage:model.BGImage];
+    cell.isShowPhoto = model.BGImage;
     
     return cell;
 }
@@ -236,5 +255,16 @@
     }
     
     return _pageControl;
+}
+- (UIImagePickerController *)imagePicker {
+    
+    if (!_imagePicker) {
+        _imagePicker = [[UIImagePickerController alloc] init];
+        _imagePicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        _imagePicker.delegate = self;
+        
+    }
+    
+    return _imagePicker;
 }
 @end

@@ -50,6 +50,8 @@
     self = [super initWithFrame:frame];
     if (self) {
         size = [MakingCell getCellSize];
+        self.isShowPhoto = NO;
+        self.isShowCheck = NO;
     }
     
     return self;
