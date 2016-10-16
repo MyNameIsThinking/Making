@@ -20,6 +20,7 @@
 @property (nonatomic, retain) UIButton *countBtn;
 @property (nonatomic, retain) UIButton *infoBtn;
 @property (nonatomic, retain) MakingCell *currCell;
+@property (nonatomic, retain) UIPageControl *pageControl;
 @end
 
 @implementation MainViewController
@@ -41,6 +42,7 @@
     [self.view addSubview:self.shareBtn];
     [self.view addSubview:self.countBtn];
     [self.view addSubview:self.infoBtn];
+    [self.view addSubview:self.pageControl];
 }
 - (void)setSelectCell:(MakingCell *)selectCell {
     
@@ -51,6 +53,12 @@
     newModel.forewordFontName = selectCell.forewordFontName;
     [_mainModels replaceObjectAtIndex:_currIndex withObject:newModel];
     [_collectionView reloadData];
+}
+#pragma mark - UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat pageWidth = CGRectGetWidth(scrollView.frame);
+    int currentPage = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1;
+    self.pageControl.currentPage = currentPage;
 }
 #pragma mark - UICollectionViewDelegateFlowLayout
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -64,6 +72,7 @@
 }
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    [self.pageControl setNumberOfPages:self.mainModels.count];
     return self.mainModels.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -92,6 +101,8 @@
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, width, width) collectionViewLayout:self.collectionViewLayout];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
+        _collectionView.showsVerticalScrollIndicator = NO;
+        _collectionView.showsHorizontalScrollIndicator = NO;
         _collectionView.pagingEnabled = YES;
         [_collectionView registerClass:[MakingCell class] forCellWithReuseIdentifier:[MakingCell identifier]];
     }
@@ -214,5 +225,16 @@
     }
     
     return _mainModels;
+}
+- (UIPageControl *)pageControl {
+    
+    if (!_pageControl) {
+        _pageControl = [[UIPageControl alloc] init];
+        _pageControl.frame = CGRectMake(0, _collectionView.frame.origin.y+CGRectGetHeight(_collectionView.frame)+[FitHelper fitHeight:10], CGRectGetWidth(self.view.frame), 8);
+        [_pageControl setPageIndicatorTintColor:[UIColor blackColor]];
+        [_pageControl setCurrentPageIndicatorTintColor:[UIColor redColor]];
+    }
+    
+    return _pageControl;
 }
 @end
