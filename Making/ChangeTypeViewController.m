@@ -12,6 +12,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CoreGraphics/CoreGraphics.h>
+#import "FitHelper.h"
 
 @implementation UIColor (ColorSame)
 
@@ -154,6 +155,7 @@
     }
     
     cell.isShowPhoto = (indexPath.item==0 && _changeType==ChangeTypeBackground);
+    cell.isShowCheck = indexPath.item==1;
     
     return cell;
 }
@@ -199,8 +201,7 @@
         UIImage *image = [UIImage imageNamed:@"btn-cancel-shadowed"];
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_closeBtn setImage:image forState:UIControlStateNormal];
-        _closeBtn.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds)-image.size.height, image.size.width, image.size.height);
-        _closeBtn.center = CGPointMake(CGRectGetWidth(self.view.bounds)/2, _closeBtn.frame.origin.y);
+        _closeBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-image.size.width)/2, CGRectGetHeight(self.view.bounds)-image.size.height-[FitHelper fitHeight:20], image.size.width, image.size.height);
         if ([_delegate respondsToSelector:@selector(pressClose)]) {
             [_closeBtn addTarget:_delegate action:@selector(pressClose) forControlEvents:UIControlEventTouchUpInside];
         }

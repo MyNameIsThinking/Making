@@ -9,6 +9,7 @@
 #import "MakingCell.h"
 #import "CoreTextModel.h"
 #import "M80AttributedLabel.h"
+#import "FitHelper.h"
 
 @interface MakingCell () {
 
@@ -22,6 +23,7 @@
 @property (nonatomic, retain) M80AttributedLabel *mainLabel;
 @property (nonatomic, retain) M80AttributedLabel *forewordLabel;
 @property (nonatomic, retain) UIButton *photoBtn;
+@property (nonatomic, retain) UIImageView *checkImageView;
 @property (nonatomic, retain) UIImageView *cellBackGroundImageView;
 
 @end
@@ -56,6 +58,7 @@
 
     [super layoutSubviews];
     self.photoBtn.hidden = !_isShowPhoto;
+    self.checkImageView.hidden = !_isShowCheck;
 }
 - (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName withBackgroundImage:(UIImage *)image {
     
@@ -100,6 +103,7 @@
     [self addSubview:self.cellImageView];
     
     [self addSubview:self.photoBtn];
+    [self addSubview:self.checkImageView];
 }
 - (void)openImagePicker:(UIButton *)sender {
     NSLog(@"openImagePicker");
@@ -169,7 +173,7 @@
     if (!_photoBtn) {
         UIImage *image = [UIImage imageNamed:@"btn-image-edit"];
         _photoBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _photoBtn.frame = CGRectMake(10, CGRectGetHeight(self.frame)-image.size.height-10, image.size.width, image.size.height);
+        _photoBtn.frame = CGRectMake([FitHelper fitWidth:10], CGRectGetHeight(self.frame)-image.size.height-[FitHelper fitWidth:10], image.size.width, image.size.height);
         [_photoBtn setImage:image forState:UIControlStateNormal];
         [_photoBtn addTarget:self action:@selector(openImagePicker) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -193,4 +197,16 @@
     UIGraphicsEndImageContext();
     return image;
 }
+- (UIImageView *)checkImageView {
+    
+    if (!_checkImageView) {
+        UIImage *image = [UIImage imageNamed:@"icon-chk-solid"];
+        _checkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)-image.size.width-[FitHelper fitWidth:10], CGRectGetHeight(self.frame)-image.size.height-[FitHelper fitWidth:10], image.size.width, image.size.height)];
+        _checkImageView.image = image;
+        
+    }
+    
+    return _checkImageView;
+}
+
 @end
