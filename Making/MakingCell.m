@@ -105,9 +105,6 @@
     [self addSubview:self.photoBtn];
     [self addSubview:self.checkImageView];
 }
-- (void)openImagePicker:(UIButton *)sender {
-    NSLog(@"openImagePicker");
-}
 - (UIImageView *)cellImageView {
 
     if (!_cellImageView) {
@@ -185,6 +182,7 @@
     if (!_cellBackGroundImageView) {
         _cellBackGroundImageView = [[UIImageView alloc] initWithFrame:self.cellView.bounds];
         _cellBackGroundImageView.backgroundColor = [UIColor clearColor];
+        _cellBackGroundImageView.contentMode = UIViewContentModeScaleAspectFill;
     }
     
     return _cellBackGroundImageView;
