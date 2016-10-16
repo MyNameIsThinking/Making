@@ -10,6 +10,7 @@
 #import "MakingCell.h"
 #import "CoreTextModel.h"
 #import "UIImage+Save.h"
+#import "FitHelper.h"
 
 typedef NS_OPTIONS(NSUInteger, ShareType) {
     ShareTypeLocal = 0,
@@ -21,6 +22,28 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
 @protocol  ShareViewDelegate <NSObject>
 
 - (void)pressShare:(ShareType)type;
+
+@end
+@interface MakingCheckCell : MakingCell
+@property (nonatomic, retain) UIImageView *checkImageView;
+@end
+@implementation MakingCheckCell
+- (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName withBackgroundImage:(UIImage *)image {
+    [super showWithModel:model withFontName:fontName withBackgroundImage:image];
+    [self addSubview:self.checkImageView];
+}
+- (UIImageView *)checkImageView {
+
+    if (!_checkImageView) {
+        UIImage *image = [UIImage imageNamed:@"icon-chk-solid"];
+        _checkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)-image.size.width-[FitHelper fitWidth:10], CGRectGetHeight(self.frame)-image.size.height-[FitHelper fitWidth:10], image.size.width, image.size.height)];
+        _checkImageView.image = image;
+        
+    }
+    
+    return _checkImageView;
+}
+
 
 @end
 @interface ShareView : UIView
@@ -54,8 +77,8 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
 
     self = [super init];
     if (self) {
-        self.view.backgroundColor = [UIColor whiteColor];
         _models = models;
+        self.view.backgroundColor = [UIColor whiteColor];
     }
     
     return self;
@@ -103,39 +126,39 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     switch (self.models.count) {
         case 1: {
-            return CGSizeMake(CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            return CGSizeMake([FitHelper fitWidth:335], [FitHelper fitWidth:335]);
         }
             break;
         case 2: {
-            return CGSizeMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetWidth(self.view.bounds)/2);
+            return CGSizeMake([FitHelper fitWidth:163], [FitHelper fitWidth:163]);
         }
             break;
         case 3: {
-            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+            return CGSizeMake([FitHelper fitWidth:105], [FitHelper fitWidth:105]);
         }
             break;
         case 4: {
-            return CGSizeMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetWidth(self.view.bounds)/2);
+            return CGSizeMake([FitHelper fitWidth:163], [FitHelper fitWidth:163]);
         }
             break;
         case 5: {
-            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+            return CGSizeMake([FitHelper fitWidth:105], [FitHelper fitWidth:105]);
         }
             break;
         case 6: {
-            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+            return CGSizeMake([FitHelper fitWidth:105], [FitHelper fitWidth:105]);
         }
             break;
         case 7: {
-            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+            return CGSizeMake([FitHelper fitWidth:105], [FitHelper fitWidth:105]);
         }
             break;
         case 8: {
-            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+            return CGSizeMake([FitHelper fitWidth:105], [FitHelper fitWidth:105]);
         }
             break;
         case 9: {
-            return CGSizeMake(CGRectGetWidth(self.view.bounds)/3, CGRectGetWidth(self.view.bounds)/3);
+            return CGSizeMake([FitHelper fitWidth:105], [FitHelper fitWidth:105]);
         }
             break;
             
@@ -146,6 +169,50 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
     return CGSizeZero;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    
+    CGFloat width  = [FitHelper fitWidth:335];
+    
+    switch (self.models.count) {
+        case 1: {
+            return 0;
+        }
+            break;
+        case 2: {
+            return 0;
+        }
+            break;
+        case 3: {
+            return 0;
+        }
+            break;
+        case 4: {
+            return width - (2*[FitHelper fitWidth:163]);
+        }
+            break;
+        case 5: {
+            return ((width/3)*2) - (2*[FitHelper fitWidth:105]);
+        }
+            break;
+        case 6: {
+            return ((width/3)*2) - (2*[FitHelper fitWidth:105]);
+        }
+            break;
+        case 7: {
+            return [FitHelper fitWidth:10];
+        }
+            break;
+        case 8: {
+            return [FitHelper fitWidth:10];
+        }
+            break;
+        case 9: {
+            return [FitHelper fitWidth:10];
+        }
+            break;
+            
+        default:
+            break;
+    }
     return 0;
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
@@ -153,50 +220,52 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
+    CGFloat x = [FitHelper fitWidth:20];
+    CGFloat width  = [FitHelper fitWidth:335];
     _scale = 1;
     switch (self.models.count) {
         case 1: {
-            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            self.collectionView.frame = CGRectMake(x, x, width, width);
             _scale = 1;
         }
             break;
         case 2: {
-            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds)/2);
+            self.collectionView.frame = CGRectMake(x, x, width, width/2);
             _scale = 2;
         }
             break;
         case 3: {
-            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds)/3);
+            self.collectionView.frame = CGRectMake(x, x, width, [FitHelper fitWidth:105]);
             _scale = 3;
         }
             break;
         case 4: {
-            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            self.collectionView.frame = CGRectMake(x, x, width, width);
             _scale = 2;
         }
             break;
         case 5: {
-            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), (CGRectGetWidth(self.view.bounds)/3)*2);
+            self.collectionView.frame = CGRectMake(x, x, width, (width/3)*2);
             _scale = 3;
         }
             break;
         case 6: {
-            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), (CGRectGetWidth(self.view.bounds)/3)*2);
+            self.collectionView.frame = CGRectMake(x, x, width, (width/3)*2);
             _scale = 3;
         }
             break;
         case 7: {
-            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            self.collectionView.frame = CGRectMake(x, x, width, width);
             _scale = 3;
         }
             break;
         case 8: {
-            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            self.collectionView.frame = CGRectMake(x, x, width, width);
             _scale = 3;
         }
             break;
         case 9: {
-            self.collectionView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetWidth(self.view.bounds));
+            self.collectionView.frame = CGRectMake(x, x, width, width);
             _scale = 3;
         }
             break;
@@ -205,14 +274,18 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
             break;
     }
     self.collectionView.center = CGPointMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetWidth(self.view.bounds)/2);
+    
+    self.countLabel.hidden = self.models.count <= 1;
+    self.grayLine.hidden = self.models.count <= 1;
     return self.models.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
+    MakingCheckCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     CoreTextModel *model = _models[indexPath.row];
     cell.backgroundColor = model.BGColor;
     [cell showWithModel:model withFontName:nil withBackgroundImage:model.BGImage];
+    cell.checkImageView.hidden = _models.count <= 1;
     
     return cell;
 }
@@ -224,7 +297,7 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.pagingEnabled = YES;
-        [_collectionView registerClass:[MakingCell class] forCellWithReuseIdentifier:[MakingCell identifier]];
+        [_collectionView registerClass:[MakingCheckCell class] forCellWithReuseIdentifier:[MakingCell identifier]];
     }
     
     return _collectionView;
@@ -244,7 +317,7 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
         UIImage *image = [UIImage imageNamed:@"btn-back"];
         _backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_backBtn setImage:image forState:UIControlStateNormal];
-        _backBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-image.size.width)/2, CGRectGetHeight(self.view.bounds)-20-image.size.height, image.size.width,image.size.height);
+        _backBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-image.size.width)/2, CGRectGetHeight(self.view.bounds)-[FitHelper fitHeight:20]-image.size.height, image.size.width,image.size.height);
         [_backBtn addTarget:self.navigationController action:@selector(popViewControllerAnimated:) forControlEvents:UIControlEventTouchUpInside];
         
     }
@@ -307,7 +380,7 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
         [self.shares addObject:[UIImage imageNamed:@"btn-share-weibo"]];
         [self.shares addObject:[UIImage imageNamed:@"btn-share-pinterest"]];
         
-        CGFloat offset = (frame.size.width-(saveImage.size.width*self.shares.count))/self.shares.count;
+        CGFloat offset = (frame.size.width-(saveImage.size.width*self.shares.count)-(2*[FitHelper fitWidth:20]))/(self.shares.count-1);
         
         for (int i = 0; i < self.shares.count; i++) {
             
@@ -315,7 +388,7 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
             btn.tag = i;
             UIImage *image = self.shares[i];
             [btn setImage:image forState:UIControlStateNormal];
-            btn.frame = CGRectMake((offset/2)+((image.size.width+offset)*i), 0, image.size.width, image.size.height);
+            btn.frame = CGRectMake([FitHelper fitWidth:20]+((image.size.width+offset)*i), 0, image.size.width, image.size.height);
             btn.layer.masksToBounds = YES;
             btn.layer.borderWidth = 2;
             btn.layer.cornerRadius = image.size.width/2;
