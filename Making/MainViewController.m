@@ -239,7 +239,7 @@
         _mainModels = [[NSMutableArray alloc] init];
         XMLUtil *xml = [ChangeTypeManager shareInstance].xmls[0];
         CoreTextModel *model = [[CoreTextModel alloc] initWithModel:xml.model];
-        model.BGColor = [UIColor whiteColor];
+        model.BGColor =[ChangeTypeManager shareInstance].colors[0];
         [_mainModels addObject:model];
     }
     

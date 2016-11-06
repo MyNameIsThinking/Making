@@ -87,16 +87,16 @@
     self.mainLabel.textAlignment = model.textAlignment;
     self.mainLabel.text = model.text;
     self.fontName = fontName?fontName:model.fontName;
-    self.mainLabel.font = [UIFont fontWithName:self.fontName size:26];
-    self.mainLabel.textColor = [UIColor grayColor];
+    self.mainLabel.font = [UIFont fontWithName:self.fontName size:model.fontSize];
+    self.mainLabel.textColor = [UIColor whiteColor];
     self.mainLabel.frame = CGRectInset(self.mainView.bounds,10,10);
     [self.mainView addSubview:self.mainLabel];
     
     self.forewordLabel.textAlignment = model.forewordAlignment;
     self.forewordLabel.text = model.forewordText;
     self.forewordFontName = fontName?fontName:model.forewordFontName;
-    self.forewordLabel.font = [UIFont fontWithName:self.fontName size:12];
-    self.forewordLabel.textColor = [UIColor grayColor];
+    self.forewordLabel.font = [UIFont fontWithName:self.fontName size:model.forewordFontSize];
+    self.forewordLabel.textColor = [UIColor whiteColor];
     self.forewordLabel.frame = CGRectInset(self.forewordView.bounds,10,10);
     [self.forewordView addSubview:self.forewordLabel];
     

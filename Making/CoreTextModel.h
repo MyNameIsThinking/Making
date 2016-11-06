@@ -14,6 +14,7 @@
 
 @property (nonatomic, retain) NSString *identifier;           //唯一標示符
 @property (nonatomic, retain) NSString *text;                 //文字
+@property (nonatomic, assign) CGFloat fontSize;               //文字大小
 @property (nonatomic, retain) NSString *fontName;             //字体
 @property (nonatomic, retain) UIColor *textColor;             //文字颜色
 @property (nonatomic, retain) UIColor *highlightColor;        //链接点击时背景高亮色

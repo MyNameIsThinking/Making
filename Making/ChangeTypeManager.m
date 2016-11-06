@@ -36,12 +36,13 @@ static ChangeTypeManager *_instance;
 
     if (!_colors) {
         _colors = [[NSArray alloc] initWithObjects:
-                   [UIColor redColor],
-                   [UIColor yellowColor],
-                   [UIColor blueColor],
-                   [UIColor blackColor],
-                   [UIColor greenColor],
-                   [UIColor whiteColor],
+                   [UIColor colorWithRed:0xe5/255.f green:0x41/255.f blue:0x75/255.f alpha:1.f],
+                   [UIColor colorWithRed:0x00/255.f green:0x00/255.f blue:0x00/255.f alpha:1.f],
+                   [UIColor colorWithRed:0xe6/255.f green:0xe6/255.f blue:0xe6/255.f alpha:1.f],
+                   [UIColor colorWithRed:0x36/255.f green:0xa5/255.f blue:0xb0/255.f alpha:1.f],
+                   [UIColor colorWithRed:0xed/255.f green:0x5b/255.f blue:0x2f/255.f alpha:1.f],
+                   [UIColor colorWithRed:0x7b/255.f green:0xb6/255.f blue:0x41/255.f alpha:1.f],
+                   [UIColor colorWithRed:0xfc/255.f green:0xb3/255.f blue:0x2c/255.f alpha:1.f],
                    nil];
     }
     
@@ -103,6 +104,8 @@ static ChangeTypeManager *_instance;
     
     if ([self.currentElement isEqualToString:@"text"]) {
         _model.text = string;
+    } else if ([self.currentElement isEqualToString:@"fontSize"]) {
+        _model.fontSize = [string integerValue];
     } else if ([self.currentElement isEqualToString:@"fontName"]) {
         _model.fontName = string;
     } else if ([self.currentElement isEqualToString:@"alignment"]) {

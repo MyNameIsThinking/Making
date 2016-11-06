@@ -2,17 +2,24 @@
 <model>
     <identifier>testModel4</identifier>
     <mainText>
-        <text>testModel4</text>
-        <fontSize>40</fontSize>
-        <alignment>0</alignment>
+        <text>
+            sometimes
+            is
+            all the time,
+            and
+            never
+            means
+            maybe.</text>
+        <fontSize>24</fontSize>
+        <alignment>2</alignment>
         <frame>{{0, 0}, {100, 100}}</frame>
-        <fontName>Zapfino</fontName>
+        <fontName>SanFranciscoDisplay-Bold</fontName>
     </mainText>
     <forewordText>
-        <forewordText>foreword4</forewordText>
-        <forewordFontSize>40</forewordFontSize>
-        <forewordAlignment>1</forewordAlignment>
+        <forewordText>loving the alien</forewordText>
+        <forewordFontSize>12</forewordFontSize>
+        <forewordAlignment>2</forewordAlignment>
         <forewordFrame>{{0, 0}, {100, 100}}</forewordFrame>
-        <forewordFontName>Zapfino</forewordFontName>
+        <forewordFontName>SanFranciscoDisplay-Bold</forewordFontName>
     </forewordText>
 </model>
