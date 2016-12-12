@@ -52,10 +52,14 @@ static ChangeTypeManager *_instance;
 
     if (!_fonts) {
         _fonts = [[NSArray alloc] initWithObjects:
-                  @"STHeitiJ-Medium",
-                  @"TimesNewRomanPSMT",
-                  @"Verdana-Bold",
-                  @"Zapfino",
+                  @"SanFranciscoDisplay-Bold",
+                  @"HelveticaNeue-Light",
+                  @"AvenirNextCondensed-Heavy",
+                  @"Courier-Bold",
+                  @"Georgia-Bold",
+                  @"MarkerFelt-Wide",
+                  @"TimesNewRomanPS-BoldMT",
+                  @"Verdana",
                   nil];
     }
     

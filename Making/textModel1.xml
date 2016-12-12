@@ -3,13 +3,13 @@
     <identifier>testModel1</identifier>
     <mainText>
         <text>
-        sometimes
-        is
-        all the time,
-        and
-        never
-        means
-        maybe.</text>
+sometimes
+is
+all the time,
+and
+never
+means
+maybe.</text>
         <fontSize>24</fontSize>
         <alignment>2</alignment>
         <frame>{{0, 0}, {100, 100}}</frame>
