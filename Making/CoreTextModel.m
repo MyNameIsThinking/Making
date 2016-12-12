@@ -25,6 +25,7 @@
         self.underLineForLink = model.underLineForLink; //链接是否带下划线
         self.autoDetectLinks = model.autoDetectLinks;   //自动检测
         self.numberOfLines = model.numberOfLines;       //行数
+        self.mainPosition = model.mainPosition;
         self.textAlignment = model.textAlignment;       //文字排版样式
         self.lineBreakMode = model.lineBreakMode;       //LineBreakMode
         self.lineSpacing = model.lineSpacing;           //行间距
@@ -35,7 +36,7 @@
         self.forewordText = model.forewordText;
         self.forewordFontSize = model.forewordFontSize;
         self.forewordAlignment = model.forewordAlignment;
-        self.forewordFrame = model.forewordFrame;
+        self.forewordPosition = model.forewordPosition;
         self.forewordFontName = model.forewordFontName;
     }
     

@@ -11,14 +11,14 @@ means
 maybe.</text>
         <fontSize>24</fontSize>
         <alignment>2</alignment>
-        <frame>{{0, 0}, {100, 100}}</frame>
         <fontName>SanFranciscoDisplay-Bold</fontName>
+        <mainPosition>0</mainPosition>
     </mainText>
     <forewordText>
         <forewordText>loving the alien</forewordText>
         <forewordFontSize>12</forewordFontSize>
         <forewordAlignment>2</forewordAlignment>
-        <forewordFrame>{{0, 0}, {100, 100}}</forewordFrame>
+        <forewordPosition>0</forewordPosition>
         <forewordFontName>SanFranciscoDisplay-Bold</forewordFontName>
     </forewordText>
 </model>

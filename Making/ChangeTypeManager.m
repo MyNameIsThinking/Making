@@ -114,8 +114,8 @@ static ChangeTypeManager *_instance;
         _model.fontName = string;
     } else if ([self.currentElement isEqualToString:@"alignment"]) {
         _model.textAlignment = [string integerValue];
-    } else if ([self.currentElement isEqualToString:@"frame"]) {
-//        _model.frame = CGRectFromString(string);
+    } else if ([self.currentElement isEqualToString:@"mainPosition"]) {
+        _model.mainPosition = [string integerValue];
     } else if ([self.currentElement isEqualToString:@"identifier"]) {
         _model.identifier = string;
     } else if ([self.currentElement isEqualToString:@"forewordText"]) {
@@ -124,8 +124,8 @@ static ChangeTypeManager *_instance;
         _model.forewordFontSize = [string integerValue];
     } else if ([self.currentElement isEqualToString:@"forewordAlignment"]) {
         _model.forewordAlignment = [string integerValue];
-    } else if ([self.currentElement isEqualToString:@"forewordFrame"]) {
-//        _model.forewordFrame = CGRectFromString(string);
+    } else if ([self.currentElement isEqualToString:@"forewordPosition"]) {
+        _model.forewordPosition = [string integerValue];
     } else if ([self.currentElement isEqualToString:@"forewordFontName"]) {
         _model.forewordFontName = string;
     }
