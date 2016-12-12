@@ -7,20 +7,29 @@
 //
 
 #import "EditTextViewController.h"
+#import "FitHelper.h"
 
 @interface EditTextViewController () <UITextViewDelegate>
 @property (nonatomic, retain) CoreTextModel *model;
 @property (nonatomic, retain) UITextView *mainTextView;
+@property (nonatomic, retain) NSDictionary *mainAttributes;
 @property (nonatomic, retain) UITextView *forewordTextView;
 @property (nonatomic, retain) UIButton *doneBtn;
 @property (nonatomic, retain) UIButton *returnBtn;
 @property (nonatomic, retain) UIButton *copyedBtn;
+@property (nonatomic, retain) UILabel *fromLabel;
 @end
 
 @implementation EditTextViewController
 - (void)dealloc {
-    self.mainTextView = nil;
-    self.forewordTextView = nil;
+    _model = nil;
+    _mainTextView = nil;
+    _mainAttributes = nil;
+    _forewordTextView = nil;
+    _doneBtn = nil;
+    _returnBtn = nil;
+    _copyedBtn = nil;
+    _fromLabel = nil;
 }
 - (id)initWithModel:(CoreTextModel *)model {
 
@@ -39,9 +48,11 @@
     [self.view addSubview:self.doneBtn];
     [self.view addSubview:self.returnBtn];
     [self.view addSubview:self.mainTextView];
+    [self.view addSubview:self.fromLabel];
     [self.view addSubview:self.forewordTextView];
     [self.mainTextView becomeFirstResponder];
 }
+/*
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]) {
         if ([self.mainTextView isFirstResponder]) {
@@ -54,17 +65,26 @@
     
     return YES;
 }
+ */
 - (void)keyboardWasShown:(NSNotification *)notification {
     NSDictionary *info = [notification userInfo];
     CGSize size = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;//得到鍵盤的高度
+    CGFloat width = [FitHelper fitWidth:15];
     
-    self.copyedBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-CGRectGetWidth(self.copyedBtn.frame))/2, CGRectGetHeight(self.view.bounds)-size.height-CGRectGetHeight(self.copyedBtn.frame)-10, CGRectGetWidth(self.copyedBtn.frame), CGRectGetHeight(self.copyedBtn.frame));
-    self.returnBtn.center = CGPointMake(10+CGRectGetWidth(self.returnBtn.frame)/2, self.copyedBtn.center.y);
+    self.copyedBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-CGRectGetWidth(self.copyedBtn.frame))/2, CGRectGetHeight(self.view.bounds)-size.height-CGRectGetHeight(self.copyedBtn.frame)-[FitHelper fitHeight:15], CGRectGetWidth(self.copyedBtn.frame), CGRectGetHeight(self.copyedBtn.frame));
+    self.returnBtn.center = CGPointMake(width+CGRectGetWidth(self.returnBtn.frame)/2, self.copyedBtn.center.y);
     self.doneBtn.center = CGPointMake(CGRectGetWidth(self.view.bounds)-self.returnBtn.center.x, self.copyedBtn.center.y);
     
-    self.forewordTextView.center = CGPointMake(CGRectGetWidth(self.view.bounds)/2, self.copyedBtn.center.y-(CGRectGetHeight(self.copyedBtn.frame)/2)-(CGRectGetHeight(self.forewordTextView.frame)/2));
+    CGSize labelSize1 = [_forewordTextView.text sizeWithAttributes:@{NSFontAttributeName:_forewordTextView.font}];
+    _forewordTextView.frame = CGRectMake(width, 0, labelSize1.width+50, labelSize1.height+20);
     
-    self.mainTextView.frame = CGRectMake(0, 0, size.width, self.forewordTextView.frame.origin.y);
+    self.forewordTextView.center = CGPointMake(_forewordTextView.center.x, self.copyedBtn.center.y-(CGRectGetHeight(self.copyedBtn.frame)/2)-(CGRectGetHeight(self.forewordTextView.frame)/2)-50);
+    
+    CGSize labelSize2 = [_fromLabel.text sizeWithAttributes:@{NSFontAttributeName:_fromLabel.font}];
+    _fromLabel.frame = CGRectMake(width+4, _forewordTextView.frame.origin.y-labelSize2.height, labelSize2.width, labelSize2.height);
+    
+    
+    self.mainTextView.frame = CGRectMake(width, [FitHelper fitHeight:15], size.width-(2*width), _fromLabel.frame.origin.y-20);
     
 }
 - (void)keyboardWillBeHidden:(NSNotification *)notification {
@@ -89,22 +109,35 @@
         
         _mainTextView = [[UITextView alloc] init];
         _mainTextView.delegate = self;
-        _mainTextView.backgroundColor = [UIColor yellowColor];
+        _mainTextView.textAlignment = NSTextAlignmentLeft;
+        _mainTextView.attributedText = [[NSAttributedString alloc] initWithString:_model.text attributes:self.mainAttributes];
+        _mainTextView.backgroundColor = [UIColor whiteColor];
         _mainTextView.returnKeyType = UIReturnKeyNext;
-        _mainTextView.text = _model.text;
     }
     
     return _mainTextView;
 }
+- (NSDictionary *)mainAttributes {
+
+    if (!_mainAttributes) {
+        NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+        paragraphStyle.lineSpacing = 12;
+        _mainAttributes = @{
+                            NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Regular" size:8.5f],
+                            NSParagraphStyleAttributeName:paragraphStyle
+                            };
+    }
+    
+    return _mainAttributes;
+}
 - (UITextView *)forewordTextView {
 
     if (!_forewordTextView) {
-        CGFloat height = 60;
-        _forewordTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, -height, CGRectGetWidth(self.view.bounds), height)];
+        _forewordTextView = [[UITextView alloc] init];
         _forewordTextView.delegate = self;
-        _forewordTextView.backgroundColor = [UIColor redColor];
+        _forewordTextView.textAlignment = NSTextAlignmentLeft;
+        _forewordTextView.attributedText = [[NSAttributedString alloc] initWithString:_model.forewordText attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Regular" size:8.5f],}];
         _forewordTextView.returnKeyType = UIReturnKeyNext;
-        _forewordTextView.text = _model.forewordText;
     }
     
     return _forewordTextView;
@@ -143,5 +176,16 @@
     }
     
     return _copyedBtn;
+}
+- (UILabel *)fromLabel {
+
+    if (!_fromLabel) {
+        NSString *text = @"來自:";
+        _fromLabel = [[UILabel alloc] init];
+        _fromLabel.text = text;
+        _fromLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:8.5f];
+    }
+    
+    return _fromLabel;
 }
 @end
