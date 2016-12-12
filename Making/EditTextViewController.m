@@ -52,20 +52,6 @@
     [self.view addSubview:self.forewordTextView];
     [self.mainTextView becomeFirstResponder];
 }
-/*
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
-    if ([text isEqualToString:@"\n"]) {
-        if ([self.mainTextView isFirstResponder]) {
-            [self.forewordTextView becomeFirstResponder];
-        } else if ([self.forewordTextView isFirstResponder]) {
-            [self.mainTextView becomeFirstResponder];
-        }
-        return NO;
-    }
-    
-    return YES;
-}
- */
 - (void)keyboardWasShown:(NSNotification *)notification {
     NSDictionary *info = [notification userInfo];
     CGSize size = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;//得到鍵盤的高度
