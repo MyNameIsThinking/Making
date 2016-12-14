@@ -87,6 +87,9 @@
 		1FD0D7541CABF9E700501D52 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D7531CABF9E700501D52 /* EditTextViewController.m */; };
 		1FD0D7571CABF9F800501D52 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D7561CABF9F800501D52 /* ShareViewController.m */; };
 		1FD0D75D1CABFF0700501D52 /* MakingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D75C1CABFF0700501D52 /* MakingCell.m */; };
+		5E2140831E011B6800C063EE /* textModel6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5E2140801E011B6800C063EE /* textModel6.xml */; };
+		5E2140841E011B6800C063EE /* textModel7.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5E2140811E011B6800C063EE /* textModel7.xml */; };
+		5E2140851E011B6800C063EE /* textModel8.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5E2140821E011B6800C063EE /* textModel8.xml */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -190,6 +193,9 @@
 		1FD0D7561CABF9F800501D52 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
 		1FD0D75B1CABFF0700501D52 /* MakingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakingCell.h; sourceTree = "<group>"; };
 		1FD0D75C1CABFF0700501D52 /* MakingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MakingCell.m; sourceTree = "<group>"; };
+		5E2140801E011B6800C063EE /* textModel6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel6.xml; sourceTree = "<group>"; };
+		5E2140811E011B6800C063EE /* textModel7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel7.xml; sourceTree = "<group>"; };
+		5E2140821E011B6800C063EE /* textModel8.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel8.xml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -279,11 +285,14 @@
 		1F8564311CB14DAE003B9AE1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				1F8564271CB14AFC003B9AE1 /* textModel5.xml */,
-				1F8564281CB14AFC003B9AE1 /* textModel4.xml */,
-				1F8564291CB14AFC003B9AE1 /* textModel3.xml */,
-				1F85642A1CB14AFC003B9AE1 /* textModel2.xml */,
 				1F85642B1CB14AFC003B9AE1 /* textModel1.xml */,
+				1F85642A1CB14AFC003B9AE1 /* textModel2.xml */,
+				1F8564291CB14AFC003B9AE1 /* textModel3.xml */,
+				1F8564281CB14AFC003B9AE1 /* textModel4.xml */,
+				1F8564271CB14AFC003B9AE1 /* textModel5.xml */,
+				5E2140801E011B6800C063EE /* textModel6.xml */,
+				5E2140811E011B6800C063EE /* textModel7.xml */,
+				5E2140821E011B6800C063EE /* textModel8.xml */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -423,6 +432,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5E2140851E011B6800C063EE /* textModel8.xml in Resources */,
 				1FC66C0A1D4448E3004ECB69 /* btn-share-pinterest@2x.png in Resources */,
 				1FC66C101D4448E3004ECB69 /* btn-share-weibo@2x.png in Resources */,
 				1F85642F1CB14AFC003B9AE1 /* textModel2.xml in Resources */,
@@ -449,6 +459,7 @@
 				1FC66BFA1D4448E3004ECB69 /* btn-gallery@2x.png in Resources */,
 				1FC66BE71D4448E3004ECB69 /* btn-add@3x.png in Resources */,
 				1FC66C001D4448E3004ECB69 /* btn-layout@2x.png in Resources */,
+				5E2140831E011B6800C063EE /* textModel6.xml in Resources */,
 				1FC66BF21D4448E3004ECB69 /* btn-confirm@2x.png in Resources */,
 				1FC66BEC1D4448E3004ECB69 /* btn-cancel-shadowed@2x.png in Resources */,
 				1FC66BF41D4448E3004ECB69 /* btn-copy@2x.png in Resources */,
@@ -480,6 +491,7 @@
 				1FC66BE81D4448E3004ECB69 /* btn-back@2x.png in Resources */,
 				1FC66BEA1D4448E3004ECB69 /* btn-camera@2x.png in Resources */,
 				1FC66BEF1D4448E3004ECB69 /* btn-cancel-small@3x.png in Resources */,
+				5E2140841E011B6800C063EE /* textModel7.xml in Resources */,
 				1FC66C161D4448E3004ECB69 /* icon-chk-solid@2x.png in Resources */,
 				1FC66C121D4448E3004ECB69 /* btn-share@2x.png in Resources */,
 				1FC66C051D4448E3004ECB69 /* btn-remove@3x.png in Resources */,

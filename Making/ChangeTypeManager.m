@@ -30,6 +30,9 @@ static ChangeTypeManager *_instance;
     [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel3"]];
     [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel4"]];
     [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel5"]];
+    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel6"]];
+    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel7"]];
+    [array addObject:[[XMLUtil alloc] initWithFileName:@"textModel8"]];
     _xmls = [[NSArray alloc] initWithArray:array];
 }
 - (NSArray *)colors {

@@ -10,14 +10,14 @@ never
 means
 maybe.</text>
         <fontSize>24</fontSize>
-        <alignment>2</alignment>
+        <alignment>0</alignment>
         <fontName>SanFranciscoDisplay-Bold</fontName>
         <mainPosition>0</mainPosition>
     </mainText>
     <forewordText>
         <forewordText>loving the alien</forewordText>
         <forewordFontSize>12</forewordFontSize>
-        <forewordAlignment>2</forewordAlignment>
+        <forewordAlignment>1</forewordAlignment>
         <forewordPosition>1</forewordPosition>
         <forewordFontName>SanFranciscoDisplay-Bold</forewordFontName>
     </forewordText>

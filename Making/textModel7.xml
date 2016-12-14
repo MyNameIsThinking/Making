@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model>
-    <identifier>testModel1</identifier>
+    <identifier>testModel7</identifier>
     <mainText>
         <text>sometimes
 is
@@ -10,15 +10,15 @@ never
 means
 maybe.</text>
         <fontSize>24</fontSize>
-        <alignment>2</alignment>
+        <alignment>0</alignment>
         <fontName>SanFranciscoDisplay-Bold</fontName>
-        <mainPosition>0</mainPosition>
+        <mainPosition>3</mainPosition>
     </mainText>
     <forewordText>
         <forewordText>loving the alien</forewordText>
         <forewordFontSize>12</forewordFontSize>
-        <forewordAlignment>2</forewordAlignment>
-        <forewordPosition>1</forewordPosition>
+        <forewordAlignment>1</forewordAlignment>
+        <forewordPosition>0</forewordPosition>
         <forewordFontName>SanFranciscoDisplay-Bold</forewordFontName>
     </forewordText>
 </model>

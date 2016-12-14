@@ -87,13 +87,15 @@
     self.fontName = fontName?fontName:model.fontName;
     self.mainLabel.font = [UIFont fontWithName:self.fontName size:model.fontSize];
     self.mainLabel.textColor = [UIColor whiteColor];
+    self.mainLabel.backgroundColor = [UIColor clearColor];
     [self.mainView addSubview:self.mainLabel];
     
-    self.forewordLabel.textAlignment = model.forewordAlignment;
     self.forewordLabel.text = model.forewordText;
+    self.forewordLabel.textAlignment = kCTTextAlignmentCenter;
     self.forewordFontName = fontName?fontName:model.forewordFontName;
-    self.forewordLabel.font = [UIFont fontWithName:self.fontName size:model.forewordFontSize];
+    self.forewordLabel.font = [UIFont fontWithName:self.forewordFontName size:model.forewordFontSize];
     self.forewordLabel.textColor = [UIColor whiteColor];
+    self.forewordLabel.backgroundColor = [UIColor clearColor];
     [self.forewordView addSubview:self.forewordLabel];
     
     CGPoint mainOrigin = CGPointZero;
@@ -108,13 +110,55 @@
     self.mainView.frame = CGRectMake(mainOrigin.x, mainOrigin.y, CGRectGetWidth(self.mainView.frame), CGRectGetHeight(self.mainView.frame));
     self.forewordView.frame = CGRectMake(forewordOrigin.x, forewordOrigin.y, CGRectGetWidth(self.forewordView.frame), CGRectGetHeight(self.forewordView.frame));
     
-    CGSize mainSize = [model.text sizeWithAttributes:@{NSFontAttributeName:self.mainLabel.font}];
-    self.mainLabel.frame = CGRectMake(0, 0, mainSize.width, mainSize.height);
-    self.mainLabel.center = CGPointMake(CGRectGetWidth(self.mainView.frame)*.5f, CGRectGetHeight(self.mainView.frame)*.5f);
-    
+    CGSize mainLabelSize = [model.text sizeWithAttributes:@{NSFontAttributeName:self.mainLabel.font}];
     CGSize forewordSize = [model.forewordText sizeWithAttributes:@{NSFontAttributeName:self.forewordLabel.font}];
-    self.forewordLabel.frame = CGRectMake(0, 0, forewordSize.width, forewordSize.height);
-    self.forewordLabel.center = CGPointMake(CGRectGetWidth(self.forewordView.frame)*.5f, CGRectGetHeight(self.forewordView.frame)*.5f);
+    CGSize mainViewSize = CGSizeMake(CGRectGetWidth(_mainView.frame), CGRectGetHeight(_mainView.frame));
+    switch (_model.mainPosition) {
+        case 0: {
+            self.mainLabel.frame = CGRectMake(0, 0, mainLabelSize.width, mainLabelSize.height);
+            self.mainLabel.center = CGPointMake(CGRectGetWidth(self.mainView.frame)*.5f, CGRectGetHeight(self.mainView.frame)*.5f);
+        }
+            break;
+        case 1: {
+            self.mainLabel.frame = CGRectMake(0, 0, mainLabelSize.width, mainLabelSize.height);
+        }
+            break;
+        case 2: {
+            self.mainLabel.frame = CGRectMake(mainViewSize.width-mainLabelSize.width, 0, mainLabelSize.width, mainLabelSize.height);
+        }
+            break;
+        case 3: {
+            self.mainLabel.frame = CGRectMake(0, mainViewSize.height-mainLabelSize.height, mainLabelSize.width, mainLabelSize.height);
+        }
+            break;
+        case 4: {
+            self.mainLabel.frame = CGRectMake(mainViewSize.width-mainLabelSize.width, mainViewSize.height-mainLabelSize.height, mainLabelSize.width, mainLabelSize.height);
+        }
+            break;
+            
+        default:
+            break;
+    }
+    switch (_model.forewordAlignment) {
+        case 0: {
+            self.forewordLabel.frame = CGRectMake(0, 0, forewordSize.width, forewordSize.height);
+            self.forewordLabel.center = CGPointMake(self.forewordLabel.center.x, CGRectGetHeight(self.forewordView.frame)*.5f);
+        }
+            break;
+        case 1: {
+            self.forewordLabel.frame = CGRectMake(mainViewSize.width-forewordSize.width, 0, forewordSize.width, forewordSize.height);
+            self.forewordLabel.center = CGPointMake(self.forewordLabel.center.x, CGRectGetHeight(self.forewordView.frame)*.5f);
+        }
+            break;
+        case 2: {
+            self.forewordLabel.frame = CGRectMake(0, 0, forewordSize.width, forewordSize.height);
+            self.forewordLabel.center = CGPointMake(CGRectGetWidth(self.forewordView.frame)*.5f, CGRectGetHeight(self.forewordView.frame)*.5f);
+        }
+            break;
+            
+        default:
+            break;
+    }
     
     _cellImage = [self getImageFromView];
     self.cellImageView.image = _cellImage;
@@ -144,7 +188,7 @@
     if (!_mainView) {
         
         _mainView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size.width-(2*[FitHelper fitWidth:25]), size.height-CGRectGetHeight(self.forewordView.frame)-(2*[FitHelper fitHeight:25]))];
-        _mainView.backgroundColor = [UIColor blueColor];
+        _mainView.backgroundColor = [UIColor clearColor];
     }
     
     return _mainView;
@@ -156,7 +200,7 @@
         UIFont *font = [UIFont fontWithName:self.fontName size:_model.forewordFontSize];
         CGSize fontSize = [text sizeWithAttributes:@{NSFontAttributeName:font}];
         _forewordView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size.width-(2*[FitHelper fitWidth:25]), fontSize.height + [FitHelper fitHeight:25])];
-        _forewordView.backgroundColor = [UIColor blackColor];
+        _forewordView.backgroundColor = [UIColor clearColor];
     }
     
     return _forewordView;
