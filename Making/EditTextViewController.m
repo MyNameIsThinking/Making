@@ -80,7 +80,9 @@
 - (void)goBack:(UIButton *)sender {
 
     if ([sender isEqual:_doneBtn]) {
-        _model.text = _mainTextView.text;
+        NSRange rang = NSMakeRange(_mainTextView.text.length-1, 1);
+        NSString *rangText = [_mainTextView.text substringWithRange:rang];
+        _model.text = [rangText isEqualToString:@"\n"]?_mainTextView.text:[NSString stringWithFormat:@"%@%@",_mainTextView.text,@"\n"];
         _model.forewordText = _forewordTextView.text;
         NSLog(@"保存");
     } else if ([sender isEqual:_returnBtn]) {
