@@ -21,7 +21,7 @@
 @property (nonatomic, retain) UIView *mainView;
 @property (nonatomic, retain) UIView *forewordView;
 @property (nonatomic, retain) M80AttributedLabel *mainLabel;
-@property (nonatomic, retain) M80AttributedLabel *forewordLabel;
+@property (nonatomic, retain) UILabel *forewordLabel;
 @property (nonatomic, retain) UIButton *photoBtn;
 @property (nonatomic, retain) UIImageView *checkImageView;
 @property (nonatomic, retain) UIImageView *cellBackGroundImageView;
@@ -85,15 +85,27 @@
     self.mainLabel.textAlignment = model.textAlignment;
     self.mainLabel.text = model.text;
     self.fontName = fontName?fontName:model.fontName;
-    self.mainLabel.font = [UIFont fontWithName:self.fontName size:model.fontSize];
+    UIFont *mainFont = nil;
+    if ([self.fontName isEqualToString:@"SFUIDisplay-Bold"]) {
+        mainFont = [UIFont systemFontOfSize:model.fontSize];
+    } else {
+        mainFont = [UIFont fontWithName:self.fontName size:model.fontSize];
+    }
+    self.mainLabel.font = mainFont;
     self.mainLabel.textColor = [UIColor whiteColor];
     self.mainLabel.backgroundColor = [UIColor clearColor];
     [self.mainView addSubview:self.mainLabel];
     
     self.forewordLabel.text = model.forewordText;
-    self.forewordLabel.textAlignment = kCTTextAlignmentCenter;
+    self.forewordLabel.textAlignment = kCTTextAlignmentLeft;
     self.forewordFontName = fontName?fontName:model.forewordFontName;
-    self.forewordLabel.font = [UIFont fontWithName:self.forewordFontName size:model.forewordFontSize];
+    UIFont *forewordFont = nil;
+    if ([self.forewordFontName isEqualToString:@"SFUIDisplay-Bold"]) {
+        forewordFont = [UIFont systemFontOfSize:model.forewordFontSize];
+    } else {
+        forewordFont = [UIFont fontWithName:self.forewordFontName size:model.forewordFontSize];
+    }
+    self.forewordLabel.font = forewordFont;
     self.forewordLabel.textColor = [UIColor whiteColor];
     self.forewordLabel.backgroundColor = [UIColor clearColor];
     [self.forewordView addSubview:self.forewordLabel];
@@ -110,9 +122,10 @@
     self.mainView.frame = CGRectMake(mainOrigin.x, mainOrigin.y, CGRectGetWidth(self.mainView.frame), CGRectGetHeight(self.mainView.frame));
     self.forewordView.frame = CGRectMake(forewordOrigin.x, forewordOrigin.y, CGRectGetWidth(self.forewordView.frame), CGRectGetHeight(self.forewordView.frame));
     
-    CGSize mainLabelSize = [model.text sizeWithAttributes:@{NSFontAttributeName:self.mainLabel.font}];
-    CGSize forewordSize = [model.forewordText sizeWithAttributes:@{NSFontAttributeName:self.forewordLabel.font}];
+    CGSize mainLabelSize = [model.text sizeWithAttributes:@{NSFontAttributeName:mainFont}];
+    CGSize forewordSize = [model.forewordText sizeWithAttributes:@{NSFontAttributeName:forewordFont}];
     CGSize mainViewSize = CGSizeMake(CGRectGetWidth(_mainView.frame), CGRectGetHeight(_mainView.frame));
+    CGSize forewordViewSize = CGSizeMake(CGRectGetWidth(_forewordView.frame), CGRectGetHeight(_forewordView.frame));
     switch (_model.mainPosition) {
         case 0: {
             self.mainLabel.frame = CGRectMake(0, 0, mainLabelSize.width, mainLabelSize.height);
@@ -146,7 +159,7 @@
         }
             break;
         case 1: {
-            self.forewordLabel.frame = CGRectMake(mainViewSize.width-forewordSize.width, 0, forewordSize.width, forewordSize.height);
+            self.forewordLabel.frame = CGRectMake(forewordViewSize.width-forewordSize.width, 0, forewordSize.width, forewordSize.height);
             self.forewordLabel.center = CGPointMake(self.forewordLabel.center.x, CGRectGetHeight(self.forewordView.frame)*.5f);
         }
             break;
@@ -214,10 +227,10 @@
     
     return _mainLabel;
 }
-- (M80AttributedLabel *)forewordLabel {
+- (UILabel *)forewordLabel {
     
     if (!_forewordLabel) {
-        _forewordLabel = [[M80AttributedLabel alloc] initWithFrame:CGRectZero];
+        _forewordLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         _forewordLabel.backgroundColor = [UIColor clearColor];
     }
     

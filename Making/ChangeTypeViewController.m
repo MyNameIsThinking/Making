@@ -140,7 +140,8 @@
     MakingCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     if (_changeType==ChangeTypeBackground) {
         cell.backgroundColor = indexPath.row==0?[UIColor whiteColor]:_colors[indexPath.row-1];
-        [cell showWithModel:self.defaultModel withFontName:nil withBackgroundImage:indexPath.row==0?self.defaultModel.BGImage:nil];
+        UIImage *image = self.defaultModel.BGImage?:[UIImage imageNamed:@"icon-origin"];
+        [cell showWithModel:self.defaultModel withFontName:nil withBackgroundImage:indexPath.row==0?image:nil];
         cell.cellDelegate = self;
     } else if (_changeType==ChangeTypeAlignment) {
         cell.backgroundColor = self.defaultColor;

@@ -11,7 +11,7 @@ means
 maybe.</text>
         <fontSize>24</fontSize>
         <alignment>2</alignment>
-        <fontName>SanFranciscoDisplay-Bold</fontName>
+        <fontName>SFUIDisplay-Bold</fontName>
         <mainPosition>0</mainPosition>
     </mainText>
     <forewordText>
@@ -19,6 +19,6 @@ maybe.</text>
         <forewordFontSize>12</forewordFontSize>
         <forewordAlignment>2</forewordAlignment>
         <forewordPosition>1</forewordPosition>
-        <forewordFontName>SanFranciscoDisplay-Bold</forewordFontName>
+        <forewordFontName>SFUIDisplay-Bold</forewordFontName>
     </forewordText>
 </model>

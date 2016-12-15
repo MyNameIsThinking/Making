@@ -90,6 +90,7 @@
 		5E2140831E011B6800C063EE /* textModel6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5E2140801E011B6800C063EE /* textModel6.xml */; };
 		5E2140841E011B6800C063EE /* textModel7.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5E2140811E011B6800C063EE /* textModel7.xml */; };
 		5E2140851E011B6800C063EE /* textModel8.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5E2140821E011B6800C063EE /* textModel8.xml */; };
+		5EB3555F1E02756900054FA0 /* icon-origin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5EB3555E1E02756900054FA0 /* icon-origin@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -196,6 +197,7 @@
 		5E2140801E011B6800C063EE /* textModel6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel6.xml; sourceTree = "<group>"; };
 		5E2140811E011B6800C063EE /* textModel7.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel7.xml; sourceTree = "<group>"; };
 		5E2140821E011B6800C063EE /* textModel8.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = textModel8.xml; sourceTree = "<group>"; };
+		5EB3555E1E02756900054FA0 /* icon-origin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-origin@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,6 +318,7 @@
 		1FC66BAF1D4448E3004ECB69 /* Image */ = {
 			isa = PBXGroup;
 			children = (
+				5EB3555E1E02756900054FA0 /* icon-origin@2x.png */,
 				1FC66BB01D4448E3004ECB69 /* btn-add@2x.png */,
 				1FC66BB11D4448E3004ECB69 /* btn-add@3x.png */,
 				1FC66BB21D4448E3004ECB69 /* btn-back@2x.png */,
@@ -459,6 +462,7 @@
 				1FC66BFA1D4448E3004ECB69 /* btn-gallery@2x.png in Resources */,
 				1FC66BE71D4448E3004ECB69 /* btn-add@3x.png in Resources */,
 				1FC66C001D4448E3004ECB69 /* btn-layout@2x.png in Resources */,
+				5EB3555F1E02756900054FA0 /* icon-origin@2x.png in Resources */,
 				5E2140831E011B6800C063EE /* textModel6.xml in Resources */,
 				1FC66BF21D4448E3004ECB69 /* btn-confirm@2x.png in Resources */,
 				1FC66BEC1D4448E3004ECB69 /* btn-cancel-shadowed@2x.png in Resources */,

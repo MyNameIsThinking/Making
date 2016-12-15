@@ -55,7 +55,7 @@ static ChangeTypeManager *_instance;
 
     if (!_fonts) {
         _fonts = [[NSArray alloc] initWithObjects:
-                  @"SanFranciscoDisplay-Bold",
+                  @"SFUIDisplay-Bold",
                   @"HelveticaNeue-Light",
                   @"AvenirNextCondensed-Heavy",
                   @"Courier-Bold",
