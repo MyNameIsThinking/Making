@@ -11,6 +11,8 @@
 #import "CoreTextModel.h"
 #import "UIImage+Save.h"
 #import "FitHelper.h"
+#import "WeiboSDK.h"
+#import "AppDelegate.h"
 
 typedef NS_OPTIONS(NSUInteger, ShareType) {
     ShareTypeLocal = 0,
@@ -93,6 +95,7 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
 }
 - (void)pressShare:(ShareType)type {
 
+    UIImage *shareImage = nil;
     NSMutableArray *images = [NSMutableArray array];
     for (int i = 0; i < _models.count; i++) {
         CoreTextModel *model = _models[i];
@@ -103,6 +106,9 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
         
         [images addObject:image];
         
+        if (i == 0) {
+            shareImage = image;
+        }
     }
     
     switch (type) {
@@ -118,7 +124,29 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
             }
         }
             break;
+        case ShareTypeWeiBo: {
             
+            AppDelegate *myDelegate =(AppDelegate*)[[UIApplication sharedApplication] delegate];
+            
+            WBAuthorizeRequest *authRequest = [WBAuthorizeRequest request];
+            authRequest.redirectURI = @"http://www.sina.com";
+            authRequest.scope = @"all";
+            
+            WBMessageObject *message = [WBMessageObject message];
+            message.text = NSLocalizedString(@"测试通过WeiboSDK发送文字到微博!", nil);
+            WBImageObject *image = [WBImageObject object];
+            image.imageData = UIImageJPEGRepresentation(shareImage, 1.f);
+            message.imageObject = image;
+            
+            WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message authInfo:authRequest access_token:myDelegate.wbtoken];
+            request.userInfo = @{@"ShareMessageFrom": @"SendMessageToWeiboViewController",
+                                 @"Other_Info_1": [NSNumber numberWithInt:123],
+                                 @"Other_Info_2": @[@"obj1", @"obj2"],
+                                 @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
+            //    request.shouldOpenWeiboAppInstallPageIfNotInstalled = NO;
+            [WeiboSDK sendRequest:request];
+        }
+            break;
         default:
             break;
     }
