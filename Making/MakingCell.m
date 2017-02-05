@@ -62,6 +62,9 @@
     self.photoBtn.hidden = _isShowPhoto==0;
     self.checkImageView.hidden = !_isShowCheck;
 }
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    self.cellView.backgroundColor = backgroundColor;
+}
 - (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName withBackgroundImage:(UIImage *)image {
     
     [_mainLabel removeFromSuperview];
