@@ -63,6 +63,7 @@
     self.checkImageView.hidden = !_isShowCheck;
 }
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:backgroundColor];
     self.cellView.backgroundColor = backgroundColor;
 }
 - (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName withBackgroundImage:(UIImage *)image {
