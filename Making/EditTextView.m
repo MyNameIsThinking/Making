@@ -18,6 +18,7 @@
 @property (nonatomic, retain) UIButton *returnBtn;
 @property (nonatomic, retain) UIButton *copyedBtn;
 @property (nonatomic, retain) UILabel *fromLabel;
+@property (nonatomic, retain) UIToolbar *toolbar;
 @end
 
 @implementation EditTextView
@@ -30,15 +31,17 @@
     _returnBtn = nil;
     _copyedBtn = nil;
     _fromLabel = nil;
+    _toolbar = nil;
 }
 - (id)initWithModel:(CoreTextModel *)model {
 
     self = [super initWithFrame:[UIScreen mainScreen].bounds];
     if (self) {
+        self.backgroundColor = [UIColor clearColor];
         _model = model;
-        self.backgroundColor = [UIColor whiteColor];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+        [self addSubview:self.toolbar];
         [self addSubview:self.copyedBtn];
         [self addSubview:self.doneBtn];
         [self addSubview:self.returnBtn];
@@ -65,7 +68,7 @@
     CGSize labelSize1 = [_forewordTextView.text sizeWithAttributes:@{NSFontAttributeName:_forewordTextView.font}];
     _forewordTextView.frame = CGRectMake(width, 0, labelSize1.width+50, labelSize1.height+20);
     
-    self.forewordTextView.center = CGPointMake(_forewordTextView.center.x, self.copyedBtn.center.y-(CGRectGetHeight(self.copyedBtn.frame)/2)-(CGRectGetHeight(self.forewordTextView.frame)/2)-50);
+    self.forewordTextView.center = CGPointMake(_forewordTextView.center.x, self.copyedBtn.center.y-(CGRectGetHeight(self.copyedBtn.frame)/2)-(CGRectGetHeight(self.forewordTextView.frame)/2));
     
     CGSize labelSize2 = [_fromLabel.text sizeWithAttributes:@{NSFontAttributeName:_fromLabel.font}];
     _fromLabel.frame = CGRectMake(width+4, _forewordTextView.frame.origin.y-labelSize2.height, labelSize2.width, labelSize2.height);
@@ -100,7 +103,7 @@
         _mainTextView.delegate = self;
         _mainTextView.textAlignment = NSTextAlignmentLeft;
         _mainTextView.attributedText = [[NSAttributedString alloc] initWithString:_model.text attributes:self.mainAttributes];
-        _mainTextView.backgroundColor = [UIColor whiteColor];
+        _mainTextView.backgroundColor = [UIColor clearColor];
         _mainTextView.returnKeyType = UIReturnKeyNext;
     }
     return _mainTextView;
@@ -123,6 +126,7 @@
     if (!_forewordTextView) {
         _forewordTextView = [[UITextView alloc] init];
         _forewordTextView.delegate = self;
+        _forewordTextView.backgroundColor = [UIColor clearColor];
         _forewordTextView.textAlignment = NSTextAlignmentLeft;
         _forewordTextView.attributedText = [[NSAttributedString alloc] initWithString:_model.forewordText attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Regular" size:17.f],}];
         _forewordTextView.returnKeyType = UIReturnKeyNext;
@@ -173,9 +177,17 @@
         NSString *text = @"來自:";
         _fromLabel = [[UILabel alloc] init];
         _fromLabel.text = text;
-        _fromLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:8.5f];
+        _fromLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:17.f];
+        _fromLabel.backgroundColor = [UIColor clearColor];
     }
     
     return _fromLabel;
+}
+- (UIToolbar *)toolbar {
+    if (!_toolbar) {
+        _toolbar = [[UIToolbar alloc] initWithFrame:self.bounds];
+        _toolbar.backgroundColor = [UIColor clearColor];
+    }
+    return _toolbar;
 }
 @end
