@@ -90,6 +90,7 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     [self.pageControl setNumberOfPages:self.mainModels.count];
+    _pageControl.hidden = _pageControl.numberOfPages==1;
     return self.mainModels.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {

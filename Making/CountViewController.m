@@ -79,6 +79,7 @@
 }
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     [self.pageControl setNumberOfPages:_mainModels.count];
+    _pageControl.hidden = _pageControl.numberOfPages==1;
     return _mainModels.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
