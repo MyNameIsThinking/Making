@@ -56,15 +56,10 @@
     NSDictionary *info = [notification userInfo];
     CGSize size = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;//得到鍵盤的高度
     CGFloat width = [FitHelper fitWidth:15];
-#if 1
     self.copyedBtn.frame = CGRectMake((CGRectGetWidth(self.bounds)-CGRectGetWidth(self.copyedBtn.frame))/2, CGRectGetHeight(self.bounds)-size.height-CGRectGetHeight(self.copyedBtn.frame)-[FitHelper fitHeight:15], CGRectGetWidth(self.copyedBtn.frame), CGRectGetHeight(self.copyedBtn.frame));
     self.returnBtn.center = CGPointMake(width+CGRectGetWidth(self.returnBtn.frame)/2, self.copyedBtn.center.y);
     self.doneBtn.center = CGPointMake(CGRectGetWidth(self.bounds)-self.returnBtn.center.x, self.copyedBtn.center.y);
-#else
-    _copyedBtn.transform = CGAffineTransformMakeTranslation(0, -size.height);
-    _returnBtn.transform = CGAffineTransformMakeTranslation(0, -size.height);
-    _doneBtn.transform = CGAffineTransformMakeTranslation(0, -size.height);
-#endif
+    
     CGSize labelSize1 = [_forewordTextView.text sizeWithAttributes:@{NSFontAttributeName:_forewordTextView.font}];
     _forewordTextView.frame = CGRectMake(width, 0, labelSize1.width+50, labelSize1.height+20);
     
@@ -96,6 +91,12 @@
     }
     [self.mainTextView resignFirstResponder];
     [self.forewordTextView resignFirstResponder];
+}
+#pragma mark - UITextViewDelegate
+- (void)textViewDidChange:(UITextView *)textView {
+    if ([textView isEqual:_mainTextView]) {
+        _copyedBtn.hidden = textView.text.length==0;
+    }
 }
 - (UITextView *)mainTextView {
     if (!_mainTextView) {
