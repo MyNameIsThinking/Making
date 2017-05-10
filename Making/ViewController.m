@@ -15,7 +15,7 @@
 #import "MakingCell.h"
 #import "M80AttributedLabel.h"
 
-const NSTimeInterval durationTime = 0.4;
+const NSTimeInterval durationTime = 0.3f;
 
 @interface ViewController () <MainDelegate,ChangeTypeDelegate>
 
