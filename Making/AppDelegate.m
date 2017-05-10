@@ -20,8 +20,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     [ChangeTypeManager shareInstance];
-    [WeiboSDK enableDebugMode:YES];
-    if ([WeiboSDK registerApp:@"2045436852z"]) {
+    [WeiboSDK enableDebugMode:NO];
+    if ([WeiboSDK registerApp:@"1228016286"]) {
         NSLog(@"");
     }
     //   wxSecretKey     @"c395c384d93921234b2ac90783cc5dfd"

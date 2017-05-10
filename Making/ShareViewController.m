@@ -137,12 +137,15 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
             WBImageObject *image = [WBImageObject object];
             image.imageData = UIImageJPEGRepresentation(shareImage, 1.f);
             message.imageObject = image;
-            
+#if 1
+            WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message];
+#else
             WBSendMessageToWeiboRequest *request = [WBSendMessageToWeiboRequest requestWithMessage:message authInfo:authRequest access_token:myDelegate.wbtoken];
             request.userInfo = @{@"ShareMessageFrom": @"SendMessageToWeiboViewController",
                                  @"Other_Info_1": [NSNumber numberWithInt:123],
                                  @"Other_Info_2": @[@"obj1", @"obj2"],
                                  @"Other_Info_3": @{@"key1": @"obj1", @"key2": @"obj2"}};
+#endif
             //    request.shouldOpenWeiboAppInstallPageIfNotInstalled = NO;
             [WeiboSDK sendRequest:request];
         }

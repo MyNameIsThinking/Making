@@ -746,7 +746,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ThirdPart/libWeiboSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sina.weibo.SNWeiboSDKDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LetsMaking;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1745e5e8-3ba7-424e-ac85-c650a8f5aec3";
 				PROVISIONING_PROFILE_SPECIFIER = zebra;
@@ -767,7 +767,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/ThirdPart/libWeiboSDK",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.sina.weibo.SNWeiboSDKDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.LetsMaking;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
