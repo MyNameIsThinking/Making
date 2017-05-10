@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "MainViewController.h"
 #import "ChangeTypeViewController.h"
-#import "EditTextViewController.h"
+#import "EditTextView.h"
 #import "ShareViewController.h"
 #import "CountViewController.h"
 #import "MakingCell.h"
@@ -55,7 +55,11 @@ const NSTimeInterval durationTime = 0.3f;
     }
 }
 - (void)pressMainCellWithModel:(CoreTextModel *)model {
-    [self presentViewController:[[EditTextViewController alloc] initWithModel:model] animated:YES completion:^{
+    EditTextView *editTextView = [[EditTextView alloc] initWithModel:model];
+    editTextView.alpha = 0.f;
+    [self.view addSubview:editTextView];
+    [UIView animateWithDuration:.3f animations:^{
+        editTextView.alpha = 1.f;
     }];
 }
 - (void)pressCell:(MakingCell *)cell changeType:(PressType)type {
@@ -134,7 +138,7 @@ const NSTimeInterval durationTime = 0.3f;
     scaleAnimation.duration = time;
     
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-    animationGroup.delegate = self;
+//    animationGroup.delegate = self;
     animationGroup.duration = time;
     [animationGroup setAnimations:[NSArray arrayWithObjects:positionAnimation,scaleAnimation, nil]];
     animationGroup.fillMode = kCAFillModeForwards;
@@ -162,7 +166,7 @@ const NSTimeInterval durationTime = 0.3f;
     scaleAnimation.duration = time;
     
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-    animationGroup.delegate = self;
+//    animationGroup.delegate = self;
     animationGroup.duration = time;
     [animationGroup setAnimations:[NSArray arrayWithObjects:positionAnimation,scaleAnimation, nil]];
     animationGroup.fillMode = kCAFillModeForwards;

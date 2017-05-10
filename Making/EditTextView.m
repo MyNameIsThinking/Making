@@ -6,10 +6,10 @@
 //  Copyright © 2016年 Making. All rights reserved.
 //
 
-#import "EditTextViewController.h"
+#import "EditTextView.h"
 #import "FitHelper.h"
 
-@interface EditTextViewController () <UITextViewDelegate>
+@interface EditTextView () <UITextViewDelegate>
 @property (nonatomic, retain) CoreTextModel *model;
 @property (nonatomic, retain) UITextView *mainTextView;
 @property (nonatomic, retain) NSDictionary *mainAttributes;
@@ -20,7 +20,7 @@
 @property (nonatomic, retain) UILabel *fromLabel;
 @end
 
-@implementation EditTextViewController
+@implementation EditTextView
 - (void)dealloc {
     _model = nil;
     _mainTextView = nil;
@@ -33,34 +33,35 @@
 }
 - (id)initWithModel:(CoreTextModel *)model {
 
-    self = [super init];
+    self = [super initWithFrame:[UIScreen mainScreen].bounds];
     if (self) {
         _model = model;
-        self.view.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor whiteColor];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasShown:) name:UIKeyboardDidShowNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillBeHidden:) name:UIKeyboardWillHideNotification object:nil];
+        [self addSubview:self.copyedBtn];
+        [self addSubview:self.doneBtn];
+        [self addSubview:self.returnBtn];
+        [self addSubview:self.mainTextView];
+        [self addSubview:self.fromLabel];
+        [self addSubview:self.forewordTextView];
+        [self.mainTextView becomeFirstResponder];
     }
     return self;
-}
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self.view addSubview:self.copyedBtn];
-    [self.view addSubview:self.doneBtn];
-    [self.view addSubview:self.returnBtn];
-    [self.view addSubview:self.mainTextView];
-    [self.view addSubview:self.fromLabel];
-    [self.view addSubview:self.forewordTextView];
-    [self.mainTextView becomeFirstResponder];
 }
 - (void)keyboardWasShown:(NSNotification *)notification {
     NSDictionary *info = [notification userInfo];
     CGSize size = [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;//得到鍵盤的高度
     CGFloat width = [FitHelper fitWidth:15];
-    
-    self.copyedBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-CGRectGetWidth(self.copyedBtn.frame))/2, CGRectGetHeight(self.view.bounds)-size.height-CGRectGetHeight(self.copyedBtn.frame)-[FitHelper fitHeight:15], CGRectGetWidth(self.copyedBtn.frame), CGRectGetHeight(self.copyedBtn.frame));
+#if 1
+    self.copyedBtn.frame = CGRectMake((CGRectGetWidth(self.bounds)-CGRectGetWidth(self.copyedBtn.frame))/2, CGRectGetHeight(self.bounds)-size.height-CGRectGetHeight(self.copyedBtn.frame)-[FitHelper fitHeight:15], CGRectGetWidth(self.copyedBtn.frame), CGRectGetHeight(self.copyedBtn.frame));
     self.returnBtn.center = CGPointMake(width+CGRectGetWidth(self.returnBtn.frame)/2, self.copyedBtn.center.y);
-    self.doneBtn.center = CGPointMake(CGRectGetWidth(self.view.bounds)-self.returnBtn.center.x, self.copyedBtn.center.y);
-    
+    self.doneBtn.center = CGPointMake(CGRectGetWidth(self.bounds)-self.returnBtn.center.x, self.copyedBtn.center.y);
+#else
+    _copyedBtn.transform = CGAffineTransformMakeTranslation(0, -size.height);
+    _returnBtn.transform = CGAffineTransformMakeTranslation(0, -size.height);
+    _doneBtn.transform = CGAffineTransformMakeTranslation(0, -size.height);
+#endif
     CGSize labelSize1 = [_forewordTextView.text sizeWithAttributes:@{NSFontAttributeName:_forewordTextView.font}];
     _forewordTextView.frame = CGRectMake(width, 0, labelSize1.width+50, labelSize1.height+20);
     
@@ -74,11 +75,13 @@
     
 }
 - (void)keyboardWillBeHidden:(NSNotification *)notification {
-    [self dismissViewControllerAnimated:YES completion:^{
+    [UIView animateWithDuration:.3f animations:^{
+        self.alpha = 0.f;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
     }];
 }
 - (void)goBack:(UIButton *)sender {
-
     if ([sender isEqual:_doneBtn]) {
         NSRange rang = NSMakeRange(_mainTextView.text.length-1, 1);
         NSString *rangText = [_mainTextView.text substringWithRange:rang];
@@ -92,9 +95,7 @@
     [self.forewordTextView resignFirstResponder];
 }
 - (UITextView *)mainTextView {
-
     if (!_mainTextView) {
-        
         _mainTextView = [[UITextView alloc] init];
         _mainTextView.delegate = self;
         _mainTextView.textAlignment = NSTextAlignmentLeft;
@@ -102,7 +103,6 @@
         _mainTextView.backgroundColor = [UIColor whiteColor];
         _mainTextView.returnKeyType = UIReturnKeyNext;
     }
-    
     return _mainTextView;
 }
 - (NSDictionary *)mainAttributes {
@@ -111,7 +111,7 @@
         NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
         paragraphStyle.lineSpacing = 12;
         _mainAttributes = @{
-                            NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Regular" size:8.5f],
+                            NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Regular" size:17.f],
                             NSParagraphStyleAttributeName:paragraphStyle
                             };
     }
@@ -124,7 +124,7 @@
         _forewordTextView = [[UITextView alloc] init];
         _forewordTextView.delegate = self;
         _forewordTextView.textAlignment = NSTextAlignmentLeft;
-        _forewordTextView.attributedText = [[NSAttributedString alloc] initWithString:_model.forewordText attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Regular" size:8.5f],}];
+        _forewordTextView.attributedText = [[NSAttributedString alloc] initWithString:_model.forewordText attributes:@{NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Regular" size:17.f],}];
         _forewordTextView.returnKeyType = UIReturnKeyNext;
     }
     
@@ -136,7 +136,8 @@
         UIImage *image = [UIImage imageNamed:@"btn-confirm-small"];
         _doneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_doneBtn setImage:image forState:UIControlStateNormal];
-        _doneBtn.frame = CGRectMake(0, -10, image.size.width, image.size.height);
+        _doneBtn.frame = CGRectMake(0, CGRectGetHeight([UIScreen mainScreen].bounds)-image.size.height-10.f, image.size.width, image.size.height);
+        self.doneBtn.center = CGPointMake(CGRectGetWidth(self.bounds)-self.returnBtn.center.x, self.copyedBtn.center.y);
         [_doneBtn addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -145,24 +146,25 @@
 - (UIButton *)returnBtn {
 
     if (!_returnBtn) {
+        CGFloat width = [FitHelper fitWidth:15];
         UIImage *image = [UIImage imageNamed:@"btn-cancel-small"];
         _returnBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_returnBtn setImage:image forState:UIControlStateNormal];
-        _returnBtn.frame = CGRectMake(0, -10, image.size.width, image.size.height);
+        _returnBtn.frame = CGRectMake(0, CGRectGetHeight([UIScreen mainScreen].bounds)-image.size.height-10.f, image.size.width, image.size.height);
+        self.returnBtn.center = CGPointMake(width+CGRectGetWidth(self.returnBtn.frame)/2, self.copyedBtn.center.y);
         [_returnBtn addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _returnBtn;
 }
 - (UIButton *)copyedBtn {
-
     if (!_copyedBtn) {
         UIImage *image = [UIImage imageNamed:@"btn-paste"];
         _copyedBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_copyedBtn setImage:image forState:UIControlStateNormal];
-        _copyedBtn.frame = CGRectMake(0, -10, image.size.width, image.size.height);
+        _copyedBtn.frame = CGRectMake(0, CGRectGetHeight([UIScreen mainScreen].bounds)-image.size.height-10.f, image.size.width, image.size.height);
+        _copyedBtn.center = CGPointMake(CGRectGetWidth(self.frame)*.5f, _copyedBtn.center.y);
     }
-    
     return _copyedBtn;
 }
 - (UILabel *)fromLabel {

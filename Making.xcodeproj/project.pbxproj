@@ -84,7 +84,7 @@
 		1FC66C1B1D4448E3004ECB69 /* icon-unchk@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1FC66BE51D4448E3004ECB69 /* icon-unchk@3x.png */; };
 		1FD0D74E1CABF8CA00501D52 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D74D1CABF8CA00501D52 /* MainViewController.m */; };
 		1FD0D7511CABF9CE00501D52 /* ChangeTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D7501CABF9CE00501D52 /* ChangeTypeViewController.m */; };
-		1FD0D7541CABF9E700501D52 /* EditTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D7531CABF9E700501D52 /* EditTextViewController.m */; };
+		1FD0D7541CABF9E700501D52 /* EditTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D7531CABF9E700501D52 /* EditTextView.m */; };
 		1FD0D7571CABF9F800501D52 /* ShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D7561CABF9F800501D52 /* ShareViewController.m */; };
 		1FD0D75D1CABFF0700501D52 /* MakingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FD0D75C1CABFF0700501D52 /* MakingCell.m */; };
 		5E2140831E011B6800C063EE /* textModel6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5E2140801E011B6800C063EE /* textModel6.xml */; };
@@ -201,8 +201,8 @@
 		1FD0D74D1CABF8CA00501D52 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		1FD0D74F1CABF9CE00501D52 /* ChangeTypeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangeTypeViewController.h; sourceTree = "<group>"; };
 		1FD0D7501CABF9CE00501D52 /* ChangeTypeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangeTypeViewController.m; sourceTree = "<group>"; };
-		1FD0D7521CABF9E700501D52 /* EditTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextViewController.h; sourceTree = "<group>"; };
-		1FD0D7531CABF9E700501D52 /* EditTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextViewController.m; sourceTree = "<group>"; };
+		1FD0D7521CABF9E700501D52 /* EditTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditTextView.h; sourceTree = "<group>"; };
+		1FD0D7531CABF9E700501D52 /* EditTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditTextView.m; sourceTree = "<group>"; };
 		1FD0D7551CABF9F800501D52 /* ShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareViewController.h; sourceTree = "<group>"; };
 		1FD0D7561CABF9F800501D52 /* ShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareViewController.m; sourceTree = "<group>"; };
 		1FD0D75B1CABFF0700501D52 /* MakingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MakingCell.h; sourceTree = "<group>"; };
@@ -297,8 +297,8 @@
 				1FD0D74D1CABF8CA00501D52 /* MainViewController.m */,
 				1FD0D74F1CABF9CE00501D52 /* ChangeTypeViewController.h */,
 				1FD0D7501CABF9CE00501D52 /* ChangeTypeViewController.m */,
-				1FD0D7521CABF9E700501D52 /* EditTextViewController.h */,
-				1FD0D7531CABF9E700501D52 /* EditTextViewController.m */,
+				1FD0D7521CABF9E700501D52 /* EditTextView.h */,
+				1FD0D7531CABF9E700501D52 /* EditTextView.m */,
 				1FD0D7551CABF9F800501D52 /* ShareViewController.h */,
 				1FD0D7561CABF9F800501D52 /* ShareViewController.m */,
 				1F0B6DAB1CAF4DF000E9088F /* CountViewController.h */,
@@ -619,7 +619,7 @@
 				1FD0D74E1CABF8CA00501D52 /* MainViewController.m in Sources */,
 				1F2A8C111CB0E94100A496BE /* ChangeTypeManager.m in Sources */,
 				1FBFA1031CB10A8100334E95 /* M80AttributedLabelURL.m in Sources */,
-				1FD0D7541CABF9E700501D52 /* EditTextViewController.m in Sources */,
+				1FD0D7541CABF9E700501D52 /* EditTextView.m in Sources */,
 				1FBFA1041CB10A8100334E95 /* M80AttributedLabelAttachment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
