@@ -80,7 +80,6 @@ const NSTimeInterval durationTime = 0.3f;
         _mainViewController.view.alpha = 1;
     }];
 }
-#pragma mark - ChangeTypeDelegate
 - (void)pressClose {
     
     [UIView animateWithDuration:durationTime animations:^{
@@ -93,6 +92,7 @@ const NSTimeInterval durationTime = 0.3f;
         [_mainViewController.view addSubview:_mainViewController.collectionView];
     }];
 }
+#pragma mark - ChangeTypeDelegate
 - (void)pressCell:(MakingCell *)cell scrollView:(UIScrollView *)scrollView {
     
     [self.mainViewController setSelectCell:cell];

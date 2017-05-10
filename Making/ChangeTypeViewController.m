@@ -197,18 +197,17 @@
     return _collectionViewLayout;
 }
 - (UIButton *)closeBtn {
-
     if (!_closeBtn) {
         UIImage *image = [UIImage imageNamed:@"btn-cancel-shadowed"];
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_closeBtn setImage:image forState:UIControlStateNormal];
         _closeBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-image.size.width)/2, CGRectGetHeight(self.view.bounds)-image.size.height-[FitHelper fitHeight:20], image.size.width, image.size.height);
-        if ([_delegate respondsToSelector:@selector(pressClose)]) {
-            [_closeBtn addTarget:_delegate action:@selector(pressClose) forControlEvents:UIControlEventTouchUpInside];
-        }
+        [_closeBtn addTarget:self action:@selector(pressClose) forControlEvents:UIControlEventTouchUpInside];
     }
-    
     return _closeBtn;
+}
+- (void)pressClose {
+    [self collectionView:_collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
 }
 - (UIImagePickerController *)imagePicker {
     

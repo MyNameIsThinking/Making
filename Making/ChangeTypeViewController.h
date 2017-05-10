@@ -18,7 +18,6 @@ typedef NS_OPTIONS(NSUInteger, ChangeType) {
 
 @protocol ChangeTypeDelegate <NSObject>
 
-- (void)pressClose;
 - (void)pressCell:(MakingCell *)cell scrollView:(UIScrollView *)scrollView;
 
 @end
