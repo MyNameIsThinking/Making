@@ -11,6 +11,8 @@
 #import "CoreTextModel.h"
 #import "FitHelper.h"
 
+#define kCELLCOUNT @"CellCount"
+
 @class CountMakingCell;
 
 @protocol CountMakingCellDelegate <NSObject>
@@ -89,6 +91,7 @@
     CoreTextModel *model = _mainModels[indexPath.row];
     cell.backgroundColor = model.BGColor;
     [cell showWithModel:model withFontName:nil withBackgroundImage:model.BGImage];
+    [[NSNotificationCenter defaultCenter] postNotificationName:kCELLCOUNT object:@(_mainModels.count)];
     
     return cell;
 }
@@ -128,9 +131,11 @@
         CoreTextModel *model = [[CoreTextModel alloc] initWithModel:copyModel];
         [_mainModels insertObject:model atIndex:_currIndexPath.row+1];
         [self.collectionView performBatchUpdates:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCELLCOUNT object:@(_mainModels.count)];
             NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
-            [self.collectionView insertItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+            [_collectionView insertItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
         } completion:^(BOOL finished) {
+            
         }];
     }
 }
@@ -139,9 +144,11 @@
     if (_mainModels.count > 1) {
         [_mainModels removeObjectAtIndex:_currIndexPath.row];
         [self.collectionView performBatchUpdates:^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:kCELLCOUNT object:@(_mainModels.count)];
             NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
-            [self.collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
+            [_collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
         } completion:^(BOOL finished) {
+            
         }];
     }
 }
@@ -210,17 +217,28 @@
 }
 @end
 @implementation CountMakingCell
-
 - (void)dealloc {
-
-    self.addBtn = nil;
-    self.delBtn = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _addBtn = nil;
+    _delBtn = nil;
+}
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setCellCount:) name:kCELLCOUNT object:nil];
+    }
+    return self;
 }
 - (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName withBackgroundImage:(UIImage *)image {
 
     [super showWithModel:model withFontName:fontName withBackgroundImage:model.BGImage];
     [self addSubview:self.addBtn];
     [self addSubview:self.delBtn];
+}
+- (void)setCellCount:(NSNotification *)notification {
+    NSInteger cellCount = [[notification object] integerValue];
+    _addBtn.hidden = cellCount >= 9;
+    _delBtn.hidden = cellCount <= 1;
 }
 - (UIButton *)addBtn {
 
