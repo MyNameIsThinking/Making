@@ -32,3 +32,7 @@ typedef NS_OPTIONS(NSUInteger, PressType) {
 @property (nonatomic, retain) NSMutableArray *mainModels;
 - (void)setSelectCell:(MakingCell *)selectCell;
 @end
+
+@interface UIButton (MotionCamera)
+- (void)scaleTouch;
+@end

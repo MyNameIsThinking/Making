@@ -92,10 +92,23 @@
     return cell;
 }
 - (void)goBack {
+    CountMakingCell *cell = (CountMakingCell *)[_collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:_pageControl.currentPage inSection:0]];
+    cell.frame = CGRectMake((CGRectGetWidth(self.frame)-CGRectGetWidth(cell.frame))*.5f, _collectionView.frame.origin.y+cell.frame.origin.y, CGRectGetWidth(cell.frame), CGRectGetHeight(cell.frame));
+    [self addSubview:cell];
+    cell.addBtn.hidden = YES;
+    cell.delBtn.hidden = YES;
+    _collectionView.hidden = YES;
+    CGFloat scale = CGRectGetWidth(self.frame)/CGRectGetWidth(cell.frame);
+    CGFloat offset_Y = (cell.center.y - (CGRectGetWidth(self.frame)*.5f))-45.f;
     [UIView animateWithDuration:.3f animations:^{
-        self.alpha = 0.f;
+        CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
+        cell.transform = CGAffineTransformTranslate(transform, 0, -offset_Y);
     } completion:^(BOOL finished) {
-        [self removeFromSuperview];
+        [UIView animateWithDuration:.3f animations:^{
+            self.alpha = 0.f;
+        } completion:^(BOOL finished) {
+            [self removeFromSuperview];
+        }];
     }];
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {

@@ -48,7 +48,7 @@ const NSTimeInterval durationTime = 0.3f;
             CountView *countView = [[CountView alloc] initWithMainModels:_mainViewController.mainModels];
             countView.alpha = 0.f;
             [self.view addSubview:countView];
-            [UIView animateWithDuration:.5f animations:^{
+            [UIView animateWithDuration:durationTime animations:^{
                 CGFloat scale = [FitHelper fitWidth:250]/CGRectGetWidth(_mainViewController.collectionView.frame);
                 CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
                 CGFloat offset_Y = countView.collectionView.center.y - _mainViewController.collectionView.center.y;

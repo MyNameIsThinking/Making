@@ -44,6 +44,8 @@
     [self.view addSubview:self.countBtn];
     [self.view addSubview:self.infoBtn];
     [self.view addSubview:self.pageControl];
+    [_countBtn scaleTouch];
+    [_infoBtn scaleTouch];
 }
 - (void)setSelectCell:(MakingCell *)selectCell {
     
@@ -266,5 +268,18 @@
     }
     
     return _imagePicker;
+}
+@end
+
+@implementation UIButton (MotionCamera)
+
+- (void)scaleTouch {
+    UIImage *image = self.imageView.image;
+    CGSize size = CGSizeMake(MAX(image.size.width, 44), MAX(image.size.height, 44));
+    CGPoint center = self.center;
+    self.frame = CGRectMake(0, 0, size.width, size.height);
+    self.imageEdgeInsets = UIEdgeInsetsMake((size.width-image.size.height)/2, (size.width-image.size.width)/2, (size.width-image.size.height)/2, (size.width-image.size.width)/2);
+    self.backgroundColor = [UIColor clearColor];
+    self.center = center;
 }
 @end
