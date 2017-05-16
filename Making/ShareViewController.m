@@ -360,7 +360,7 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
     if (!_countLabel) {
         _countLabel = [[UILabel alloc] init];
         _countLabel.backgroundColor = [UIColor whiteColor];
-        _countLabel.text = [NSString stringWithFormat:@"共%i張",(int)self.models.count];
+        _countLabel.text = [NSString stringWithFormat:@"共%i张",(int)self.models.count];
         _countLabel.font = [UIFont systemFontOfSize:16];
         _countLabel.textAlignment = NSTextAlignmentCenter;
         _countLabel.textColor = [UIColor grayColor];

@@ -85,9 +85,7 @@
         NSString *rangText = [_mainTextView.text substringWithRange:rang];
         _model.text = [rangText isEqualToString:@"\n"]?_mainTextView.text:[NSString stringWithFormat:@"%@%@",_mainTextView.text,@"\n"];
         _model.forewordText = _forewordTextView.text;
-        NSLog(@"保存");
     } else if ([sender isEqual:_returnBtn]) {
-        NSLog(@"放棄");
     }
     [self.mainTextView resignFirstResponder];
     [self.forewordTextView resignFirstResponder];
@@ -175,7 +173,7 @@
 - (UILabel *)fromLabel {
 
     if (!_fromLabel) {
-        NSString *text = @"來自:";
+        NSString *text = @"来自:";
         _fromLabel = [[UILabel alloc] init];
         _fromLabel.text = text;
         _fromLabel.font = [UIFont fontWithName:@"PingFangSC-Semibold" size:17.f];
