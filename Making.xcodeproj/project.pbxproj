@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1F0B6DAD1CAF4DF000E9088F /* CountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B6DAC1CAF4DF000E9088F /* CountViewController.m */; };
+		1F0B6DAD1CAF4DF000E9088F /* CountView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B6DAC1CAF4DF000E9088F /* CountView.m */; };
 		1F16E2541CAEA6CA0009AA13 /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */; };
 		1F2A8C091CB0B4A500A496BE /* CoreTextModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8C081CB0B4A500A496BE /* CoreTextModel.m */; };
 		1F2A8C111CB0E94100A496BE /* ChangeTypeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F2A8C101CB0E94100A496BE /* ChangeTypeManager.m */; };
@@ -107,8 +107,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1F0B6DAB1CAF4DF000E9088F /* CountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountViewController.h; sourceTree = "<group>"; };
-		1F0B6DAC1CAF4DF000E9088F /* CountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountViewController.m; sourceTree = "<group>"; };
+		1F0B6DAB1CAF4DF000E9088F /* CountView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CountView.h; sourceTree = "<group>"; };
+		1F0B6DAC1CAF4DF000E9088F /* CountView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CountView.m; sourceTree = "<group>"; };
 		1F16E2521CAEA6CA0009AA13 /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		1F16E2531CAEA6CA0009AA13 /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		1F2A8C071CB0B4A500A496BE /* CoreTextModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreTextModel.h; sourceTree = "<group>"; };
@@ -301,8 +301,8 @@
 				1FD0D7531CABF9E700501D52 /* EditTextView.m */,
 				1FD0D7551CABF9F800501D52 /* ShareViewController.h */,
 				1FD0D7561CABF9F800501D52 /* ShareViewController.m */,
-				1F0B6DAB1CAF4DF000E9088F /* CountViewController.h */,
-				1F0B6DAC1CAF4DF000E9088F /* CountViewController.m */,
+				1F0B6DAB1CAF4DF000E9088F /* CountView.h */,
+				1F0B6DAC1CAF4DF000E9088F /* CountView.m */,
 				1FD0D75B1CABFF0700501D52 /* MakingCell.h */,
 				1FD0D75C1CABFF0700501D52 /* MakingCell.m */,
 				1F2A8C071CB0B4A500A496BE /* CoreTextModel.h */,
@@ -605,7 +605,7 @@
 			files = (
 				1FD0D7511CABF9CE00501D52 /* ChangeTypeViewController.m in Sources */,
 				1F16E2541CAEA6CA0009AA13 /* BaseViewController.m in Sources */,
-				1F0B6DAD1CAF4DF000E9088F /* CountViewController.m in Sources */,
+				1F0B6DAD1CAF4DF000E9088F /* CountView.m in Sources */,
 				1F80C2371CAAA86800961DA0 /* ViewController.m in Sources */,
 				1F80C2341CAAA86800961DA0 /* AppDelegate.m in Sources */,
 				1F6768F01DB357F6006B895D /* FitHelper.m in Sources */,

@@ -11,9 +11,10 @@
 #import "ChangeTypeViewController.h"
 #import "EditTextView.h"
 #import "ShareViewController.h"
-#import "CountViewController.h"
+#import "CountView.h"
 #import "MakingCell.h"
 #import "M80AttributedLabel.h"
+#import "FitHelper.h"
 
 const NSTimeInterval durationTime = 0.3f;
 
@@ -42,8 +43,22 @@ const NSTimeInterval durationTime = 0.3f;
         }
             break;
         case PressTypeCount: {
-            [self presentViewController:[[CountViewController alloc] initWithMainModels:_mainViewController.mainModels] animated:YES completion:^{
+            [_animationImageView removeFromSuperview];
+            _animationImageView = nil;
+            CountView *countView = [[CountView alloc] initWithMainModels:_mainViewController.mainModels];
+            countView.alpha = 0.f;
+            [self.view addSubview:countView];
+            [UIView animateWithDuration:.5f animations:^{
+                CGFloat scale = [FitHelper fitWidth:250]/CGRectGetWidth(_mainViewController.collectionView.frame);
+                CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
+                CGFloat offset_Y = countView.collectionView.center.y - _mainViewController.collectionView.center.y;
+                _mainViewController.collectionView.transform = CGAffineTransformTranslate(transform, 0, offset_Y + 68.f);
+                countView.alpha = 1.f;
+            } completion:^(BOOL finished) {
+                CGAffineTransform transform = CGAffineTransformMakeScale(1.f, 1.f);
+                _mainViewController.collectionView.transform = CGAffineTransformTranslate(transform, 0.f, 0.f);
             }];
+
         }
             break;
         case PressTypeInfo:
@@ -98,7 +113,6 @@ const NSTimeInterval durationTime = 0.3f;
 }
 #pragma mark - ChangeTypeDelegate
 - (void)pressCell:(MakingCell *)cell scrollView:(UIScrollView *)scrollView {
-    
     [self.mainViewController setSelectCell:cell];
     UIImage *image = cell.cellImage;
     self.animationImageView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);

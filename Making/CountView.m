@@ -1,12 +1,12 @@
 //
-//  CountViewController.m
+//  CountView.m
 //  Making
 //
 //  Created by rico on 2016/4/2.
 //  Copyright © 2016年 Making. All rights reserved.
 //
 
-#import "CountViewController.h"
+#import "CountView.h"
 #import "MakingCell.h"
 #import "CoreTextModel.h"
 #import "FitHelper.h"
@@ -31,11 +31,10 @@
 @interface CenterLayout : UICollectionViewFlowLayout
 @property (nonatomic, assign) NSInteger cellCount;
 @end
-@interface CountViewController () <UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, CountMakingCellDelegate> {
+@interface CountView () <UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, CountMakingCellDelegate> {
 
 }
 @property (nonatomic, retain) UILabel *titleLabel;
-@property (nonatomic, retain) UICollectionView *collectionView;
 @property (nonatomic, retain) CenterLayout *collectionViewLayout;
 @property (nonatomic, retain) UIButton *closeBtn;
 @property (nonatomic, retain) NSIndexPath *currIndexPath;
@@ -43,7 +42,7 @@
 @property (nonatomic, retain) UIPageControl *pageControl;
 @end
 
-@implementation CountViewController
+@implementation CountView
 
 - (void)dealloc {
 
@@ -54,23 +53,20 @@
 }
 - (id)initWithMainModels:(NSMutableArray *)mainModels {
 
-    self = [super init];
+    self = [super initWithFrame:[UIScreen mainScreen].bounds];
     if (self) {
         _mainModels = mainModels;
-        self.view.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor whiteColor];
+        [self addSubview:self.titleLabel];
+        [self addSubview:self.collectionView];
+        [self addSubview:self.closeBtn];
+        [self addSubview:self.pageControl];
     }
     
     return self;
 }
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self.view addSubview:self.titleLabel];
-    [self.view addSubview:self.collectionView];
-    [self.view addSubview:self.closeBtn];
-    [self.view addSubview:self.pageControl];
-}
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat height = CGRectGetHeight(self.view.bounds)/3;
+    CGFloat height = CGRectGetHeight(self.bounds)/3;
     return CGSizeMake(height, height);
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
@@ -96,9 +92,10 @@
     return cell;
 }
 - (void)goBack {
-
-    [self dismissViewControllerAnimated:YES completion:^{
-        
+    [UIView animateWithDuration:.3f animations:^{
+        self.alpha = 0.f;
+    } completion:^(BOOL finished) {
+        [self removeFromSuperview];
     }];
 }
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
@@ -160,7 +157,7 @@
         _titleLabel.textColor = [UIColor blackColor];
         _titleLabel.font = [UIFont systemFontOfSize:20];
         CGSize size = [_titleLabel.text sizeWithAttributes:@{NSFontAttributeName:_titleLabel.font}];
-        _titleLabel.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-size.width)/2, [FitHelper fitHeight:80], size.width, size.height);
+        _titleLabel.frame = CGRectMake((CGRectGetWidth(self.bounds)-size.width)/2, [FitHelper fitHeight:80], size.width, size.height);
     }
     
     return _titleLabel;
@@ -170,7 +167,7 @@
     if (!_collectionView) {
         CGFloat y = self.titleLabel.frame.origin.y+CGRectGetHeight(self.titleLabel.frame)+[FitHelper fitHeight:80];
         CGFloat height = [FitHelper fitWidth:250]+[FitHelper fitWidth:30];
-        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, y, CGRectGetWidth(self.view.bounds), height) collectionViewLayout:self.collectionViewLayout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, y, CGRectGetWidth(self.bounds), height) collectionViewLayout:self.collectionViewLayout];
         _collectionView.backgroundColor = [UIColor whiteColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
@@ -198,7 +195,7 @@
         _closeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [_closeBtn setImage:image forState:UIControlStateNormal];
         CGSize size = image.size;
-        _closeBtn.frame = CGRectMake((CGRectGetWidth(self.view.bounds)-size.width)/2, CGRectGetHeight(self.view.bounds)-image.size.height-[FitHelper fitHeight:20], size.width, size.height);
+        _closeBtn.frame = CGRectMake((CGRectGetWidth(self.bounds)-size.width)/2, CGRectGetHeight(self.bounds)-image.size.height-[FitHelper fitHeight:20], size.width, size.height);
         [_closeBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -208,7 +205,7 @@
 
     if (!_pageControl) {
         _pageControl = [[UIPageControl alloc] init];
-        _pageControl.frame = CGRectMake(0, _collectionView.frame.origin.y+CGRectGetHeight(_collectionView.frame)+[FitHelper fitHeight:10], CGRectGetWidth(self.view.frame), 8);
+        _pageControl.frame = CGRectMake(0, _collectionView.frame.origin.y+CGRectGetHeight(_collectionView.frame)+[FitHelper fitHeight:10], CGRectGetWidth(self.frame), 8);
         [_pageControl setPageIndicatorTintColor:[UIColor blackColor]];
         [_pageControl setCurrentPageIndicatorTintColor:[UIColor redColor]];
     }

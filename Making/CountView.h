@@ -1,5 +1,5 @@
 //
-//  CountViewController.h
+//  CountView.h
 //  Making
 //
 //  Created by rico on 2016/4/2.
@@ -8,7 +8,9 @@
 
 #import "BaseViewController.h"
 
-@interface CountViewController : BaseViewController
+@interface CountView : UIView
+
+@property (nonatomic, retain) UICollectionView *collectionView;
 
 - (id)initWithMainModels:(NSMutableArray *)mainModels;
 @end
