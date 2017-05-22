@@ -29,11 +29,6 @@
 - (void)dealloc {
     self.collectionView = nil;
 }
-- (void)viewWillAppear:(BOOL)animated {
-
-    [super viewWillAppear:animated];
-    [_collectionView reloadData];
-}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.collectionView];
@@ -46,6 +41,10 @@
     [self.view addSubview:self.pageControl];
     [_countBtn scaleTouch];
     [_infoBtn scaleTouch];
+}
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [_collectionView reloadData];
 }
 - (void)setSelectCell:(MakingCell *)selectCell {
     

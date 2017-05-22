@@ -26,28 +26,6 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
 - (void)pressShare:(ShareType)type;
 
 @end
-@interface MakingCheckCell : MakingCell
-@property (nonatomic, retain) UIImageView *checkImageView;
-@end
-@implementation MakingCheckCell
-- (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName withBackgroundImage:(UIImage *)image {
-    [super showWithModel:model withFontName:fontName withBackgroundImage:image];
-    [self addSubview:self.checkImageView];
-}
-- (UIImageView *)checkImageView {
-
-    if (!_checkImageView) {
-        UIImage *image = [UIImage imageNamed:@"icon-chk-solid"];
-        _checkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(self.frame)-image.size.width-[FitHelper fitWidth:10], CGRectGetHeight(self.frame)-image.size.height-[FitHelper fitWidth:10], image.size.width, image.size.height)];
-        _checkImageView.image = image;
-        
-    }
-    
-    return _checkImageView;
-}
-
-
-@end
 @interface ShareView : UIView
 @property (nonatomic, retain) NSMutableArray *shares;
 @property (nonatomic, weak) id<ShareViewDelegate> delegate;
@@ -62,6 +40,7 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
 @property (nonatomic, retain) UIView *grayLine;
 @property (nonatomic, retain) ShareView *shareView;
 @property (nonatomic, assign) CGFloat scale;
+@property (nonatomic, retain) NSMutableArray *hiddenList;
 @end
 
 @implementation ShareViewController
@@ -104,7 +83,13 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
         [cell showWithModel:model withFontName:nil withBackgroundImage:model.BGImage];
         UIImage *image = [cell getImageFromView];
         
-        [images addObject:image];
+        if (_models.count > 1) {
+            if (![[_hiddenList objectAtIndex:i] boolValue]) {
+                [images addObject:image];
+            }
+        } else if (_models.count == 1) {
+            [images addObject:image];
+        }
         
         if (i == 0) {
             shareImage = image;
@@ -311,26 +296,40 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
     return self.models.count;
 }
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    MakingCheckCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
+    MakingCell *cell = (MakingCell *)[collectionView dequeueReusableCellWithReuseIdentifier:[MakingCell identifier] forIndexPath:indexPath];
     CoreTextModel *model = _models[indexPath.row];
     cell.backgroundColor = model.BGColor;
     [cell showWithModel:model withFontName:nil withBackgroundImage:model.BGImage];
-    cell.checkImageView.hidden = _models.count <= 1;
     
+    UIImage *image = [UIImage imageNamed:@"icon-chk-solid"];
+    UIImageView *checkImageView = [[UIImageView alloc] initWithFrame:CGRectMake(CGRectGetWidth(cell.frame)-image.size.width-[FitHelper fitWidth:10], CGRectGetHeight(cell.frame)-image.size.height-[FitHelper fitWidth:10], image.size.width, image.size.height)];
+    checkImageView.tag = 404;
+    checkImageView.image = image;
+    [cell addSubview:checkImageView];
+    checkImageView.hidden = _models.count <= 1;
+    [self.hiddenList addObject:@(checkImageView.hidden)];
     return cell;
 }
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    MakingCell *cell = (MakingCell *)[collectionView cellForItemAtIndexPath:indexPath];
+    for (UIView *view in cell.subviews) {
+        if (view.tag == 404) {
+            view.hidden = !view.hidden;
+            [_hiddenList replaceObjectAtIndex:indexPath.item withObject:@(view.hidden)];
+            break;
+        }
+    }
+}
 - (UICollectionView *)collectionView {
-    
     if (!_collectionView) {
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:self.collectionViewLayout];
         _collectionView.backgroundColor = [UIColor clearColor];
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.pagingEnabled = YES;
-        [_collectionView registerClass:[MakingCheckCell class] forCellWithReuseIdentifier:[MakingCell identifier]];
+        [_collectionView registerClass:[MakingCell class] forCellWithReuseIdentifier:[MakingCell identifier]];
     }
-    
     return _collectionView;
 }
 - (UICollectionViewFlowLayout *)collectionViewLayout {
@@ -392,6 +391,12 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
     
     return _shareView;
 }
+- (NSMutableArray *)hiddenList {
+    if (!_hiddenList) {
+        _hiddenList = [[NSMutableArray alloc] init];
+    }
+    return _hiddenList;
+}
 @end
 
 @implementation ShareView
@@ -445,4 +450,5 @@ typedef NS_OPTIONS(NSUInteger, ShareType) {
     
     return _shares;
 }
+
 @end

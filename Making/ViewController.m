@@ -45,9 +45,9 @@ const NSTimeInterval durationTime = 0.3f;
         case PressTypeCount: {
             [_animationImageView removeFromSuperview];
             _animationImageView = nil;
-            CountView *countView = [[CountView alloc] initWithMainModels:_mainViewController.mainModels];
+            CountView *countView = [[CountView alloc] initWithMainModels:_mainViewController.mainModels mainView:_mainViewController];
             countView.alpha = 0.f;
-            [self.view addSubview:countView];
+            [_mainViewController.view addSubview:countView];
             [UIView animateWithDuration:durationTime animations:^{
                 CGFloat scale = [FitHelper fitWidth:250]/CGRectGetWidth(_mainViewController.collectionView.frame);
                 CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
@@ -152,7 +152,7 @@ const NSTimeInterval durationTime = 0.3f;
     scaleAnimation.duration = time;
     
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-//    animationGroup.delegate = self;
+    animationGroup.delegate = self;
     animationGroup.duration = time;
     [animationGroup setAnimations:[NSArray arrayWithObjects:positionAnimation,scaleAnimation, nil]];
     animationGroup.fillMode = kCAFillModeForwards;
@@ -180,7 +180,7 @@ const NSTimeInterval durationTime = 0.3f;
     scaleAnimation.duration = time;
     
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-//    animationGroup.delegate = self;
+    animationGroup.delegate = self;
     animationGroup.duration = time;
     [animationGroup setAnimations:[NSArray arrayWithObjects:positionAnimation,scaleAnimation, nil]];
     animationGroup.fillMode = kCAFillModeForwards;

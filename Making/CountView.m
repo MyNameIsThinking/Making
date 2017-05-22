@@ -40,6 +40,7 @@
 @property (nonatomic, retain) NSIndexPath *currIndexPath;
 @property (nonatomic, retain) NSMutableArray *mainModels;
 @property (nonatomic, retain) UIPageControl *pageControl;
+@property (nonatomic, retain) MainViewController *mainView;
 @end
 
 @implementation CountView
@@ -51,11 +52,12 @@
     self.collectionViewLayout = nil;
     self.closeBtn = nil;
 }
-- (id)initWithMainModels:(NSMutableArray *)mainModels {
+- (id)initWithMainModels:(NSMutableArray *)mainModels mainView:(MainViewController *)mainView {
 
     self = [super initWithFrame:[UIScreen mainScreen].bounds];
     if (self) {
         _mainModels = mainModels;
+        _mainView = mainView;
         self.backgroundColor = [UIColor whiteColor];
         [self addSubview:self.titleLabel];
         [self addSubview:self.collectionView];
@@ -107,6 +109,7 @@
         [UIView animateWithDuration:.3f animations:^{
             self.alpha = 0.f;
         } completion:^(BOOL finished) {
+            [_mainView.collectionView reloadData];
             [self removeFromSuperview];
         }];
     }];

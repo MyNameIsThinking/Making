@@ -7,10 +7,11 @@
 //
 
 #import "BaseViewController.h"
+#import "MainViewController.h"
 
 @interface CountView : UIView
 
 @property (nonatomic, retain) UICollectionView *collectionView;
 
-- (id)initWithMainModels:(NSMutableArray *)mainModels;
+- (id)initWithMainModels:(NSMutableArray *)mainModels mainView:(MainViewController *)mainView;
 @end
