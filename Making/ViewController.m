@@ -186,7 +186,6 @@ const NSTimeInterval durationTime = 0.3f;
     animationGroup.fillMode = kCAFillModeForwards;
     animationGroup.removedOnCompletion = NO;
     [imageView.layer addAnimation:animationGroup forKey:@"toMain"];
-    
 }
 - (MainViewController *)mainViewController {
 
