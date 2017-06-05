@@ -35,11 +35,11 @@
 @property (nonatomic, retain) NSMutableArray *xmls;
 @property (nonatomic, retain) NSMutableArray *fonts;
 @property (nonatomic, retain) UIImagePickerController *imagePicker;
+@property (nonatomic, assign) NSInteger showCheckIndex;
 @end
 
 @implementation ChangeTypeViewController
 - (void)dealloc {
-
     self.collectionView = nil;
     self.collectionViewLayout = nil;
     self.closeBtn = nil;
@@ -51,62 +51,59 @@
 }
 - (void)setChangeType:(ChangeType)changeType {
 
-    {
-        self.colors = nil;
-        _colors = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].colors];
-        int selectIndex = -1;
-        for (int i = 0; i < _colors.count; i++) {
-            if ([_colors[i] isKindOfClass:[UIColor class]]) {
-                UIColor *color = _colors[i];
-                if ([_defaultColor isSameToColor:color]) {
+    _changeType = changeType;
+
+    switch (_changeType) {
+        case ChangeTypeBackground: {
+            self.colors = nil;
+            _colors = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].colors];
+            int selectIndex = -1;
+            for (int i = 0; i < _colors.count; i++) {
+                if ([_colors[i] isKindOfClass:[UIColor class]]) {
+                    UIColor *color = _colors[i];
+                    if ([_defaultColor isSameToColor:color]) {
+                        selectIndex = i;
+                        break;
+                    }
+                }
+            }
+            _showCheckIndex = selectIndex+1;
+        }
+            break;
+            
+        case ChangeTypeAlignment: {
+            self.xmls = nil;
+            _xmls = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].xmls];
+            int selectIndex = -1;
+            for (int i = 0; i < _xmls.count; i++) {
+                XMLUtil *xml = _xmls[i];
+                if ([_defaultModel.identifier isEqualToString:xml.model.identifier]) {
                     selectIndex = i;
                     break;
                 }
             }
+            _showCheckIndex = selectIndex;
         }
-        
-        if (selectIndex != -1 && selectIndex != 0) {
-            [_colors exchangeObjectAtIndex:0 withObjectAtIndex:selectIndex];
+            break;
+        case ChangeTypeFont: {
+            self.fonts = nil;
+            _fonts = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].fonts];
+            int selectIndex = -1;
+            for (int i = 0; i < _fonts.count; i++) {
+                NSString *fontName = _fonts[i];
+                if ([_defaultFont isEqualToString:fontName]) {
+                    selectIndex = i;
+                    break;
+                }
+            }
+            _showCheckIndex = selectIndex;
         }
+            break;
+        default:
+            break;
     }
     
-    {
-        self.xmls = nil;
-        _xmls = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].xmls];
-        int selectIndex = -1;
-        for (int i = 0; i < _xmls.count; i++) {
-            XMLUtil *xml = _xmls[i];
-            if ([_defaultModel.identifier isEqualToString:xml.model.identifier]) {
-                selectIndex = i;
-                break;
-            }
-        }
-        
-        if (selectIndex != -1 && selectIndex != 1) {
-            [_xmls exchangeObjectAtIndex:1 withObjectAtIndex:selectIndex];
-        }
-    }
-    
-    {
-        self.fonts = nil;
-        _fonts = [[NSMutableArray alloc] initWithArray:[ChangeTypeManager shareInstance].fonts];
-        int selectIndex = -1;
-        for (int i = 0; i < _fonts.count; i++) {
-            NSString *fontName = _fonts[i];
-            if ([_defaultFont isEqualToString:fontName]) {
-                selectIndex = i;
-                break;
-            }
-        }
-        
-        if (selectIndex != -1 && selectIndex != 1) {
-            [_fonts exchangeObjectAtIndex:1 withObjectAtIndex:selectIndex];
-        }
-    }
-    if (_changeType != changeType) {
-        _changeType = changeType;
-        [_collectionView reloadData];
-    }
+    [_collectionView reloadData];
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 
@@ -156,7 +153,7 @@
     }
     
     cell.isShowPhoto = (indexPath.item==0 && _changeType==ChangeTypeBackground)?1:0;
-    cell.isShowCheck = indexPath.item==1;
+    cell.isShowCheck = indexPath.item==_showCheckIndex;
     
     return cell;
 }
@@ -207,7 +204,7 @@
     return _closeBtn;
 }
 - (void)pressClose {
-    [self collectionView:_collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForItem:1 inSection:0]];
+    [self collectionView:_collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForItem:_showCheckIndex inSection:0]];
 }
 - (UIImagePickerController *)imagePicker {
     
