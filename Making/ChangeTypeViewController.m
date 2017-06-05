@@ -36,6 +36,7 @@
 @property (nonatomic, retain) NSMutableArray *fonts;
 @property (nonatomic, retain) UIImagePickerController *imagePicker;
 @property (nonatomic, assign) NSInteger showCheckIndex;
+@property (nonatomic, assign) ChangeType changeType;
 @end
 
 @implementation ChangeTypeViewController
@@ -49,7 +50,7 @@
     [self.view addSubview:self.collectionView];
     [self.view addSubview:self.closeBtn];
 }
-- (void)setChangeType:(ChangeType)changeType {
+- (NSInteger)setType:(ChangeType)changeType {
 
     _changeType = changeType;
 
@@ -104,6 +105,7 @@
     }
     
     [_collectionView reloadData];
+    return _showCheckIndex;
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
 

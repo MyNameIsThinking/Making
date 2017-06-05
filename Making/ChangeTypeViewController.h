@@ -23,8 +23,8 @@ typedef NS_OPTIONS(NSUInteger, ChangeType) {
 @end
 @interface ChangeTypeViewController : BaseViewController
 @property (nonatomic, weak) id<ChangeTypeDelegate> delegate;
-@property (nonatomic, assign) ChangeType changeType;
 @property (nonatomic, retain) CoreTextModel *defaultModel;
 @property (nonatomic, retain) UIColor *defaultColor;
 @property (nonatomic, retain) NSString *defaultFont;
+- (NSInteger)setType:(ChangeType)changeType;
 @end

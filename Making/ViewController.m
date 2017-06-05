@@ -88,17 +88,17 @@ const NSTimeInterval durationTime = 0.3f;
 }
 - (void)pressCell:(MakingCell *)cell changeType:(PressType)type {
     
+    self.changeTypeViewController.defaultColor = cell.backgroundColor;
+    self.changeTypeViewController.defaultModel = cell.model;
+    self.changeTypeViewController.defaultFont = cell.fontName;
+    NSInteger cellIndex = [self.changeTypeViewController setType:(ChangeType)type];
+    
     UIImage *image = cell.cellImage;
     self.animationImageView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
     self.animationImageView.image = image;
     self.animationImageView.backgroundColor = cell.backgroundColor;
-    [self toCell:self.animationImageView toIndex:cell.model.BGImage?0:1];
+    [self toCell:self.animationImageView toIndex:cellIndex];
     [_mainViewController.collectionView removeFromSuperview];
-    
-    self.changeTypeViewController.defaultColor = cell.backgroundColor;
-    self.changeTypeViewController.defaultModel = cell.model;
-    self.changeTypeViewController.defaultFont = cell.fontName;
-    self.changeTypeViewController.changeType = (ChangeType)type;
     
     [self.view insertSubview:self.changeTypeViewController.view belowSubview:_mainViewController.view];
     [UIView animateWithDuration:durationTime animations:^{
@@ -144,11 +144,46 @@ const NSTimeInterval durationTime = 0.3f;
     CABasicAnimation *positionAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
     positionAnimation.fromValue = [NSValue valueWithCGPoint:CGPointMake(imageView.layer.frame.origin.x+(imageView.layer.frame.size.width/2), imageView.layer.frame.origin.y+(imageView.layer.frame.size.height/2))];
     
-    if (index==0) {
-        positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*1, CGRectGetHeight(imageView.layer.frame)/4)];
-    } else if (index==1) {
-        positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*3, CGRectGetHeight(imageView.layer.frame)/4)];
+    CGFloat centerY = CGRectGetHeight(imageView.layer.frame)/4.f;
+    CGFloat offsetY = CGRectGetHeight(imageView.layer.frame)/2.f;
+    switch (index) {
+        case 0: {
+            positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*1, centerY)];
+        }
+            break;
+        case 1: {
+            positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*3, centerY)];
+        }
+            break;
+        case 2: {
+            positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*1, centerY+offsetY)];
+        }
+            break;
+        case 3: {
+            positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*3, centerY+offsetY)];
+        }
+            break;
+        case 4: {
+            positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*1, centerY+2*offsetY)];
+        }
+            break;
+        case 5: {
+            positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*3, centerY+2*offsetY)];
+        }
+            break;
+        case 6: {
+            positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*1, centerY+3*offsetY)];
+        }
+            break;
+        case 7: {
+            positionAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake((CGRectGetWidth(self.view.bounds)/4)*3, centerY+3*offsetY)];
+        }
+            break;
+            
+        default:
+            break;
     }
+
     positionAnimation.fillMode = kCAFillModeForwards;
     positionAnimation.removedOnCompletion = NO;
     positionAnimation.duration = time;
