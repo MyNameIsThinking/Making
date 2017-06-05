@@ -45,18 +45,27 @@ const NSTimeInterval durationTime = 0.3f;
         case PressTypeCount: {
             [_animationImageView removeFromSuperview];
             _animationImageView = nil;
+            MakingCell *cell = (MakingCell *)[_mainViewController.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:_mainViewController.currIndex inSection:0]];
+            UIImage *image = cell.cellImage;
+            self.animationImageView.frame = CGRectMake(0, 0, cell.frame.size.width, cell.frame.size.height);
+            self.animationImageView.image = image;
+            self.animationImageView.backgroundColor = cell.backgroundColor;
+            [self.view addSubview:_animationImageView];
+            
             CountView *countView = [[CountView alloc] initWithMainModels:_mainViewController.mainModels mainView:_mainViewController];
+            countView.collectionView.alpha = 0.f;
             countView.alpha = 0.f;
             [_mainViewController.view addSubview:countView];
             [UIView animateWithDuration:durationTime animations:^{
                 CGFloat scale = [FitHelper fitWidth:250]/CGRectGetWidth(_mainViewController.collectionView.frame);
                 CGAffineTransform transform = CGAffineTransformMakeScale(scale, scale);
                 CGFloat offset_Y = countView.collectionView.center.y - _mainViewController.collectionView.center.y;
-                _mainViewController.collectionView.transform = CGAffineTransformTranslate(transform, 0, offset_Y + 68.f);
+                _animationImageView.transform = CGAffineTransformTranslate(transform, 0, offset_Y + 68.f);
                 countView.alpha = 1.f;
             } completion:^(BOOL finished) {
-                CGAffineTransform transform = CGAffineTransformMakeScale(1.f, 1.f);
-                _mainViewController.collectionView.transform = CGAffineTransformTranslate(transform, 0.f, 0.f);
+                countView.collectionView.alpha = 1.f;
+                [_animationImageView removeFromSuperview];
+                _animationImageView = nil;
             }];
 
         }
