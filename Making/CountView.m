@@ -148,7 +148,7 @@
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.collectionView indexPathForCell:cell].item+1 inSection:0];
             [_collectionView insertItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
         } completion:^(BOOL finished) {
-            
+            [self scrollViewDidEndDecelerating:_collectionView];
         }];
     }
 }
@@ -161,7 +161,7 @@
             NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
             [_collectionView deleteItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
         } completion:^(BOOL finished) {
-            
+            [self scrollViewDidEndDecelerating:_collectionView];
         }];
     }
 }
@@ -354,6 +354,12 @@
     if (_insertIndexPath) {
         NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:_insertIndexPath.item inSection:0];
         [self.collectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    } else if (_deleteIndexPath) {
+        NSIndexPath *nextIndexPath;
+        if (_deleteIndexPath.item>0) {
+            nextIndexPath = [NSIndexPath indexPathForItem:_deleteIndexPath.item-1 inSection:0];
+            [self.collectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+        }
     }
     _insertIndexPath = nil;
     _deleteIndexPath = nil;
@@ -366,7 +372,10 @@
     }
     return [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
 }
-- (nullable UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
-    return [super finalLayoutAttributesForDisappearingItemAtIndexPath:itemIndexPath];
+- (UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
+    attributes.transform = CGAffineTransformMakeScale(.2f, .2f);
+    attributes.alpha = 0.0;
+    return attributes;
 }
 @end
