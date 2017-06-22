@@ -137,9 +137,7 @@
     }
 }
 - (void)pressAdd:(CountMakingCell *)cell {
-
     if (_mainModels.count < 9) {
-        
         CoreTextModel *copyModel = _mainModels[_currIndexPath.row];
         CoreTextModel *model = [[CoreTextModel alloc] initWithModel:copyModel];
         [_mainModels insertObject:model atIndex:_currIndexPath.row+1];
@@ -153,7 +151,6 @@
     }
 }
 - (void)pressDel:(CountMakingCell *)cell {
-    
     if (_mainModels.count > 1) {
         [_mainModels removeObjectAtIndex:_currIndexPath.row];
         [self.collectionView performBatchUpdates:^{
