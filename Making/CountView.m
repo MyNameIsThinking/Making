@@ -145,7 +145,7 @@
         [_mainModels insertObject:model atIndex:_currIndexPath.row+1];
         [self.collectionView performBatchUpdates:^{
             [[NSNotificationCenter defaultCenter] postNotificationName:kCELLCOUNT object:@(_mainModels.count)];
-            NSIndexPath *indexPath = [self.collectionView indexPathForCell:cell];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[self.collectionView indexPathForCell:cell].item+1 inSection:0];
             [_collectionView insertItemsAtIndexPaths:[NSArray arrayWithObject:indexPath]];
         } completion:^(BOOL finished) {
             
@@ -292,6 +292,12 @@
     }
 }
 @end
+
+@interface CenterLayout () {
+    NSIndexPath *_insertIndexPath;
+    NSIndexPath *_deleteIndexPath;
+}
+@end
 @implementation CenterLayout
 
 - (void)prepareLayout {
@@ -334,5 +340,33 @@
 }
 - (CGSize)collectionViewContentSize {
     return CGSizeMake(self.cellCount*CGRectGetHeight(self.collectionView.frame)+((CGRectGetHeight(self.collectionView.frame)/3)*2), 0);
+}
+- (void)prepareForCollectionViewUpdates:(NSArray<UICollectionViewUpdateItem *> *)updateItems {
+    for (UICollectionViewUpdateItem *update in updateItems) {
+        if (update.updateAction == UICollectionUpdateActionDelete) {
+            _deleteIndexPath = update.indexPathBeforeUpdate;
+        } else if (update.updateAction == UICollectionUpdateActionInsert) {
+            _insertIndexPath = update.indexPathAfterUpdate;
+        }
+    }
+}
+- (void)finalizeCollectionViewUpdates {
+    if (_insertIndexPath) {
+        NSIndexPath *nextIndexPath = [NSIndexPath indexPathForItem:_insertIndexPath.item inSection:0];
+        [self.collectionView scrollToItemAtIndexPath:nextIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+    }
+    _insertIndexPath = nil;
+    _deleteIndexPath = nil;
+}
+- (nullable UICollectionViewLayoutAttributes *)initialLayoutAttributesForAppearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+    if (itemIndexPath.item == _insertIndexPath.item && _insertIndexPath) {
+        UICollectionViewLayoutAttributes *attributes = [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
+        attributes.transform = CGAffineTransformMakeScale(0.f, 0.f);
+        return attributes;
+    }
+    return [super initialLayoutAttributesForAppearingItemAtIndexPath:itemIndexPath];
+}
+- (nullable UICollectionViewLayoutAttributes *)finalLayoutAttributesForDisappearingItemAtIndexPath:(NSIndexPath *)itemIndexPath {
+    return [super finalLayoutAttributesForDisappearingItemAtIndexPath:itemIndexPath];
 }
 @end
