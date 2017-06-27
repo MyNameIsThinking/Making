@@ -239,6 +239,15 @@
     }
     return self;
 }
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(.3f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [UIView animateWithDuration:.2f animations:^{
+            _addBtn.alpha = 1.f;
+            _delBtn.alpha = 1.f;
+        }];
+    });
+}
 - (void)showWithModel:(CoreTextModel *)model withFontName:(NSString *)fontName withBackgroundImage:(UIImage *)image {
 
     [super showWithModel:model withFontName:fontName withBackgroundImage:model.BGImage];
@@ -259,6 +268,7 @@
         CGSize size = image.size;
         _addBtn.frame = CGRectMake(CGRectGetWidth(self.frame)-size.width-[FitHelper fitWidth:10], CGRectGetHeight(self.frame)-size.height-[FitHelper fitWidth:10], size.width, size.height);
         [_addBtn addTarget:self action:@selector(pressAdd) forControlEvents:UIControlEventTouchUpInside];
+        _addBtn.alpha = 0.f;
     }
     
     return _addBtn;
@@ -272,6 +282,7 @@
         CGSize size = image.size;;
         _delBtn.frame = CGRectMake([FitHelper fitWidth:10], CGRectGetHeight(self.frame)-size.height-[FitHelper fitWidth:10], size.width, size.height);
         [_delBtn addTarget:self action:@selector(pressDel) forControlEvents:UIControlEventTouchUpInside];
+        _delBtn.alpha = 0.f;
     }
     
     return _delBtn;
