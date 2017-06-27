@@ -31,7 +31,7 @@
 @interface CenterLayout : UICollectionViewFlowLayout
 @property (nonatomic, assign) NSInteger cellCount;
 @end
-@interface CountView () <UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, CountMakingCellDelegate> {
+@interface CountView () <UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate, CountMakingCellDelegate, UIGestureRecognizerDelegate> {
 
 }
 @property (nonatomic, retain) UILabel *titleLabel;
@@ -41,6 +41,8 @@
 @property (nonatomic, retain) NSMutableArray *mainModels;
 @property (nonatomic, retain) UIPageControl *pageControl;
 @property (nonatomic, retain) MainViewController *mainView;
+@property (nonatomic, retain) UISwipeGestureRecognizer *left;
+@property (nonatomic, retain) UISwipeGestureRecognizer *right;
 @end
 
 @implementation CountView
@@ -162,6 +164,26 @@
         }];
     }
 }
+- (void)swip:(UISwipeGestureRecognizer *)sender {
+    _collectionView.userInteractionEnabled = NO;
+    if (sender.state == UIGestureRecognizerStateEnded) {
+        UISwipeGestureRecognizerDirection dir = sender.direction;
+        if (dir == UISwipeGestureRecognizerDirectionRight) {
+            NSInteger nextIndex = _pageControl.currentPage-1;
+            if (nextIndex < [_collectionView numberOfItemsInSection:0] && nextIndex>=0) {
+                [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:nextIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+                [_pageControl setCurrentPage:nextIndex];
+            }
+        } else if (dir == UISwipeGestureRecognizerDirectionLeft) {
+            NSInteger nextIndex = _pageControl.currentPage+1;
+            if (nextIndex < [_collectionView numberOfItemsInSection:0] && nextIndex>=0) {
+                [_collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:nextIndex inSection:0] atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+                [_pageControl setCurrentPage:nextIndex];
+            }
+        }
+    }
+    _collectionView.userInteractionEnabled = YES;
+}
 - (UILabel *)titleLabel {
 
     if (!_titleLabel) {
@@ -185,9 +207,12 @@
         _collectionView.delegate = self;
         _collectionView.dataSource = self;
         _collectionView.pagingEnabled = NO;
+        _collectionView.scrollEnabled = NO;
         [_collectionView setClipsToBounds:NO];
         [_collectionView setShowsHorizontalScrollIndicator:NO];
         [_collectionView registerClass:[CountMakingCell class] forCellWithReuseIdentifier:[CountMakingCell identifier]];
+        [_collectionView addGestureRecognizer:self.left];
+        [_collectionView addGestureRecognizer:self.right];
     }
     
     return _collectionView;
@@ -224,6 +249,22 @@
     }
     
     return _pageControl;
+}
+- (UISwipeGestureRecognizer *)left {
+    if (!_left) {
+        _left = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swip:)];
+        _left.direction = UISwipeGestureRecognizerDirectionLeft;
+        _left.delegate = self;
+    }
+    return _left;
+}
+- (UISwipeGestureRecognizer *)right {
+    if (!_right) {
+        _right = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swip:)];
+        _right.direction = UISwipeGestureRecognizerDirectionRight;
+        _right.delegate = self;
+    }
+    return _right;
 }
 @end
 @implementation CountMakingCell
