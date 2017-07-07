@@ -76,6 +76,7 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat pageWidth = CGRectGetWidth(scrollView.frame);
     int currentPage = floor((scrollView.contentOffset.x-pageWidth/2)/pageWidth)+1;
+    _currIndex = currentPage;
     self.pageControl.currentPage = currentPage;
 }
 #pragma mark - UICollectionViewDelegateFlowLayout
